@@ -1,8 +1,7 @@
 {
     "PRO_ENV": "Dev",
+    "version": "1.0.0",
     "http": "127.0.0.1:300",
     "download_url": "127.0.0.1:80/Download",
-    "res_fileRoot": "./Res",
-    "ab_fileRoot": "./Res/AssetBundles",
-    "ab_local_fileRoot": "../AssetBundles"
+    "res_fileRoot": "./Res"
 }
