@@ -36,7 +36,7 @@ public class ResTool : MonoBehaviour
         //准备工作
         var rootDir = new DirectoryInfo(buildRoot);
         var rootABDir = new DirectoryInfo(Path.Combine(rootDir.FullName, "./AssetBundles"));
-
+        var versionFile = new FileInfo(Path.Combine(rootDir.FullName, "./Version"));
         if (!Directory.Exists(rootABDir.FullName))
         {
             Directory.CreateDirectory(rootABDir.FullName);
@@ -106,8 +106,45 @@ public class ResTool : MonoBehaviour
         //加密数据
         json = Util.Encrypt.AesEncrypt(json);
 
-        File.WriteAllText(Path.Combine(rootDir.FullName, "./Version"), json);
+        File.WriteAllText(versionFile.FullName, json);
     }
+    [MenuItem("Tools/资源管理/复制资源文件至本地")]
+    static void CopyToResRoot()
+    {
+        var rootResDir = new DirectoryInfo(resRoot);
+        var rootBuildDir = new DirectoryInfo(buildRoot);
+        var rootABDir = new DirectoryInfo(Path.Combine(rootBuildDir.FullName, "./AssetBundles"));
+        var versionFile = new FileInfo(Path.Combine(rootBuildDir.FullName, "./Version"));
+        if (!Directory.Exists(rootResDir.FullName))
+        {
+            Debug.Log("创建资源文件夹");
+            Directory.CreateDirectory(rootResDir.FullName);
+        }
+        if (!Directory.Exists(rootBuildDir.FullName))
+        {
+            UnityEditor.EditorUtility.DisplayDialog("提示", "Build文件夹不存在,请重新构建\n Url:" + rootBuildDir.FullName, "确定");
+            return;
+        }
 
+
+        if (!File.Exists(versionFile.FullName))
+        {
+            UnityEditor.EditorUtility.DisplayDialog("提示", "Build - Version文件不存在,请重新构建\n Url:" + versionFile.FullName, "确定");
+        }
+        else
+        {
+
+        }
+
+        if (!Directory.Exists(rootABDir.FullName))
+        {
+            UnityEditor.EditorUtility.DisplayDialog("提示", "Build - AB文件夹不存在,请重新构建\n Url:" + rootABDir.FullName, "确定");
+        }
+        else
+        {
+
+        }
+
+    }
 
 }
