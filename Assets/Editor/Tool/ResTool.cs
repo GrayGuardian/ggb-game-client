@@ -8,17 +8,17 @@ using Newtonsoft.Json;
 
 public class ResTool : MonoBehaviour
 {
-    static string resRoot = Path.Combine(Application.persistentDataPath, (string)Json.Instance["config"]["res_fileRoot"]);
+    static string resLocalRoot = Path.Combine(Application.persistentDataPath, (string)Json.Instance["config"]["res_fileRoot"]);
+    static string resWebRoot = Path.Combine(Application.dataPath, "../../koa-game-server/web-server/public/Download");
     static string buildRoot = Path.Combine(Application.dataPath, "../Build");
     static string abRoot = Path.Combine(Application.dataPath, "../AssetBundles");
 
-    [MenuItem("Tools/资源管理/打开资源文件夹")]
-    static void OpenResFolder()
+    static void OpenFolder(string path)
     {
-        string path = new DirectoryInfo(resRoot).FullName;
+        path = new DirectoryInfo(path).FullName;
         if (!Directory.Exists(path))
         {
-            if (UnityEditor.EditorUtility.DisplayDialog("提示", "资源文件夹不存在 是否创建？\n Url:" + path, "确定", "取消"))
+            if (UnityEditor.EditorUtility.DisplayDialog("提示", "文件夹不存在 是否创建？\n Url:" + path, "确定", "取消"))
             {
                 Directory.CreateDirectory(path);
             }
@@ -30,8 +30,29 @@ public class ResTool : MonoBehaviour
         string arg = string.Format(@"/open,{0}", path);
         System.Diagnostics.Process.Start("explorer.exe", arg);
     }
-    [MenuItem("Tools/资源管理/构建本地资源文件")]
-    static void BuildLocalRes()
+    [MenuItem("Tools/资源管理/Open Folder/AssetBundles Build Folder")]
+    static void OpenABFolder()
+    {
+        OpenFolder(abRoot);
+    }
+    [MenuItem("Tools/资源管理/Open Folder/Build Folder")]
+    static void OpenBuildFolder()
+    {
+        OpenFolder(buildRoot);
+    }
+    [MenuItem("Tools/资源管理/Open Folder/Local Resource Folder")]
+    static void OpenLocalResFolder()
+    {
+        OpenFolder(resLocalRoot);
+    }
+    [MenuItem("Tools/资源管理/Open Folder/Web Resource Folder")]
+    static void OpenWebResFolder()
+    {
+        OpenFolder(resWebRoot);
+    }
+
+    [MenuItem("Tools/资源管理/Build/Build")]
+    static void BuildRes()
     {
         //准备工作
         var rootDir = new DirectoryInfo(buildRoot);
@@ -47,26 +68,6 @@ public class ResTool : MonoBehaviour
             Directory.CreateDirectory(rootDir.FullName);
             Debug.Log("Build文件夹不存在，重新创建");
         }
-        // FileInfo[] files;
-        // bool isClear = false;
-        // files = rootDir.GetFiles();
-        // if (files.Length > 0 && (UnityEditor.EditorUtility.DisplayDialog("提示", "是否清空旧资源？", "确定", "取消") || isClear))
-        // {
-        //     isClear = true;
-        //     foreach (var file in files)
-        //     {
-        //         file.Delete();
-        //     }
-        // }
-        // files = rootABDir.GetFiles();
-        // if (files.Length > 0 && (UnityEditor.EditorUtility.DisplayDialog("提示", "是否清空旧资源？", "确定", "取消") || isClear))
-        // {
-        //     isClear = true;
-        //     foreach (var file in files)
-        //     {
-        //         file.Delete();
-        //     }
-        // }
         //构建资源
         List<ABVObject> abVObjectList = new List<ABVObject>();
         string[] blackFilesName = new string[] { "AssetBundles" };
@@ -84,14 +85,12 @@ public class ResTool : MonoBehaviour
                 continue;
             }
             var bytes = File.ReadAllBytes(file.FullName);
-            //加密数据
-            bytes = Util.Encrypt.AesEncrypt(bytes);
             var name = Path.GetFileNameWithoutExtension(file.FullName);
             var size = bytes.Length;
             var hash = Util.ComputeHash(bytes);
 
             //build AB File
-            File.WriteAllBytes(Path.Combine(rootABDir.FullName, name), bytes);
+            Util.Encrypt.WriteBytes(Path.Combine(rootABDir.FullName, name), bytes);
             Debug.Log(string.Format("Build AB Res >>>> name:{0} size:{1} hask:{2}", name, size, hash));
 
             //build version File
@@ -103,22 +102,57 @@ public class ResTool : MonoBehaviour
 
         string json = JsonConvert.SerializeObject(vObject);
         Debug.Log("Version Json:" + json);
-        //加密数据
-        json = Util.Encrypt.AesEncrypt(json);
 
-        File.WriteAllText(versionFile.FullName, json);
+        Util.Encrypt.WriteString(versionFile.FullName, json);
+
+
+        if (UnityEditor.EditorUtility.DisplayDialog("提示", "是否更新Resources内版本文件？", "确定", "取消"))
+        {
+            Util.Encrypt.WriteString(Path.Combine(Application.dataPath, "./Resources/Version"), json);
+        }
     }
-    [MenuItem("Tools/资源管理/复制资源文件至本地")]
-    static void CopyToResRoot()
+
+    [MenuItem("Tools/资源管理/Build/Build ＆ CopyTo Local")]
+    static void BuildRes1()
     {
-        var rootResDir = new DirectoryInfo(resRoot);
+        BuildRes();
+        CopyResToLocalRoot();
+    }
+    [MenuItem("Tools/资源管理/Build/Build ＆ CopyTo Web")]
+    static void BuildRes2()
+    {
+        BuildRes();
+        CopyResToWebRoot();
+    }
+    [MenuItem("Tools/资源管理/Build/Build ＆ CopyTo Local ＆ CopyTo Web")]
+    static void BuildRes3()
+    {
+        BuildRes();
+        CopyResToLocalRoot();
+        CopyResToWebRoot();
+    }
+    [MenuItem("Tools/资源管理/Copy/Copy To Local Folder")]
+    static void CopyResToLocalRoot()
+    {
+        var rootDir = new DirectoryInfo(resLocalRoot);
+        CopyResToRoot(rootDir);
+    }
+    [MenuItem("Tools/资源管理/Copy/Copy To Web Folder")]
+    static void CopyResToWebRoot()
+    {
+        var rootDir = new DirectoryInfo(resWebRoot);
+        CopyResToRoot(rootDir);
+    }
+    static void CopyResToRoot(DirectoryInfo rootDir)
+    {
+        string path;
         var rootBuildDir = new DirectoryInfo(buildRoot);
         var rootABDir = new DirectoryInfo(Path.Combine(rootBuildDir.FullName, "./AssetBundles"));
         var versionFile = new FileInfo(Path.Combine(rootBuildDir.FullName, "./Version"));
-        if (!Directory.Exists(rootResDir.FullName))
+        if (!Directory.Exists(rootDir.FullName))
         {
             Debug.Log("创建资源文件夹");
-            Directory.CreateDirectory(rootResDir.FullName);
+            Directory.CreateDirectory(rootDir.FullName);
         }
         if (!Directory.Exists(rootBuildDir.FullName))
         {
@@ -133,7 +167,9 @@ public class ResTool : MonoBehaviour
         }
         else
         {
-
+            path = Path.Combine(rootDir.FullName, "./Version");
+            versionFile.CopyTo(path, true);
+            Debug.Log(string.Format("[{0}] Copy To >>> Path:{1}", "Version", path));
         }
 
         if (!Directory.Exists(rootABDir.FullName))
@@ -142,9 +178,31 @@ public class ResTool : MonoBehaviour
         }
         else
         {
+            path = Path.Combine(rootDir.FullName, "./AssetBundles");
+            if (!Directory.Exists(path))
+            {
+                Debug.Log("创建资源文件夹 - AB包");
+                Directory.CreateDirectory(path);
+            }
+            foreach (var file in rootABDir.GetFiles())
+            {
+                file.CopyTo(Path.Combine(path, file.Name), true);
+                Debug.Log(string.Format("AB - [{0}] Copy To >>> Path:{1}", file.Name, path));
+            };
 
         }
 
     }
-
+    [MenuItem("Tools/资源管理/Print Version Json")]
+    static void PrintVersionJson()
+    {
+        var versionFile = new FileInfo(Path.Combine(buildRoot, "./Version"));
+        if (!File.Exists(versionFile.FullName))
+        {
+            UnityEditor.EditorUtility.DisplayDialog("提示", "Build - Version文件不存在,请重新构建\n Url:" + versionFile.FullName, "确定");
+            return;
+        }
+        string str = Util.Encrypt.ReadString(versionFile.FullName);
+        Debug.Log(str);
+    }
 }
