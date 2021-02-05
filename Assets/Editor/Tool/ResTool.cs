@@ -8,10 +8,6 @@ using Newtonsoft.Json;
 
 public class ResTool : MonoBehaviour
 {
-    static string resLocalRoot = Path.Combine(Application.persistentDataPath, (string)Json.Instance["config"]["res_fileRoot"]);
-    static string resWebRoot = Path.Combine(Application.dataPath, "../../koa-game-server/web-server/public/Download");
-    static string buildRoot = Path.Combine(Application.dataPath, "../Build");
-    static string abRoot = Path.Combine(Application.dataPath, "../AssetBundles");
 
     static void OpenFolder(string path)
     {
@@ -30,32 +26,32 @@ public class ResTool : MonoBehaviour
         string arg = string.Format(@"/open,{0}", path);
         System.Diagnostics.Process.Start("explorer.exe", arg);
     }
-    [MenuItem("Tools/资源管理/Open Folder/AssetBundles Build Folder")]
+    [MenuItem("Tools/资源管理/Open Folder/Build AssetBundles Folder")]
     static void OpenABFolder()
     {
-        OpenFolder(abRoot);
+        OpenFolder(PathConst.BUILD_AB_ROOT);
     }
     [MenuItem("Tools/资源管理/Open Folder/Build Folder")]
     static void OpenBuildFolder()
     {
-        OpenFolder(buildRoot);
+        OpenFolder(PathConst.BUILD_ROOT);
     }
     [MenuItem("Tools/资源管理/Open Folder/Local Resource Folder")]
     static void OpenLocalResFolder()
     {
-        OpenFolder(resLocalRoot);
+        OpenFolder(PathConst.RES_LOCAL_ROOT);
     }
     [MenuItem("Tools/资源管理/Open Folder/Web Resource Folder")]
     static void OpenWebResFolder()
     {
-        OpenFolder(resWebRoot);
+        OpenFolder(PathConst.RES_WEB_ROOT);
     }
 
     [MenuItem("Tools/资源管理/Build/Build")]
     static void BuildRes()
     {
         //准备工作
-        var rootDir = new DirectoryInfo(buildRoot);
+        var rootDir = new DirectoryInfo(PathConst.BUILD_ROOT);
         var rootABDir = new DirectoryInfo(Path.Combine(rootDir.FullName, "./AssetBundles"));
         var versionFile = new FileInfo(Path.Combine(rootDir.FullName, "./Version"));
         if (!Directory.Exists(rootABDir.FullName))
@@ -71,7 +67,7 @@ public class ResTool : MonoBehaviour
         //构建资源
         List<ABVObject> abVObjectList = new List<ABVObject>();
         string[] blackFilesName = new string[] { "AssetBundles" };
-        foreach (var file in new DirectoryInfo(abRoot).GetFiles())
+        foreach (var file in new DirectoryInfo(PathConst.BUILD_AB_ROOT).GetFiles())
         {
             //Debug.Log(string.Format("文件路径：{0} 后缀名：{1} 文件名{2}",VARIABLE,Path.GetExtension(VARIABLE),Path.GetFileNameWithoutExtension(VARIABLE)) );
             //存在后缀名则跳过
@@ -84,32 +80,33 @@ public class ResTool : MonoBehaviour
             {
                 continue;
             }
-            var bytes = File.ReadAllBytes(file.FullName);
+            var bytes = Util.Encrypt.AesEncrypt(Util.File.ReadBytes(file.FullName));
             var name = Path.GetFileNameWithoutExtension(file.FullName);
             var size = bytes.Length;
-            var hash = Util.ComputeHash(bytes);
+            var hash = Util.File.ComputeHash(bytes);
 
             //build AB File
-            Util.Encrypt.WriteBytes(Path.Combine(rootABDir.FullName, name), bytes);
+            Util.File.WriteBytes(Path.Combine(rootABDir.FullName, name), bytes);
             Debug.Log(string.Format("Build AB Res >>>> name:{0} size:{1} hask:{2}", name, size, hash));
 
             //build version File
             abVObjectList.Add(new ABVObject() { name = name, size = size, hash = hash });
         }
         VObject vObject = new VObject();
-        vObject.Version = "1.0.0";
+        vObject.Version = "1.0.4";
         vObject.UpdateType = 0;
         vObject.IsRestart = false;
+        vObject.Content = "我是更新描述";
         vObject.ABs = abVObjectList.ToArray();
 
-        string json = JsonConvert.SerializeObject(vObject);
+        string json = vObject.toString();
         Debug.Log("Version Json:" + json);
 
         Util.Encrypt.WriteString(versionFile.FullName, json);
 
         if (UnityEditor.EditorUtility.DisplayDialog("提示", "是否更新Resources内版本文件？", "确定", "取消"))
         {
-            Util.Encrypt.WriteString(Path.Combine(Application.dataPath, "./Resources/Version"), json);
+            Util.Encrypt.WriteString(Path.Combine(PathConst.RESOURCES, "./Version"), json);
         }
     }
 
@@ -135,19 +132,25 @@ public class ResTool : MonoBehaviour
     [MenuItem("Tools/资源管理/Copy/Copy To Local Folder")]
     static void CopyResToLocalRoot()
     {
-        var rootDir = new DirectoryInfo(resLocalRoot);
+        var rootDir = new DirectoryInfo(PathConst.RES_LOCAL_ROOT);
         CopyResToRoot(rootDir);
     }
     [MenuItem("Tools/资源管理/Copy/Copy To Web Folder")]
     static void CopyResToWebRoot()
     {
-        var rootDir = new DirectoryInfo(resWebRoot);
+        var rootDir = new DirectoryInfo(PathConst.RES_WEB_ROOT);
         CopyResToRoot(rootDir);
+    }
+    [MenuItem("Tools/资源管理/Copy/Copy To Local Folder ＆ Web Folder")]
+    static void CopyResToLocalRootAndWebRoot()
+    {
+        CopyResToLocalRoot();
+        CopyResToWebRoot();
     }
     static void CopyResToRoot(DirectoryInfo rootDir)
     {
         string path;
-        var rootBuildDir = new DirectoryInfo(buildRoot);
+        var rootBuildDir = new DirectoryInfo(PathConst.BUILD_ROOT);
         var rootABDir = new DirectoryInfo(Path.Combine(rootBuildDir.FullName, "./AssetBundles"));
         var versionFile = new FileInfo(Path.Combine(rootBuildDir.FullName, "./Version"));
         if (!Directory.Exists(rootDir.FullName))
@@ -197,7 +200,7 @@ public class ResTool : MonoBehaviour
     [MenuItem("Tools/资源管理/Print Version Json")]
     static void PrintVersionJson()
     {
-        var versionFile = new FileInfo(Path.Combine(buildRoot, "./Version"));
+        var versionFile = new FileInfo(Path.Combine(PathConst.BUILD_ROOT, "./Version"));
         if (!File.Exists(versionFile.FullName))
         {
             UnityEditor.EditorUtility.DisplayDialog("提示", "Build - Version文件不存在,请重新构建\n Url:" + versionFile.FullName, "确定");

@@ -13,7 +13,7 @@ public class EncryptUtil
     /// <returns></returns>
     public byte[] ReadBytes(string path)
     {
-        byte[] data = File.ReadAllBytes(path);
+        byte[] data = Util.File.ReadBytes(path);
         return AesDecrypt(data);
     }
     /// <summary>
@@ -24,7 +24,7 @@ public class EncryptUtil
     /// <returns></returns>
     public string ReadString(string path)
     {
-        string str = File.ReadAllText(path);
+        string str = Util.File.ReadString(path);
         return AesDecrypt(str, null);
     }
     /// <summary>

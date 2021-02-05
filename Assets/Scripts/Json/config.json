@@ -1,6 +1,6 @@
 {
     "PRO_ENV": "Dev",
-    "http": "127.0.0.1:300",
-    "download_url": "127.0.0.1:80/Download",
+    "http": "127.0.0.1:300/",
+    "download_url": "http://127.0.0.1:80/Download/",
     "res_fileRoot": "./Res"
 }

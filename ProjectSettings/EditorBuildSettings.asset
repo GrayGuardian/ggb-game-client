@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Step.unity
+    guid: 09164c727595687488f37f123e6e40da
+  - enabled: 1
+    path: Assets/Scenes/UpRes.unity
+    guid: fab2fa20f2d1d5845886220c04e061ad
   m_configObjects: {}

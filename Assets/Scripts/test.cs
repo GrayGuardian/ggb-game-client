@@ -10,8 +10,7 @@ public class test : MonoBehaviour
     void Start()
     {
         JObject jObject = JObject.Parse("{'a':1}");
-        Debug.Log(Json.Instance["config"]["http"]);
-        Debug.Log(Json.Instance["config"]["download_url"]);
+
         Debug.Log(Application.persistentDataPath);
 
         //Debug.Log(t1("d"));
@@ -27,7 +26,7 @@ public class test : MonoBehaviour
         //Debug.Log("尝试加载：" + key + );
         string path = System.IO.Path.Combine(Application.dataPath, "../AssetBundles/" + key);
         Debug.Log(path);
-        var data = File.ReadAllBytes(path);
+        var data = Util.File.ReadBytes(path);
         MemoryStream steam = new MemoryStream();
         BinaryWriter writer = new BinaryWriter(steam);
         writer.Write(data);

@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 public class ABVObject
 {
     /// <summary>
@@ -7,7 +9,7 @@ public class ABVObject
     /// <summary>
     /// AB包大小
     /// </summary>
-    public int size;
+    public long size;
     /// <summary>
     /// AB包Hash值
     /// </summary>
@@ -29,7 +31,16 @@ public class VObject
     /// </summary>
     public bool IsRestart;
     /// <summary>
+    /// 更新内容
+    /// </summary>
+    public string Content;
+    /// <summary>
     /// AB包版本信息
     /// </summary>
     public ABVObject[] ABs;
+
+    public string toString()
+    {
+        return JsonConvert.SerializeObject(this);
+    }
 }
