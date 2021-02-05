@@ -15,6 +15,7 @@ public class UpRes : MonoBehaviour
         if (UpData == null)
         {
             Debug.Log("不需要更新");
+            ClearRedundantRes();
         }
         else
         {
@@ -60,8 +61,30 @@ public class UpRes : MonoBehaviour
     void DownloadOver()
     {
         Debug.Log("所有资源更新完毕");
+        ClearRedundantRes();
+    }
+
+    void ClearRedundantRes()
+    {
+        Debug.Log("清理冗余代码");
+        DirectoryInfo dirInfo = new DirectoryInfo(PathConst.DOWNLOAD_TEMPFILE_ROOT);
+        foreach (var fileInfo in dirInfo.GetFiles())
+        {
+            fileInfo.Delete();
+        }
+        Debug.Log("清理完毕");
 
     }
+
+    /// <summary>
+    /// 更新AB包
+    /// </summary>
+    /// <param name="abInfos">AB包信息数组</param>
+    /// <param name="allDownloadOverEvent">全部下载完毕回调</param>
+    /// <param name="singleDownloadStartEvent">单AB包开始下载回调</param>
+    /// <param name="singleDownloadOverEvent">单AB包下载完毕回调</param>
+    /// <param name="singleDownloadUpdateEvent">单AB包下载过程中持续回调</param>
+    /// <param name="order"></param>
     public void UpABFile(ABVObject[] abInfos, Action allDownloadOverEvent = null, Action<ABVObject> singleDownloadStartEvent = null, Action<ABVObject> singleDownloadOverEvent = null, Action<ABVObject, int, double, double> singleDownloadUpdateEvent = null, int order = 0)
     {
         if (abInfos == null || abInfos.Length <= order)
