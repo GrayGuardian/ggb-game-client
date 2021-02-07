@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 using UnityEngine;
 public class JsonUtil
 {
-    public Dictionary<string, JObject> jsonDic = new Dictionary<string, JObject>();
+    public Dictionary<string, JObject> JsonDic = new Dictionary<string, JObject>();
     public JsonUtil()
     {
         string root = Path.Combine(Application.dataPath, "Scripts/Json");
@@ -19,14 +19,16 @@ public class JsonUtil
             string key = Path.GetFileNameWithoutExtension(file.ToString());
             string json = Util.File.ReadString(file.ToString());
             JObject jObject = JObject.Parse(json);
-            jsonDic.Add(key, jObject);
+            JsonDic.Add(key, jObject);
         }
     }
     public JObject this[string key]
     {
         get
         {
-            return jsonDic[key];
+            return JsonDic[key];
         }
     }
+
+
 }

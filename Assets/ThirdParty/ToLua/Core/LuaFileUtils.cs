@@ -155,13 +155,15 @@ namespace LuaInterface
 
         public virtual byte[] ReadFile(string fileName)
         {
+
             if (!beZip)
             {
+
                 string path = FindFile(fileName);
                 byte[] str = null;
-
                 if (!string.IsNullOrEmpty(path) && File.Exists(path))
                 {
+
 #if !UNITY_WEBPLAYER
                     str = File.ReadAllBytes(path);
 #else

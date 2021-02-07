@@ -44,9 +44,9 @@ public class LuaClient : MonoBehaviour
     protected bool openLuaSocket = false;
     protected bool beZbStart = false;
 
-    protected virtual LuaFileUtils InitLoader()
+    protected virtual LuaFileUtil InitLoader()
     {
-        return LuaFileUtils.Instance;
+        return LuaFileUtil.Instance;
     }
 
     protected virtual void LoadLuaFiles()
@@ -138,7 +138,7 @@ public class LuaClient : MonoBehaviour
 
     protected virtual void StartMain()
     {
-        luaState.DoFile("./Base/Main.lua");
+        luaState.DoFile("main");
         levelLoaded = luaState.GetFunction("OnLevelWasLoaded");
         CallMain();
     }
@@ -185,12 +185,13 @@ public class LuaClient : MonoBehaviour
         StartMain();
     }
 
-    void OnLevelLoaded(int level)
+    void OnLevelLoaded(int id, string name)
     {
         if (levelLoaded != null)
         {
             levelLoaded.BeginPCall();
-            levelLoaded.Push(level);
+            levelLoaded.Push(id);
+            levelLoaded.Push(name);
             levelLoaded.PCall();
             levelLoaded.EndPCall();
         }
@@ -204,12 +205,12 @@ public class LuaClient : MonoBehaviour
 #if UNITY_5_4_OR_NEWER
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        OnLevelLoaded(scene.buildIndex);
+        OnLevelLoaded(scene.buildIndex, scene.name);
     }
 #else
-    protected void OnLevelWasLoaded(int level)
+    protected void OnLevelWasLoaded(int idx,string name)
     {
-        OnLevelLoaded(level);
+        OnLevelLoaded(idx,name);
     }
 #endif
 

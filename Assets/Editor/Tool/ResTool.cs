@@ -93,7 +93,7 @@ public class ResTool : MonoBehaviour
             abVObjectList.Add(new ABVObject() { name = name, size = size, hash = hash });
         }
         VObject vObject = new VObject();
-        vObject.Version = "1.0.4";
+        vObject.Version = "1.0.5";
         vObject.UpdateType = 0;
         vObject.IsRestart = false;
         vObject.Content = "我是更新描述";

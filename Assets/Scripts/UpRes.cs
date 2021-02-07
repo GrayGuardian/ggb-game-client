@@ -11,7 +11,7 @@ public class UpRes : MonoBehaviour
 
     private void Awake()
     {
-        UpData = ResMgr.Instance.getUpdata();
+        UpData = Util.Res.getUpdata();
         if (UpData == null)
         {
             Debug.Log("不需要更新");
@@ -21,23 +21,39 @@ public class UpRes : MonoBehaviour
         {
             Debug.Log("需要更新");
             //UpdateRes();
-            if (UpData.Version != ResMgr.Instance.Version.Version)
+            if (UpData.Version != Util.Res.Version.Version)
             {
-                Debug.Log("更新版本");
-                ShowUI_Updata_Info();
+                if (UpData.UpdateType == 0)
+                {
+                    if (UpData.ABs.Length > 0)
+                    {
+                        Debug.Log("在线更新>>下载文件");
+                        ShowUI_Updata_Info();
+                    }
+                    else
+                    {
+                        Debug.Log("在线更新>>不需要下载文件");
+                        DownloadOver();
+                    }
+                }
+                if (UpData.UpdateType == 1)
+                {
+                    Debug.Log("强制更新");
+                    ShowUI_Updata_Info();
+                }
             }
             else
             {
-                Debug.Log("文件损坏 需要更新资源");
+                Debug.Log("文件损坏 需要更新资源>>" + UpData.toString());
                 long size = 0;
                 foreach (var ab in UpData.ABs)
                 {
                     size += ab.size;
                 }
-                ShowUI_Tip(string.Format("文件损坏,需要重新下载\n共计需要下载{0:N2}M资源", size / 1024f / 1024f), () =>
-                {
-                    DownloadRes();
-                });
+                ShowUI_Tip(string.Format("文件损坏,需要重新下载\n共计需要下载{0}资源", Util.SizeFormat((long)size)), () =>
+               {
+                   DownloadRes();
+               });
             }
         }
     }
@@ -52,9 +68,9 @@ public class UpRes : MonoBehaviour
             (ab) => { Debug.Log(string.Format("AB包[{0}]更新完毕", ab.name)); },
             (ab, order, size, count) =>
             {
-                Bar_Value.fillAmount = (float)(size / count);
-                Bar_Desc.text = string.Format("正在下载>>>[{0}/{1}]：{2:N2}MB/{3:N2}MB", order, UpData.ABs.Length, size, count);
-                Debug.Log(string.Format("AB包[{0}]正在更新：{1}/{2}", ab.name, size, count));
+                Bar_Value.fillAmount = (float)size / count;
+                Bar_Desc.text = string.Format("正在下载>>>[{0}/{1}]：{2}/{3}", order + 1, UpData.ABs.Length, Util.SizeFormat(size), Util.SizeFormat(count));
+                //Debug.Log(string.Format("AB包[{0}]正在更新：{1}/{2}", ab.name, size, count));
             }
         );
     }
@@ -62,6 +78,7 @@ public class UpRes : MonoBehaviour
     {
         Debug.Log("所有资源更新完毕");
         ClearRedundantRes();
+        Util.Res.UpVersion();
     }
 
     void ClearRedundantRes()
@@ -72,10 +89,21 @@ public class UpRes : MonoBehaviour
         {
             fileInfo.Delete();
         }
+        ClearOver();
+    }
+    void ClearOver()
+    {
         Debug.Log("清理完毕");
-
+        AllOver();
     }
 
+    void AllOver()
+    {
+        Debug.Log("所有操作执行完毕，启用游戏逻辑");
+        //Util.Res.LoadAssetBundle("common");
+        // Debug.Log(Util.Res.LoadSprite("comm1on", "bg"));
+        Util.Mono.MonoGo.AddComponent<LuaClient>();
+    }
     /// <summary>
     /// 更新AB包
     /// </summary>
@@ -85,7 +113,7 @@ public class UpRes : MonoBehaviour
     /// <param name="singleDownloadOverEvent">单AB包下载完毕回调</param>
     /// <param name="singleDownloadUpdateEvent">单AB包下载过程中持续回调</param>
     /// <param name="order"></param>
-    public void UpABFile(ABVObject[] abInfos, Action allDownloadOverEvent = null, Action<ABVObject> singleDownloadStartEvent = null, Action<ABVObject> singleDownloadOverEvent = null, Action<ABVObject, int, double, double> singleDownloadUpdateEvent = null, int order = 0)
+    public void UpABFile(ABVObject[] abInfos, Action allDownloadOverEvent = null, Action<ABVObject> singleDownloadStartEvent = null, Action<ABVObject> singleDownloadOverEvent = null, Action<ABVObject, int, long, long> singleDownloadUpdateEvent = null, int order = 0)
     {
         if (abInfos == null || abInfos.Length <= order)
         {
@@ -95,7 +123,7 @@ public class UpRes : MonoBehaviour
         }
         ABVObject abInfo = abInfos[order];
         if (singleDownloadStartEvent != null) singleDownloadStartEvent(abInfo);
-        HttpMgr.Instance.Download(Util.Json["config"]["download_url"] + "AssetBundles/" + abInfo.name, Path.Combine(PathConst.RES_LOCAL_ROOT, "./AssetBundles/", abInfo.name), (abInfo.name + "_" + abInfo.hash + ".temp"),
+        Util.Http.Download(Util.Json["config"]["download_url"] + "AssetBundles/" + abInfo.name, Path.Combine(PathConst.RES_LOCAL_ROOT, "./AssetBundles/", abInfo.name), (abInfo.name + "_" + abInfo.hash + ".temp"),
            () =>
            {
                if (singleDownloadOverEvent != null) singleDownloadOverEvent(abInfo);
@@ -130,7 +158,8 @@ public class UpRes : MonoBehaviour
             {
                 size += ab.size;
             }
-            node.Find("DescText").GetComponent<Text>().text = string.Format("共计需要下载{0:N2}M资源", size / 1024f / 1024f);
+            Debug.Log(size / 1024f);
+            node.Find("DescText").GetComponent<Text>().text = string.Format("共计需要下载{0}资源", Util.SizeFormat(size));
             node.Find("Button/Text").GetComponent<Text>().text = "开始下载";
         }
         else if (UpData.UpdateType == 1)

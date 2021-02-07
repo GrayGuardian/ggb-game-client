@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using UnityEngine;
 
 public static class LuaConst
 {
-    public static string luaDir = Application.dataPath + "/Lua";                //lua逻辑代码目录
+    public static string luaDir = Path.Combine(PathConst.RESOURCES, "./AB/lua");                //lua逻辑代码目录
     public static string toluaDir = Application.dataPath + "/ThirdParty/ToLua/Lua";        //tolua lua文件目录
 
 #if UNITY_STANDALONE

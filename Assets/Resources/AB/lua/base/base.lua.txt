@@ -1,0 +1,7 @@
+-- 缩写
+UE = UnityEngine
+SceneManager = UE.SceneManagement.SceneManager
+Application = UE.Application
+
+util = require("util")
+class = require("middle_class")

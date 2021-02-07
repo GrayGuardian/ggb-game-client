@@ -26,7 +26,7 @@ using LuaInterface;
 using System.IO;
 using System.Text;
 
-public class LuaResLoader : LuaFileUtils
+public class LuaResLoader : LuaFileUtil
 {
     public LuaResLoader()
     {
@@ -74,7 +74,7 @@ public class LuaResLoader : LuaFileUtils
 
         if (Path.GetExtension(fileName) == ".lua")
         {
-            fileName = fileName.Substring(0, fileName.Length - 4);            
+            fileName = fileName.Substring(0, fileName.Length - 4);
         }
 
         using (CString.Block())
@@ -88,7 +88,7 @@ public class LuaResLoader : LuaFileUtils
 
             sb.Append("\n\tno file './Resources/").Append(fileName).Append(".lua'")
               .Append("\n\tno file '").Append(LuaConst.luaResDir).Append('/')
-			  .Append(fileName).Append(".lua'");
+              .Append(fileName).Append(".lua'");
             sb = sb.Replace("?", fileName);
 
             return sb.ToString();
@@ -125,8 +125,8 @@ public class LuaResLoader : LuaFileUtils
         string path = fileName;
 
         if (!Path.IsPathRooted(fileName))
-        {            
-            path = string.Format("{0}/{1}", LuaConst.luaResDir, fileName);            
+        {
+            path = string.Format("{0}/{1}", LuaConst.luaResDir, fileName);
         }
 
         if (File.Exists(path))

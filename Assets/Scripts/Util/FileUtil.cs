@@ -64,6 +64,8 @@ public class FileUtil
     /// <returns></returns>
     public FileInfo[] GetChildFiles(string rootPath, string searchPattern = "*")
     {
+
+        searchPattern = new DirectoryInfo(searchPattern).Name;
         if (!Directory.Exists(rootPath))
         {
             return new FileInfo[] { };
@@ -72,7 +74,9 @@ public class FileUtil
         getFiles = (path, list) =>
         {
             if (list == null) list = new List<FileInfo>();
+
             DirectoryInfo root = new DirectoryInfo(path);
+
             foreach (var val in root.GetFiles(searchPattern))
             {
                 list.Add(val);

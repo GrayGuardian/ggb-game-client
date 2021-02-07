@@ -5,7 +5,8 @@ using LuaInterface;
 using UnityEditor;
 
 using BindType = ToLuaMenu.BindType;
-using System.Reflection;
+using UnityEngine.SceneManagement;
+using Newtonsoft.Json.Linq;
 
 public static class CustomSettings
 {
@@ -150,6 +151,16 @@ public static class CustomSettings
         _GT(typeof(RenderTexture)),
         _GT(typeof(Resources)),
         _GT(typeof(LuaProfiler)),
+
+        _GT(typeof(SceneManager)),
+        _GT(typeof(Scene)),
+        _GT(typeof(LoadSceneParameters)),
+
+        _GT(typeof(PathConst)),
+        _GT(typeof(Dictionary<string, JObject>)),
+        _GT(typeof(JObject)),
+        _GT(typeof(JsonUtil)),
+
     };
 
     public static List<Type> dynamicList = new List<Type>()

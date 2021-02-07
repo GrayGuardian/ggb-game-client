@@ -1,0 +1,9 @@
+local SceneLogin = class("Scene_Login", Scene)
+function SceneLogin:init()
+    --Scene.init(self, 1)
+    --self:load()
+end
+function SceneLogin:awake()
+end
+
+return SceneLogin

@@ -32,6 +32,14 @@ public class DelegateFactory
 		dict.Add(typeof(UnityEngine.AudioClip.PCMReaderCallback), factory.UnityEngine_AudioClip_PCMReaderCallback);
 		dict.Add(typeof(UnityEngine.AudioClip.PCMSetPositionCallback), factory.UnityEngine_AudioClip_PCMSetPositionCallback);
 		dict.Add(typeof(System.Action<UnityEngine.AsyncOperation>), factory.System_Action_UnityEngine_AsyncOperation);
+		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode>), factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode);
+		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>), factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene);
+		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>), factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene);
+		dict.Add(typeof(System.ComponentModel.PropertyChangedEventHandler), factory.System_ComponentModel_PropertyChangedEventHandler);
+		dict.Add(typeof(System.ComponentModel.PropertyChangingEventHandler), factory.System_ComponentModel_PropertyChangingEventHandler);
+		dict.Add(typeof(System.ComponentModel.ListChangedEventHandler), factory.System_ComponentModel_ListChangedEventHandler);
+		dict.Add(typeof(System.ComponentModel.AddingNewEventHandler), factory.System_ComponentModel_AddingNewEventHandler);
+		dict.Add(typeof(System.Collections.Specialized.NotifyCollectionChangedEventHandler), factory.System_Collections_Specialized_NotifyCollectionChangedEventHandler);
 
 		DelegateTraits<System.Action>.Init(factory.System_Action);
 		DelegateTraits<UnityEngine.Events.UnityAction>.Init(factory.UnityEngine_Events_UnityAction);
@@ -48,6 +56,14 @@ public class DelegateFactory
 		DelegateTraits<UnityEngine.AudioClip.PCMReaderCallback>.Init(factory.UnityEngine_AudioClip_PCMReaderCallback);
 		DelegateTraits<UnityEngine.AudioClip.PCMSetPositionCallback>.Init(factory.UnityEngine_AudioClip_PCMSetPositionCallback);
 		DelegateTraits<System.Action<UnityEngine.AsyncOperation>>.Init(factory.System_Action_UnityEngine_AsyncOperation);
+		DelegateTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode>>.Init(factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode);
+		DelegateTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>>.Init(factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene);
+		DelegateTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>>.Init(factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene);
+		DelegateTraits<System.ComponentModel.PropertyChangedEventHandler>.Init(factory.System_ComponentModel_PropertyChangedEventHandler);
+		DelegateTraits<System.ComponentModel.PropertyChangingEventHandler>.Init(factory.System_ComponentModel_PropertyChangingEventHandler);
+		DelegateTraits<System.ComponentModel.ListChangedEventHandler>.Init(factory.System_ComponentModel_ListChangedEventHandler);
+		DelegateTraits<System.ComponentModel.AddingNewEventHandler>.Init(factory.System_ComponentModel_AddingNewEventHandler);
+		DelegateTraits<System.Collections.Specialized.NotifyCollectionChangedEventHandler>.Init(factory.System_Collections_Specialized_NotifyCollectionChangedEventHandler);
 
 		TypeTraits<System.Action>.Init(factory.Check_System_Action);
 		TypeTraits<UnityEngine.Events.UnityAction>.Init(factory.Check_UnityEngine_Events_UnityAction);
@@ -64,6 +80,14 @@ public class DelegateFactory
 		TypeTraits<UnityEngine.AudioClip.PCMReaderCallback>.Init(factory.Check_UnityEngine_AudioClip_PCMReaderCallback);
 		TypeTraits<UnityEngine.AudioClip.PCMSetPositionCallback>.Init(factory.Check_UnityEngine_AudioClip_PCMSetPositionCallback);
 		TypeTraits<System.Action<UnityEngine.AsyncOperation>>.Init(factory.Check_System_Action_UnityEngine_AsyncOperation);
+		TypeTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode>>.Init(factory.Check_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode);
+		TypeTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>>.Init(factory.Check_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene);
+		TypeTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>>.Init(factory.Check_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene);
+		TypeTraits<System.ComponentModel.PropertyChangedEventHandler>.Init(factory.Check_System_ComponentModel_PropertyChangedEventHandler);
+		TypeTraits<System.ComponentModel.PropertyChangingEventHandler>.Init(factory.Check_System_ComponentModel_PropertyChangingEventHandler);
+		TypeTraits<System.ComponentModel.ListChangedEventHandler>.Init(factory.Check_System_ComponentModel_ListChangedEventHandler);
+		TypeTraits<System.ComponentModel.AddingNewEventHandler>.Init(factory.Check_System_ComponentModel_AddingNewEventHandler);
+		TypeTraits<System.Collections.Specialized.NotifyCollectionChangedEventHandler>.Init(factory.Check_System_Collections_Specialized_NotifyCollectionChangedEventHandler);
 
 		StackTraits<System.Action>.Push = factory.Push_System_Action;
 		StackTraits<UnityEngine.Events.UnityAction>.Push = factory.Push_UnityEngine_Events_UnityAction;
@@ -80,6 +104,14 @@ public class DelegateFactory
 		StackTraits<UnityEngine.AudioClip.PCMReaderCallback>.Push = factory.Push_UnityEngine_AudioClip_PCMReaderCallback;
 		StackTraits<UnityEngine.AudioClip.PCMSetPositionCallback>.Push = factory.Push_UnityEngine_AudioClip_PCMSetPositionCallback;
 		StackTraits<System.Action<UnityEngine.AsyncOperation>>.Push = factory.Push_System_Action_UnityEngine_AsyncOperation;
+		StackTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode>>.Push = factory.Push_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode;
+		StackTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>>.Push = factory.Push_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene;
+		StackTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>>.Push = factory.Push_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene;
+		StackTraits<System.ComponentModel.PropertyChangedEventHandler>.Push = factory.Push_System_ComponentModel_PropertyChangedEventHandler;
+		StackTraits<System.ComponentModel.PropertyChangingEventHandler>.Push = factory.Push_System_ComponentModel_PropertyChangingEventHandler;
+		StackTraits<System.ComponentModel.ListChangedEventHandler>.Push = factory.Push_System_ComponentModel_ListChangedEventHandler;
+		StackTraits<System.ComponentModel.AddingNewEventHandler>.Push = factory.Push_System_ComponentModel_AddingNewEventHandler;
+		StackTraits<System.Collections.Specialized.NotifyCollectionChangedEventHandler>.Push = factory.Push_System_Collections_Specialized_NotifyCollectionChangedEventHandler;
 	}
     
     public static Delegate CreateDelegate(Type t, LuaFunction func = null)
@@ -1054,6 +1086,476 @@ public class DelegateFactory
 	}
 
 	void Push_System_Action_UnityEngine_AsyncOperation(IntPtr L, System.Action<UnityEngine.AsyncOperation> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode_Event : LuaDelegate
+	{
+		public UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode_Event(LuaFunction func) : base(func) { }
+		public UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(UnityEngine.SceneManagement.Scene param0, UnityEngine.SceneManagement.LoadSceneMode param1)
+		{
+			func.BeginPCall();
+			func.PushValue(param0);
+			func.Push(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(UnityEngine.SceneManagement.Scene param0, UnityEngine.SceneManagement.LoadSceneMode param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushValue(param0);
+			func.Push(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode> UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode> fn = delegate(UnityEngine.SceneManagement.Scene param0, UnityEngine.SceneManagement.LoadSceneMode param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode_Event target = new UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode_Event(func);
+			UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode_Event target = new UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode_Event(func, self);
+			UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode>), L, pos);
+	}
+
+	void Push_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode(IntPtr L, UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_Event : LuaDelegate
+	{
+		public UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_Event(LuaFunction func) : base(func) { }
+		public UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(UnityEngine.SceneManagement.Scene param0)
+		{
+			func.BeginPCall();
+			func.PushValue(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(UnityEngine.SceneManagement.Scene param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushValue(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene> UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene> fn = delegate(UnityEngine.SceneManagement.Scene param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_Event target = new UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_Event(func);
+			UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_Event target = new UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_Event(func, self);
+			UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>), L, pos);
+	}
+
+	void Push_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene(IntPtr L, UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene_Event : LuaDelegate
+	{
+		public UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene_Event(LuaFunction func) : base(func) { }
+		public UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(UnityEngine.SceneManagement.Scene param0, UnityEngine.SceneManagement.Scene param1)
+		{
+			func.BeginPCall();
+			func.PushValue(param0);
+			func.PushValue(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(UnityEngine.SceneManagement.Scene param0, UnityEngine.SceneManagement.Scene param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushValue(param0);
+			func.PushValue(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene> UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene> fn = delegate(UnityEngine.SceneManagement.Scene param0, UnityEngine.SceneManagement.Scene param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene_Event target = new UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene_Event(func);
+			UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene_Event target = new UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene_Event(func, self);
+			UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>), L, pos);
+	}
+
+	void Push_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene(IntPtr L, UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_ComponentModel_PropertyChangedEventHandler_Event : LuaDelegate
+	{
+		public System_ComponentModel_PropertyChangedEventHandler_Event(LuaFunction func) : base(func) { }
+		public System_ComponentModel_PropertyChangedEventHandler_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(object param0, System.ComponentModel.PropertyChangedEventArgs param1)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PushObject(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(object param0, System.ComponentModel.PropertyChangedEventArgs param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PushObject(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.ComponentModel.PropertyChangedEventHandler System_ComponentModel_PropertyChangedEventHandler(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.ComponentModel.PropertyChangedEventHandler fn = delegate(object param0, System.ComponentModel.PropertyChangedEventArgs param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_ComponentModel_PropertyChangedEventHandler_Event target = new System_ComponentModel_PropertyChangedEventHandler_Event(func);
+			System.ComponentModel.PropertyChangedEventHandler d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_ComponentModel_PropertyChangedEventHandler_Event target = new System_ComponentModel_PropertyChangedEventHandler_Event(func, self);
+			System.ComponentModel.PropertyChangedEventHandler d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_ComponentModel_PropertyChangedEventHandler(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.ComponentModel.PropertyChangedEventHandler), L, pos);
+	}
+
+	void Push_System_ComponentModel_PropertyChangedEventHandler(IntPtr L, System.ComponentModel.PropertyChangedEventHandler o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_ComponentModel_PropertyChangingEventHandler_Event : LuaDelegate
+	{
+		public System_ComponentModel_PropertyChangingEventHandler_Event(LuaFunction func) : base(func) { }
+		public System_ComponentModel_PropertyChangingEventHandler_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(object param0, System.ComponentModel.PropertyChangingEventArgs param1)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PushObject(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(object param0, System.ComponentModel.PropertyChangingEventArgs param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PushObject(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.ComponentModel.PropertyChangingEventHandler System_ComponentModel_PropertyChangingEventHandler(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.ComponentModel.PropertyChangingEventHandler fn = delegate(object param0, System.ComponentModel.PropertyChangingEventArgs param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_ComponentModel_PropertyChangingEventHandler_Event target = new System_ComponentModel_PropertyChangingEventHandler_Event(func);
+			System.ComponentModel.PropertyChangingEventHandler d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_ComponentModel_PropertyChangingEventHandler_Event target = new System_ComponentModel_PropertyChangingEventHandler_Event(func, self);
+			System.ComponentModel.PropertyChangingEventHandler d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_ComponentModel_PropertyChangingEventHandler(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.ComponentModel.PropertyChangingEventHandler), L, pos);
+	}
+
+	void Push_System_ComponentModel_PropertyChangingEventHandler(IntPtr L, System.ComponentModel.PropertyChangingEventHandler o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_ComponentModel_ListChangedEventHandler_Event : LuaDelegate
+	{
+		public System_ComponentModel_ListChangedEventHandler_Event(LuaFunction func) : base(func) { }
+		public System_ComponentModel_ListChangedEventHandler_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(object param0, System.ComponentModel.ListChangedEventArgs param1)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PushObject(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(object param0, System.ComponentModel.ListChangedEventArgs param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PushObject(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.ComponentModel.ListChangedEventHandler System_ComponentModel_ListChangedEventHandler(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.ComponentModel.ListChangedEventHandler fn = delegate(object param0, System.ComponentModel.ListChangedEventArgs param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_ComponentModel_ListChangedEventHandler_Event target = new System_ComponentModel_ListChangedEventHandler_Event(func);
+			System.ComponentModel.ListChangedEventHandler d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_ComponentModel_ListChangedEventHandler_Event target = new System_ComponentModel_ListChangedEventHandler_Event(func, self);
+			System.ComponentModel.ListChangedEventHandler d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_ComponentModel_ListChangedEventHandler(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.ComponentModel.ListChangedEventHandler), L, pos);
+	}
+
+	void Push_System_ComponentModel_ListChangedEventHandler(IntPtr L, System.ComponentModel.ListChangedEventHandler o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_ComponentModel_AddingNewEventHandler_Event : LuaDelegate
+	{
+		public System_ComponentModel_AddingNewEventHandler_Event(LuaFunction func) : base(func) { }
+		public System_ComponentModel_AddingNewEventHandler_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(object param0, System.ComponentModel.AddingNewEventArgs param1)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PushObject(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(object param0, System.ComponentModel.AddingNewEventArgs param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PushObject(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.ComponentModel.AddingNewEventHandler System_ComponentModel_AddingNewEventHandler(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.ComponentModel.AddingNewEventHandler fn = delegate(object param0, System.ComponentModel.AddingNewEventArgs param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_ComponentModel_AddingNewEventHandler_Event target = new System_ComponentModel_AddingNewEventHandler_Event(func);
+			System.ComponentModel.AddingNewEventHandler d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_ComponentModel_AddingNewEventHandler_Event target = new System_ComponentModel_AddingNewEventHandler_Event(func, self);
+			System.ComponentModel.AddingNewEventHandler d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_ComponentModel_AddingNewEventHandler(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.ComponentModel.AddingNewEventHandler), L, pos);
+	}
+
+	void Push_System_ComponentModel_AddingNewEventHandler(IntPtr L, System.ComponentModel.AddingNewEventHandler o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_Collections_Specialized_NotifyCollectionChangedEventHandler_Event : LuaDelegate
+	{
+		public System_Collections_Specialized_NotifyCollectionChangedEventHandler_Event(LuaFunction func) : base(func) { }
+		public System_Collections_Specialized_NotifyCollectionChangedEventHandler_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(object param0, System.Collections.Specialized.NotifyCollectionChangedEventArgs param1)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PushObject(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(object param0, System.Collections.Specialized.NotifyCollectionChangedEventArgs param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PushObject(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.Collections.Specialized.NotifyCollectionChangedEventHandler System_Collections_Specialized_NotifyCollectionChangedEventHandler(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Collections.Specialized.NotifyCollectionChangedEventHandler fn = delegate(object param0, System.Collections.Specialized.NotifyCollectionChangedEventArgs param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Collections_Specialized_NotifyCollectionChangedEventHandler_Event target = new System_Collections_Specialized_NotifyCollectionChangedEventHandler_Event(func);
+			System.Collections.Specialized.NotifyCollectionChangedEventHandler d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Collections_Specialized_NotifyCollectionChangedEventHandler_Event target = new System_Collections_Specialized_NotifyCollectionChangedEventHandler_Event(func, self);
+			System.Collections.Specialized.NotifyCollectionChangedEventHandler d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Collections_Specialized_NotifyCollectionChangedEventHandler(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Collections.Specialized.NotifyCollectionChangedEventHandler), L, pos);
+	}
+
+	void Push_System_Collections_Specialized_NotifyCollectionChangedEventHandler(IntPtr L, System.Collections.Specialized.NotifyCollectionChangedEventHandler o)
 	{
 		ToLua.Push(L, o);
 	}
