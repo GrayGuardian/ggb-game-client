@@ -1,10 +1,10 @@
 ManifestFileVersion: 0
-CRC: 4055869140
+CRC: 2558801139
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: common
+      Name: lua
       Dependencies: {}
     Info_1:
-      Name: lua
+      Name: common
       Dependencies: {}

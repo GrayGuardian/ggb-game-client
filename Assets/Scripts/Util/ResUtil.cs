@@ -148,6 +148,7 @@ public class ResUtil
 
     public T Load<T>(string key, string resName) where T : UnityEngine.Object
     {
+
         T data = default(T);
         if (Util.Json["config"]["PRO_ENV"].ToString() == "Master")
         {
@@ -160,18 +161,33 @@ public class ResUtil
             {
                 asset = _abMap[key];
             }
-            if (asset == null) return data;
-            //UnityEngine.Debug.Log(string.Format("通过AB包加载资源 key:{0} resName:{1}", key, resName));
-            data = asset.LoadAsset<T>(resName);
+            if (asset != null){
+                UnityEngine.Debug.Log(string.Format("通过AB包加载资源 key:{0} resName:{1}", key, resName));
+                data = asset.LoadAsset<T>(resName);
+            }
         }
         else
         {
             string resPath = Path.Combine(PathConst.RESOURCES, "./AB/" + key);
             FileInfo fileInfo = Util.File.GetChildFile(resPath, resName + ".*");
+            if (fileInfo != null){
+                string dirPath = PathConst.GetRelativePath(fileInfo.DirectoryName,PathConst.RESOURCES);
+                resPath = Path.Combine(dirPath, resName);
+                UnityEngine.Debug.Log(string.Format("通过Resources加载资源 key:{0} resName:{1} resPath:{2}", key, resName,resPath));
+                 data = Resources.Load<T>(resPath);
+            }
+        }
+        
+        if(data == default(T)){
+            string resPath = Path.Combine(PathConst.RESOURCES, "./Default/" + key);
+            UnityEngine.Debug.Log(resPath);
+            UnityEngine.Debug.Log(resName + ".*");
+            FileInfo fileInfo = Util.File.GetChildFile(resPath, resName + ".*");
             if (fileInfo == null) return data;
-            string dirPath = PathConst.GetRelativeResourcesPath(fileInfo.DirectoryName);
-            //UnityEngine.Debug.Log(string.Format("通过Resources加载资源 key:{0} resName:{1}", key, resName));
-            data = Resources.Load<T>(Path.Combine(dirPath, resName));
+            string dirPath = PathConst.GetRelativePath(fileInfo.DirectoryName, PathConst.RESOURCES);
+            resPath = Path.Combine(dirPath, resName);
+            UnityEngine.Debug.Log(string.Format("通过默认文件夹加载资源 key:{0} resName:{1} resPath:{2}", key, resName, resPath));
+            data = Resources.Load<T>(resPath);
         }
         return data;
     }

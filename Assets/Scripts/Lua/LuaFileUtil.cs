@@ -32,16 +32,13 @@ public class LuaFileUtil : LuaFileUtils
     public override byte[] ReadFile(string fileName)
     {
         byte[] bytes = new byte[] { };
-        //UnityEngine.Debug.Log(fileName);
+        UnityEngine.Debug.Log(fileName + ".lua");
         if (bytes.Length == 0)
         {
-            FileInfo file = Util.File.GetChildFile(Path.Combine(PathConst.RESOURCES, "./AB/lua"), fileName + ".lua.txt");
-            if (file != null)
-            {
-                bytes = Util.File.ReadBytes(file.FullName);
-            }
+            bytes = Util.Res.LoadBytes("lua", fileName + ".lua");
+            if(bytes == null)
+                bytes = new byte[] { };
         }
-
         if (bytes.Length == 0)
         {
             bytes = base.ReadFile(fileName);

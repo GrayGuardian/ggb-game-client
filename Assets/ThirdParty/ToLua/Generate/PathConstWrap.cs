@@ -7,7 +7,7 @@ public class PathConstWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(PathConst), typeof(System.Object));
-		L.RegFunction("GetRelativeResourcesPath", GetRelativeResourcesPath);
+		L.RegFunction("GetRelativePath", GetRelativePath);
 		L.RegFunction("New", _CreatePathConst);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("RESOURCES", get_RESOURCES, set_RESOURCES);
@@ -44,13 +44,14 @@ public class PathConstWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetRelativeResourcesPath(IntPtr L)
+	static int GetRelativePath(IntPtr L)
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 1);
+			ToLua.CheckArgsCount(L, 2);
 			string arg0 = ToLua.CheckString(L, 1);
-			string o = PathConst.GetRelativeResourcesPath(arg0);
+			string arg1 = ToLua.CheckString(L, 2);
+			string o = PathConst.GetRelativePath(arg0, arg1);
 			LuaDLL.lua_pushstring(L, o);
 			return 1;
 		}

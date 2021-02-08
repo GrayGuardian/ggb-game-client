@@ -35,11 +35,11 @@ public class PathConst
     public static string DOWNLOAD_TEMPFILE_ROOT = Path.Combine(Application.persistentDataPath, "./Temp");
 
     /// <summary>
-    /// 获取Resources的相对路径
+    /// 获取相对路径
     /// </summary>
-    public static string GetRelativeResourcesPath(string filePath)
+    public static string GetRelativePath(string filePath,string rootPath)
     {
-        string result = Path.GetFullPath(filePath).Replace(Path.GetFullPath(RESOURCES) + "\\", "");
+        string result = Path.GetFullPath(filePath).Replace(Path.GetFullPath(rootPath) + "\\", "");
         return filePath == result ? null : result;
     }
 

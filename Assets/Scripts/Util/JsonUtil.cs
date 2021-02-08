@@ -6,6 +6,7 @@ using UnityEngine;
 public class JsonUtil
 {
     public Dictionary<string, JObject> JsonDic = new Dictionary<string, JObject>();
+    
     public JsonUtil()
     {
         string root = Path.Combine(Application.dataPath, "Scripts/Json");
