@@ -4,20 +4,28 @@ function UI:init()
     broadcast:on(
         BROADCAST_CODE.SCENE_LOADED,
         function(info)
-            self:sceneLoaded(info)
+            self:sceneLoad(info)
         end
     )
 
-    self.lastSceneComp = nil
+    self.sceneComp = nil
 end
-
-function UI:sceneLoaded(info)
+-- 场景lua文件加载
+function UI:sceneLoad(info)
     print("跳转场景>>>>", "idx:", info.idx, "name:", info.name)
-
+    if self.sceneComp ~= nil then
+        print("卸载场景lua脚本>>" .. util.serialize(self.sceneComp.info))
+        self.sceneComp.onDestroy()
+    end
+    -- 最开始两个场景不需要加载lua脚本
     if info.idx >= 2 then
         luaName = string.lower("scene_" .. info.name)
         print("加载场景lua脚本>>" .. luaName)
-        self.lastSceneComp = require(luaName):new(info)
+        self.sceneComp = require(luaName):new(info)
     end
+end
+-- 切换场景
+function UI:loadScene(key)
+    SceneManager.LoadScene(key)
 end
 return UI

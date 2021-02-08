@@ -8,4 +8,5 @@ public class Test : MonoBehaviour
     {
         MonoSingleton.Instance.MonoGo.AddComponent<LuaClient>();
     }
+
 }

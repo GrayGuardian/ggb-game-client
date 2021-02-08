@@ -5,12 +5,15 @@ function SceneBase:init(info)
     timer:on(
         UE.Time.deltaTime,
         function()
-            self:awake()
+            self:onLoad()
         end
     )
 end
-function SceneBase:awake()
-    print("Scene awake")
+function SceneBase:onLoad()
+    print("Scene onLoad")
+end
+function SceneBase:onDestroy()
+    print("Scene onDestroy")
 end
 
 return SceneBase
