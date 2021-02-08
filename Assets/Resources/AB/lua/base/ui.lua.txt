@@ -1,6 +1,7 @@
 local UI = class("UI")
 local lastSceneComp = nil
-local Scene_Loaded = function(data)
+
+local sceneLoaded = function(data)
     print("跳转场景>>>>", "idx:", data.idx, "name:", data.name)
 
     if data.idx >= 2 then
@@ -10,5 +11,8 @@ local Scene_Loaded = function(data)
     end
 end
 
-broadcast:on(broadcastCode.SCENE_LOADED, Scene_Loaded)
+function UI:init()
+    broadcast:on(BROADCAST_CODE.SCENE_LOADED, sceneLoaded)
+end
+
 return UI

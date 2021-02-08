@@ -7,7 +7,9 @@ class = require("middle_class")
 
 json = require("json_util"):new()
 
-broadcastCode = require("broadcast_code")
+BROADCAST_CODE = require("broadcast_code")
 broadcast = require("broadcast_util"):new()
+
+mono = require("mono_util"):new()
 
 ui = require("ui"):new()

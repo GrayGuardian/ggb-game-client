@@ -39,6 +39,7 @@ public static class CustomSettings
         _DT(typeof(UnityEngine.Events.UnityAction)),
         _DT(typeof(System.Predicate<int>)),
         _DT(typeof(System.Action<int>)),
+        _DT(typeof(System.Action<string>)),
         _DT(typeof(System.Comparison<int>)),
         _DT(typeof(System.Func<int, int>)),
     };
@@ -160,6 +161,8 @@ public static class CustomSettings
         _GT(typeof(Dictionary<string, JObject>)),
         _GT(typeof(JObject)),
         _GT(typeof(JsonUtil)),
+        _GT(typeof(MonoSingleton)),
+        _GT(typeof(MonoComponent)),
 
     };
 

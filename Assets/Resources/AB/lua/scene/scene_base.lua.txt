@@ -1,7 +1,6 @@
 local SceneBase = class("SceneBase")
 function SceneBase:init()
     print("Scene Init")
-    print(tostring(self.class))
     self:onLoad()
 end
 function SceneBase:onLoad()

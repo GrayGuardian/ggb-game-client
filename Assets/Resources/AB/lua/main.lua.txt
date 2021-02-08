@@ -2,6 +2,7 @@ require("base")
 --主入口函数。从这里开始lua逻辑
 function Main()
     print("logic start")
+    print(json.config:GetValue("http"))
     -- SceneManager.LoadScene("Login")
 end
 
@@ -10,7 +11,7 @@ function OnLevelWasLoaded(idx, name)
     collectgarbage("collect")
     Time.timeSinceLevelLoad = 0
 
-    broadcast:notify(broadcastCode.SCENE_LOADED, {idx = idx, name = name})
+    broadcast:notify(BROADCAST_CODE.SCENE_LOADED, {idx = idx, name = name})
 
     -- require("scene_login"):new()
     -- if idx >= 2 then
@@ -19,5 +20,6 @@ function OnLevelWasLoaded(idx, name)
 end
 
 function OnApplicationQuit()
+    broadcast:notify(BROADCAST_CODE.MONO_QUIT)
     print("游戏退出")
 end
