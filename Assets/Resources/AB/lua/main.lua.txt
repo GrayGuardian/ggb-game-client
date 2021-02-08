@@ -11,7 +11,7 @@ function OnLevelWasLoaded(idx, name)
     collectgarbage("collect")
     Time.timeSinceLevelLoad = 0
 
-    broadcast:notify(BROADCAST_CODE.SCENE_LOADED, {idx = idx, name = name})
+    --broadcast:notify(BROADCAST_CODE.SCENE_LOADED, {idx = idx, name = name})
 
     -- require("scene_login"):new()
     -- if idx >= 2 then

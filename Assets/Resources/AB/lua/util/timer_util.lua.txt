@@ -1,3 +1,0 @@
-local Timer = class("Timer")
-
-return Timer

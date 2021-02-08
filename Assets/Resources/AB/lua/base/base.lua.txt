@@ -5,11 +5,27 @@ Application = UE.Application
 
 class = require("middle_class")
 
-json = require("json_util"):new()
+table.exist = function(table, value)
+    for k, v in pairs(table) do
+        if v == value then
+            return true
+        end
+    end
+    return false
+end
+table.del = function(table, value)
+    for k, v in pairs(table) do
+        if v == value then
+            table[k] = nil
+            return true
+        end
+    end
+    return false
+end
 
+json = require("json_util"):new()
 BROADCAST_CODE = require("broadcast_code")
 broadcast = require("broadcast_util"):new()
-
 mono = require("mono_util"):new()
-
+timer = require("timer_util"):new()
 ui = require("ui"):new()
