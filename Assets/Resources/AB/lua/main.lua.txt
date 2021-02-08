@@ -2,17 +2,20 @@ require("base")
 --主入口函数。从这里开始lua逻辑
 function Main()
     print("logic start")
-    SceneManager.LoadScene("Login")
+    -- SceneManager.LoadScene("Login")
 end
 
 --场景切换通知
 function OnLevelWasLoaded(idx, name)
     collectgarbage("collect")
     Time.timeSinceLevelLoad = 0
-    print("跳转场景>>>>", "idx:", idx, "name:", name)
-    if idx >= 2 then
-        require("scene"):new()
-    end
+
+    broadcast:notify(broadcastCode.SCENE_LOADED, {idx = idx, name = name})
+
+    -- require("scene_login"):new()
+    -- if idx >= 2 then
+    --     require("scene"):new()
+    -- end
 end
 
 function OnApplicationQuit()

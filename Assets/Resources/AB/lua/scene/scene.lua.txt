@@ -1,5 +1,0 @@
-local Scene = class("Scene")
-function Scene:init()
-    print("Scene Init")
-end
-return Scene

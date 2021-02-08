@@ -1,5 +1,0 @@
-local Util = {}
-
-Util.json = require("json_util")
-
-return Util

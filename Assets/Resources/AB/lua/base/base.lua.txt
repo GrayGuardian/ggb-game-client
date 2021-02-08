@@ -3,5 +3,11 @@ UE = UnityEngine
 SceneManager = UE.SceneManagement.SceneManager
 Application = UE.Application
 
-util = require("util")
 class = require("middle_class")
+
+json = require("json_util"):new()
+
+broadcastCode = require("broadcast_code")
+broadcast = require("broadcast_util"):new()
+
+ui = require("ui"):new()

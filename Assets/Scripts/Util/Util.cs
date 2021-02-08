@@ -1,6 +1,5 @@
 public class Util
 {
-    public static MonoUtil Mono = new MonoUtil();
     public static HttpUtil Http = new HttpUtil();
     public static ResUtil Res = new ResUtil();
     public static FileUtil File = new FileUtil();

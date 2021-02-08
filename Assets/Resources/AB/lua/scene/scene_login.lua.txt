@@ -1,9 +1,10 @@
-local SceneLogin = class("Scene_Login", Scene)
+local base = require("scene_base")
+local SceneLogin = class("SceneLogin", base)
 function SceneLogin:init()
-    --Scene.init(self, 1)
-    --self:load()
+    base.init(self)
+    print("Scene_Login init")
 end
-function SceneLogin:awake()
+function SceneLogin:onLoad()
+    print("Scene_Login onLoad")
 end
-
 return SceneLogin

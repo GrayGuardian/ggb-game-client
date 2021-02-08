@@ -1,11 +1,11 @@
 using System.Collections;
 using UnityEngine;
 
-public class MonoUtil
+public class MonoSingleton : Singleton<MonoSingleton>
 {
     public GameObject MonoGo;
     public MonoComponent MonoComponent;
-    public MonoUtil()
+    public MonoSingleton()
     {
         MonoGo = new GameObject("MonoGo");
         MonoComponent = MonoGo.AddComponent<MonoComponent>();

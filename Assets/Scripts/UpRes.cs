@@ -102,7 +102,7 @@ public class UpRes : MonoBehaviour
         Debug.Log("所有操作执行完毕，启用游戏逻辑");
         //Util.Res.LoadAssetBundle("common");
         // Debug.Log(Util.Res.LoadSprite("comm1on", "bg"));
-        Util.Mono.MonoGo.AddComponent<LuaClient>();
+        MonoSingleton.Instance.MonoGo.AddComponent<LuaClient>();
     }
     /// <summary>
     /// 更新AB包

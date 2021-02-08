@@ -1,0 +1,6 @@
+local BroadcastCode = {}
+
+--场景切换回调
+BroadcastCode.SCENE_LOADED = "SCENE_LOADED"
+
+return BroadcastCode

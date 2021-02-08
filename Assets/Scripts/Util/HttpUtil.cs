@@ -77,7 +77,7 @@ public class HttpUtil
 
     public void Download(string url, string saveFile, string tempFileName = null, Action cb = null, Action<long, long> downloadingCb = null)
     {
-        Util.Mono.StartCoroutine(_download(url, saveFile, tempFileName, cb, downloadingCb));
+        MonoSingleton.Instance.StartCoroutine(_download(url, saveFile, tempFileName, cb, downloadingCb));
     }
     IEnumerator _download(string url, string saveFile, string tempFileName = null, Action cb = null, Action<long, long> downloadingCb = null)
     {
