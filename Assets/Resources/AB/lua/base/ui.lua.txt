@@ -3,20 +3,21 @@ local UI = class("UI")
 function UI:init()
     broadcast:on(
         BROADCAST_CODE.SCENE_LOADED,
-        function(data)
-            self:sceneLoaded(data)
+        function(info)
+            self:sceneLoaded(info)
         end
     )
 
     self.lastSceneComp = nil
 end
 
-function UI:sceneLoaded(data)
-    print("跳转场景>>>>", "idx:", data.idx, "name:", data.name)
-    if data.idx >= 2 then
-        luaName = string.lower("scene_" .. data.name)
+function UI:sceneLoaded(info)
+    print("跳转场景>>>>", "idx:", info.idx, "name:", info.name)
+
+    if info.idx >= 2 then
+        luaName = string.lower("scene_" .. info.name)
         print("加载场景lua脚本>>" .. luaName)
-        lastSceneComp = require(luaName):new()
+        self.lastSceneComp = require(luaName):new(info)
     end
 end
 return UI

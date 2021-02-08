@@ -1,7 +1,8 @@
 local base = require("scene_base")
 local SceneLogin = class("SceneLogin", base)
-function SceneLogin:init()
-    base.init(self)
+function SceneLogin:init(info)
+    base.init(self, info)
+
     print("Scene_Login init")
 end
 function SceneLogin:awake()

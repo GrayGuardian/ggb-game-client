@@ -1,6 +1,7 @@
 local SceneBase = class("SceneBase")
-function SceneBase:init()
-    print("Scene Init")
+function SceneBase:init(info)
+    print("Scene Init>>>info:" .. util.serialize(info))
+    self.info = info
     timer:on(
         UE.Time.deltaTime,
         function()
