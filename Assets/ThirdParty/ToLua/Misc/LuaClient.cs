@@ -56,6 +56,7 @@ public class LuaClient : MonoBehaviour
 
     protected virtual void OpenLibs()
     {
+        OpenCJson();
         luaState.OpenLibs(LuaDLL.luaopen_pb);
         luaState.OpenLibs(LuaDLL.luaopen_struct);
         luaState.OpenLibs(LuaDLL.luaopen_lpeg);

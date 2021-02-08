@@ -8,16 +8,14 @@ local monoListEvent =
         broadcast:notify(BROADCAST_CODE[string.upper("MONO_" .. key)])
     end
 )
-
+broadcast:on(
+    BROADCAST_CODE.MONO_QUIT,
+    function()
+        MonoSingleton.MonoComponent:DelListenEvent(monoListEvent)
+    end
+)
 function Mono:init()
     MonoSingleton.MonoComponent:AddListenEvent(monoListEvent)
-
-    broadcast:on(
-        BROADCAST_CODE.MONO_UPDATE,
-        function()
-            print("update")
-        end
-    )
 end
 
 return Mono

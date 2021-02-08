@@ -161,6 +161,7 @@ public static class CustomSettings
         _GT(typeof(Dictionary<string, JObject>)),
         _GT(typeof(JObject)),
         _GT(typeof(JsonUtil)),
+
         _GT(typeof(MonoSingleton)),
         _GT(typeof(MonoComponent)),
 

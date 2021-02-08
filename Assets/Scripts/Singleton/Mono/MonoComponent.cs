@@ -8,12 +8,10 @@ public class MonoComponent : MonoBehaviour
     public void AddListenEvent(Action<string> e)
     {
         _onListenEvent += e;
-        Debug.Log("AddListenEvent");
     }
     public void DelListenEvent(Action<string> e)
     {
         _onListenEvent -= e;
-        Debug.Log("DelListenEvent");
     }
     protected void Awake()
     {
