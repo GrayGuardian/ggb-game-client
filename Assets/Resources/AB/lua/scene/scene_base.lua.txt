@@ -1,10 +1,15 @@
 local SceneBase = class("SceneBase")
 function SceneBase:init()
     print("Scene Init")
-    self:onLoad()
+    timer:on(
+        UE.Time.deltaTime,
+        function()
+            self:awake()
+        end
+    )
 end
-function SceneBase:onLoad()
-    print("Scene onLoad")
+function SceneBase:awake()
+    print("Scene awake")
 end
 
 return SceneBase

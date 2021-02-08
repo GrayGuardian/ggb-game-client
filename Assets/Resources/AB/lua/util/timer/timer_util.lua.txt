@@ -23,7 +23,7 @@ function Timer:update()
             -- 通过剩余循环次数判断是否结束 -1为无限循环 不触发
             if timer:getRemainCount() == 0 then
                 -- 时钟结束
-                self:stopTimer(timer)
+                self:out(timer)
             end
             if timer.isOver or timer.isPause then
                 -- 时钟结束或暂停，跳过判断
@@ -70,10 +70,18 @@ function Timer:init()
 end
 
 --生成时钟
-function Timer:addTimer(time, loopCount, onTrigger)
-    timer = TimerModel:new(time, loopCount, onTrigger)
-    table.insert(timerAddTempList, timer)
-    return timer
+function Timer:on(time, loopCount, onTrigger)
+    local o = TimerModel:new(time, loopCount, onTrigger)
+    table.insert(timerAddTempList, o)
+    return o
+end
+--停止时钟
+function Timer:out(timer)
+    if self:exist(timer) == false then
+        return
+    end
+    timer.isOver = true
+    table.insert(timerDelTempList, timer)
 end
 --开始时钟
 function Timer:playTimer(timer)
@@ -88,14 +96,6 @@ function Timer:pauseTimer(timer)
         return
     end
     timer.isPause = true
-end
---停止时钟
-function Timer:stopTimer(timer)
-    if self:exist(timer) == false then
-        return
-    end
-    timer.isOver = true
-    table.insert(timerDelTempList, timer)
 end
 --时钟是否存在
 function Timer:exist(timer)

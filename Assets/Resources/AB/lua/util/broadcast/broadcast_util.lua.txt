@@ -19,12 +19,12 @@ function Broadcast:notify(key, data)
     return true
 end
 function Broadcast:on(key, callback, order, isOnce)
-    info = {}
+    local info = {}
     info.callback = callback
     info.order = order or 0
     info.isOnce = isOnce or false
 
-    list = {}
+    local list = {}
     if self:exist(key) == false then
         -- 键值不存在则新建
         table.insert(list, info)
@@ -34,7 +34,7 @@ function Broadcast:on(key, callback, order, isOnce)
         return false
     else
         list = callBackInfoMap[key]
-        index = -1
+        local index = -1
         for i = 1, #list do
             o = list[i]
             if o.order > order then
@@ -52,7 +52,7 @@ function Broadcast:out(key, callback)
     if self:exist(key, callback) == false then
         return false
     end
-    list = callBackInfoMap[key]
+    local list = callBackInfoMap[key]
     for i = 1, #list do
         if list[i].callback == callback then
             table.remove(list, i)
@@ -76,7 +76,7 @@ function Broadcast:exist(key, callback)
         if callback == nil then
             return true
         else
-            list = callBackInfoMap[key]
+            local list = callBackInfoMap[key]
 
             for k, v in pairs(list) do
                 if v.callback == callback then
