@@ -52,6 +52,9 @@ util.serialize = function(obj)
     return lua
 end
 
+-- c#
+resUtil = ResUtil.New()
+-- tolua
 json = require("json_util"):new()
 BROADCAST_CODE = require("broadcast_code")
 broadcast = require("broadcast_util"):new()

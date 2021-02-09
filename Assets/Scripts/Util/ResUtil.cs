@@ -65,7 +65,7 @@ public class ResUtil
     /// 获取更新数据
     /// </summary>
     /// <returns></returns>
-    public VObject getUpdata()
+    public VObject getRefdata()
     {
         bool isUp = false;
         VObject vObject;
@@ -143,6 +143,7 @@ public class ResUtil
 
     public UnityEngine.Object Load(string key, string resName)
     {
+
         return Load<UnityEngine.Object>(key, resName);
     }
 

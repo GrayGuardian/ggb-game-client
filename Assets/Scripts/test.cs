@@ -7,7 +7,6 @@ public class Test : MonoBehaviour
     private void Awake()
     {
         MonoSingleton.Instance.MonoGo.AddComponent<LuaClient>();
-
     }
 
 }

@@ -7,12 +7,12 @@ using UnityEngine.UI;
 
 public class UpRes : MonoBehaviour
 {
-    VObject UpData;
+    VObject refData;
 
     private void Awake()
     {
-        UpData = Util.Res.getUpdata();
-        if (UpData == null)
+        refData = Util.Res.getRefdata();
+        if (refData == null)
         {
             Debug.Log("不需要更新");
             ClearRedundantRes();
@@ -21,11 +21,11 @@ public class UpRes : MonoBehaviour
         {
             Debug.Log("需要更新");
             //UpdateRes();
-            if (UpData.Version != Util.Res.Version.Version)
+            if (refData.Version != Util.Res.Version.Version)
             {
-                if (UpData.UpdateType == 0)
+                if (refData.UpdateType == 0)
                 {
-                    if (UpData.ABs.Length > 0)
+                    if (refData.ABs.Length > 0)
                     {
                         Debug.Log("在线更新>>下载文件");
                         ShowUI_Updata_Info();
@@ -36,7 +36,7 @@ public class UpRes : MonoBehaviour
                         DownloadOver();
                     }
                 }
-                if (UpData.UpdateType == 1)
+                if (refData.UpdateType == 1)
                 {
                     Debug.Log("强制更新");
                     ShowUI_Updata_Info();
@@ -44,9 +44,9 @@ public class UpRes : MonoBehaviour
             }
             else
             {
-                Debug.Log("文件损坏 需要更新资源>>" + UpData.toString());
+                Debug.Log("文件损坏 需要更新资源>>" + refData.toString());
                 long size = 0;
-                foreach (var ab in UpData.ABs)
+                foreach (var ab in refData.ABs)
                 {
                     size += ab.size;
                 }
@@ -62,14 +62,14 @@ public class UpRes : MonoBehaviour
         Debug.Log("开始下载资源");
         Bar_Node.gameObject.SetActive(true);
         UpABFile(
-            UpData.ABs,
+            refData.ABs,
             () => { Bar_Node.gameObject.SetActive(false); DownloadOver(); },
             (ab) => { Debug.Log(string.Format("AB包[{0}]开始更新", ab.name)); },
             (ab) => { Debug.Log(string.Format("AB包[{0}]更新完毕", ab.name)); },
             (ab, order, size, count) =>
             {
                 Bar_Value.fillAmount = (float)size / count;
-                Bar_Desc.text = string.Format("正在下载>>>[{0}/{1}]：{2}/{3}", order + 1, UpData.ABs.Length, Util.SizeFormat(size), Util.SizeFormat(count));
+                Bar_Desc.text = string.Format("正在下载>>>[{0}/{1}]：{2}/{3}", order + 1, refData.ABs.Length, Util.SizeFormat(size), Util.SizeFormat(count));
                 //Debug.Log(string.Format("AB包[{0}]正在更新：{1}/{2}", ab.name, size, count));
             }
         );
@@ -102,7 +102,7 @@ public class UpRes : MonoBehaviour
         Debug.Log("所有操作执行完毕，启用游戏逻辑");
         //Util.Res.LoadAssetBundle("common");
         // Debug.Log(Util.Res.LoadSprite("comm1on", "bg"));
-        MonoSingleton.Instance.MonoGo.AddComponent<LuaClient>();
+        //MonoSingleton.Instance.MonoGo.AddComponent<LuaClient>();
     }
     /// <summary>
     /// 更新AB包
@@ -146,15 +146,15 @@ public class UpRes : MonoBehaviour
     void ShowUI_Updata_Info()
     {
         RectTransform node = UI_Updata_Info_Node;
-        node.Find("VersionText").GetComponent<Text>().text = UpData.Version;
-        node.Find("ContentText").GetComponent<Text>().text = UpData.Content;
+        node.Find("VersionText").GetComponent<Text>().text = refData.Version;
+        node.Find("ContentText").GetComponent<Text>().text = refData.Content;
 
 
-        if (UpData.UpdateType == 0)
+        if (refData.UpdateType == 0)
         {
             //在线更新
             long size = 0;
-            foreach (var ab in UpData.ABs)
+            foreach (var ab in refData.ABs)
             {
                 size += ab.size;
             }
@@ -162,7 +162,7 @@ public class UpRes : MonoBehaviour
             node.Find("DescText").GetComponent<Text>().text = string.Format("共计需要下载{0}资源", Util.SizeFormat(size));
             node.Find("Button/Text").GetComponent<Text>().text = "开始下载";
         }
-        else if (UpData.UpdateType == 1)
+        else if (refData.UpdateType == 1)
         {
             //自行更新
             node.Find("DescText").GetComponent<Text>().text = "需要手动下载安装包更新";
@@ -179,12 +179,12 @@ public class UpRes : MonoBehaviour
 
     public void OnUpdataBtnClick()
     {
-        if (UpData.UpdateType == 0)
+        if (refData.UpdateType == 0)
         {
             //在线更新
             DownloadRes();
         }
-        else if (UpData.UpdateType == 1)
+        else if (refData.UpdateType == 1)
         {
             //自行更新
             Debug.Log("转跳下载，退出游戏");

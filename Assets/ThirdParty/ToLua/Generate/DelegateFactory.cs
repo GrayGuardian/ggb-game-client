@@ -41,6 +41,7 @@ public class DelegateFactory
 		dict.Add(typeof(System.ComponentModel.ListChangedEventHandler), factory.System_ComponentModel_ListChangedEventHandler);
 		dict.Add(typeof(System.ComponentModel.AddingNewEventHandler), factory.System_ComponentModel_AddingNewEventHandler);
 		dict.Add(typeof(System.Collections.Specialized.NotifyCollectionChangedEventHandler), factory.System_Collections_Specialized_NotifyCollectionChangedEventHandler);
+		dict.Add(typeof(System.Action<long,long>), factory.System_Action_long_long);
 
 		DelegateTraits<System.Action>.Init(factory.System_Action);
 		DelegateTraits<UnityEngine.Events.UnityAction>.Init(factory.UnityEngine_Events_UnityAction);
@@ -66,6 +67,7 @@ public class DelegateFactory
 		DelegateTraits<System.ComponentModel.ListChangedEventHandler>.Init(factory.System_ComponentModel_ListChangedEventHandler);
 		DelegateTraits<System.ComponentModel.AddingNewEventHandler>.Init(factory.System_ComponentModel_AddingNewEventHandler);
 		DelegateTraits<System.Collections.Specialized.NotifyCollectionChangedEventHandler>.Init(factory.System_Collections_Specialized_NotifyCollectionChangedEventHandler);
+		DelegateTraits<System.Action<long,long>>.Init(factory.System_Action_long_long);
 
 		TypeTraits<System.Action>.Init(factory.Check_System_Action);
 		TypeTraits<UnityEngine.Events.UnityAction>.Init(factory.Check_UnityEngine_Events_UnityAction);
@@ -91,6 +93,7 @@ public class DelegateFactory
 		TypeTraits<System.ComponentModel.ListChangedEventHandler>.Init(factory.Check_System_ComponentModel_ListChangedEventHandler);
 		TypeTraits<System.ComponentModel.AddingNewEventHandler>.Init(factory.Check_System_ComponentModel_AddingNewEventHandler);
 		TypeTraits<System.Collections.Specialized.NotifyCollectionChangedEventHandler>.Init(factory.Check_System_Collections_Specialized_NotifyCollectionChangedEventHandler);
+		TypeTraits<System.Action<long,long>>.Init(factory.Check_System_Action_long_long);
 
 		StackTraits<System.Action>.Push = factory.Push_System_Action;
 		StackTraits<UnityEngine.Events.UnityAction>.Push = factory.Push_UnityEngine_Events_UnityAction;
@@ -116,6 +119,7 @@ public class DelegateFactory
 		StackTraits<System.ComponentModel.ListChangedEventHandler>.Push = factory.Push_System_ComponentModel_ListChangedEventHandler;
 		StackTraits<System.ComponentModel.AddingNewEventHandler>.Push = factory.Push_System_ComponentModel_AddingNewEventHandler;
 		StackTraits<System.Collections.Specialized.NotifyCollectionChangedEventHandler>.Push = factory.Push_System_Collections_Specialized_NotifyCollectionChangedEventHandler;
+		StackTraits<System.Action<long,long>>.Push = factory.Push_System_Action_long_long;
 	}
     
     public static Delegate CreateDelegate(Type t, LuaFunction func = null)
@@ -1617,6 +1621,65 @@ public class DelegateFactory
 	}
 
 	void Push_System_Collections_Specialized_NotifyCollectionChangedEventHandler(IntPtr L, System.Collections.Specialized.NotifyCollectionChangedEventHandler o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_Action_long_long_Event : LuaDelegate
+	{
+		public System_Action_long_long_Event(LuaFunction func) : base(func) { }
+		public System_Action_long_long_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(long param0, long param1)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.Push(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(long param0, long param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.Push(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.Action<long,long> System_Action_long_long(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<long,long> fn = delegate(long param0, long param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_long_long_Event target = new System_Action_long_long_Event(func);
+			System.Action<long,long> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_long_long_Event target = new System_Action_long_long_Event(func, self);
+			System.Action<long,long> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Action_long_long(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Action<long,long>), L, pos);
+	}
+
+	void Push_System_Action_long_long(IntPtr L, System.Action<long,long> o)
 	{
 		ToLua.Push(L, o);
 	}

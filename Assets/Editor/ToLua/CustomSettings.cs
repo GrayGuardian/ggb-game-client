@@ -156,14 +156,19 @@ public static class CustomSettings
         _GT(typeof(SceneManager)),
         _GT(typeof(Scene)),
         _GT(typeof(LoadSceneParameters)),
+        _GT(typeof(UnityEngine.UI.CanvasScaler)),
 
         _GT(typeof(PathConst)),
         _GT(typeof(Dictionary<string, JObject>)),
         _GT(typeof(JObject)),
-        _GT(typeof(JsonUtil)),
 
         _GT(typeof(MonoSingleton)),
         _GT(typeof(MonoComponent)),
+        _GT(typeof(JsonUtil)),
+        _GT(typeof(EncryptUtil)),
+        _GT(typeof(HttpUtil)),
+        _GT(typeof(ResUtil)),
+        _GT(typeof(VObject)),
 
     };
 

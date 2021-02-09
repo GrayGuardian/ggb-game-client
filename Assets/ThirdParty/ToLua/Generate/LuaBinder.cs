@@ -12,9 +12,13 @@ public static class LuaBinder
 		LuaInterface_DebuggerWrap.Register(L);
 		LuaProfilerWrap.Register(L);
 		PathConstWrap.Register(L);
-		JsonUtilWrap.Register(L);
 		MonoSingletonWrap.Register(L);
 		MonoComponentWrap.Register(L);
+		JsonUtilWrap.Register(L);
+		EncryptUtilWrap.Register(L);
+		HttpUtilWrap.Register(L);
+		ResUtilWrap.Register(L);
+		VObjectWrap.Register(L);
 		Singleton_MonoSingletonWrap.Register(L);
 		L.BeginModule("LuaInterface");
 		LuaInterface_LuaInjectionStationWrap.Register(L);
@@ -66,6 +70,12 @@ public static class LuaBinder
 		UnityEngine_SceneManagement_SceneWrap.Register(L);
 		UnityEngine_SceneManagement_LoadSceneParametersWrap.Register(L);
 		L.EndModule();
+		L.BeginModule("UI");
+		UnityEngine_UI_CanvasScalerWrap.Register(L);
+		L.EndModule();
+		L.BeginModule("EventSystems");
+		UnityEngine_EventSystems_UIBehaviourWrap.Register(L);
+		L.EndModule();
 		L.BeginModule("Events");
 		L.RegFunction("UnityAction", UnityEngine_Events_UnityAction);
 		L.RegFunction("UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode", UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode);
@@ -95,6 +105,7 @@ public static class LuaBinder
 		L.RegFunction("Action_bool", System_Action_bool);
 		L.RegFunction("Func_bool", System_Func_bool);
 		L.RegFunction("Action_UnityEngine_AsyncOperation", System_Action_UnityEngine_AsyncOperation);
+		L.RegFunction("Action_long_long", System_Action_long_long);
 		L.BeginModule("Collections");
 		L.BeginModule("Generic");
 		System_Collections_Generic_Dictionary_string_Newtonsoft_Json_Linq_JObjectWrap.Register(L);
@@ -640,6 +651,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateTraits<System.Action<UnityEngine.AsyncOperation>>.Create(func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_Action_long_long(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<System.Action<long,long>>.Create(func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<System.Action<long,long>>.Create(func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
