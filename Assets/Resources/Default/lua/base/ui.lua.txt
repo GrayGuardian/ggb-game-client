@@ -7,7 +7,7 @@ function UI:init()
             self:sceneLoad(info)
         end
     )
-
+    self.sceneParamMap = {}
     self.sceneComp = nil
 end
 -- 场景lua文件加载
@@ -15,17 +15,17 @@ function UI:sceneLoad(info)
     print("跳转场景>>>>", "idx:", info.idx, "name:", info.name)
     if self.sceneComp ~= nil then
         print("卸载场景lua脚本>>" .. util.serialize(self.sceneComp.info))
-        self.sceneComp.onDestroy()
+        self.sceneComp._onDestroy(self.sceneComp)
     end
-    -- 最开始两个场景不需要加载lua脚本
-    if info.idx >= 2 then
-        luaName = string.lower("scene_" .. info.name)
-        print("加载场景lua脚本>>" .. luaName)
-        self.sceneComp = require(luaName):new(info)
-    end
+    luaName = string.lower("scene_" .. info.name)
+    print(self.sceneParamMap[info.name])
+    print("加载场景lua脚本>>" .. luaName)
+    self.sceneComp = require(luaName):new(info, self.sceneParamMap[info.name])
+    self.sceneParamMap[info.name] = nil
 end
 -- 切换场景
-function UI:loadScene(key)
+function UI:loadScene(key, param)
+    self.sceneParamMap[key] = param
     SceneManager.LoadScene(key)
 end
 return UI

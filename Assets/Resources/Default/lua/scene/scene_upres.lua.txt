@@ -1,0 +1,10 @@
+local base = require("scene_base")
+local SceneLogin = class("SceneUpres", base)
+
+function SceneLogin:onLoad()
+    print("Scene_Upres onLoad")
+end
+function SceneLogin:onDestroy()
+    print("Scene_Upres onDestroy")
+end
+return SceneLogin

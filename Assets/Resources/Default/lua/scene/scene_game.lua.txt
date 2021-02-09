@@ -1,9 +1,5 @@
 local base = require("scene_base")
 local SceneGame = class("SceneGame", base)
-function SceneGame:init(info)
-    base.init(self, info)
-    print("Scene_Game init")
-end
 function SceneGame:onLoad()
     print("Scene_Game onLoad")
 end

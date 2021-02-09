@@ -161,7 +161,8 @@ public class ResUtil
             {
                 asset = _abMap[key];
             }
-            if (asset != null){
+            if (asset != null)
+            {
                 UnityEngine.Debug.Log(string.Format("通过AB包加载资源 key:{0} resName:{1}", key, resName));
                 data = asset.LoadAsset<T>(resName);
             }
@@ -170,23 +171,23 @@ public class ResUtil
         {
             string resPath = Path.Combine(PathConst.RESOURCES, "./AB/" + key);
             FileInfo fileInfo = Util.File.GetChildFile(resPath, resName + ".*");
-            if (fileInfo != null){
-                string dirPath = PathConst.GetRelativePath(fileInfo.DirectoryName,PathConst.RESOURCES);
+            if (fileInfo != null)
+            {
+                string dirPath = PathConst.GetRelativePath(fileInfo.DirectoryName, PathConst.RESOURCES);
                 resPath = Path.Combine(dirPath, resName);
-                UnityEngine.Debug.Log(string.Format("通过Resources加载资源 key:{0} resName:{1} resPath:{2}", key, resName,resPath));
-                 data = Resources.Load<T>(resPath);
+                UnityEngine.Debug.Log(string.Format("通过Resources加载资源 key:{0} resName:{1} resPath:{2}", key, resName, resPath));
+                data = Resources.Load<T>(resPath);
             }
         }
-        
-        if(data == default(T)){
+
+        if (data == default(T))
+        {
             string resPath = Path.Combine(PathConst.RESOURCES, "./Default/" + key);
-            UnityEngine.Debug.Log(resPath);
-            UnityEngine.Debug.Log(resName + ".*");
             FileInfo fileInfo = Util.File.GetChildFile(resPath, resName + ".*");
             if (fileInfo == null) return data;
             string dirPath = PathConst.GetRelativePath(fileInfo.DirectoryName, PathConst.RESOURCES);
             resPath = Path.Combine(dirPath, resName);
-            UnityEngine.Debug.Log(string.Format("通过默认文件夹加载资源 key:{0} resName:{1} resPath:{2}", key, resName, resPath));
+            //UnityEngine.Debug.Log(string.Format("通过默认文件夹加载资源 key:{0} resName:{1} resPath:{2}", key, resName, resPath));
             data = Resources.Load<T>(resPath);
         }
         return data;

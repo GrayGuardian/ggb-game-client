@@ -1,0 +1,7 @@
+local base = require("scene_base")
+local SceneLogin = class("SceneStep", base)
+
+function SceneLogin:onLoad()
+    ui:loadScene("Login", {adfsafda = 123123})
+end
+return SceneLogin

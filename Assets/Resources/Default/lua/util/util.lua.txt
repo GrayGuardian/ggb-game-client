@@ -21,6 +21,9 @@ end
 util = {}
 util.serialize = function(obj)
     local lua = ""
+    if obj == nil then
+        return "nil"
+    end
     local t = type(obj)
     if t == "number" then
         lua = lua .. obj
