@@ -1,0 +1,79 @@
+local UIBase = class("UIBase")
+
+------------------- 继承重写 -------------------
+--UI所在AB包 默认为UI名 可通过子类 base.static.ab = '' 进行重写
+UIBase.static.ab = '';
+--通用AB依赖包 可通过子类 base.static.abs = {} 进行重写
+UIBase.static.abs = { 'common' }
+
+function UIBase:onLoad()
+end
+function UIBase:onDestroy()
+end
+------------------- 继承重写 -------------------
+
+function UIBase:init(info,param)
+    print(
+        "加载UI-" ..
+            info.name ..
+                " >>>>>>>>>>>>>>>>>>>>>>>> Init ----" ..
+                    " info:" .. util.serialize(info) .. " param:" .. util.serialize(param)
+    )
+    self.info = info;
+    self.param = param;
+    table.insert(UIBase.abs,1,self:getAB())
+end
+
+--绑定物体
+function UIBase:bind(node)
+    self.node = node;
+    self:uiCompInit();
+    print('UI绑定成功>>>',self.info.name,self.node);
+    self:_onLoad();
+end
+-- ui组件初始化
+function UIBase:uiCompInit()
+    self.uiComp = {};
+
+    local types = { 'Text' , 'Image' , 'Button' }
+
+    for index, type in ipairs(types) do
+        self.uiComp[type] = {};
+        local arr = self.node:GetComponentsInChildren(typeof(UEUI[type]));
+        for i = 0, arr.Length-1 do
+            local comp = arr:GetValue(i);
+            local key = comp.name;
+            self.uiComp[type][key] = comp;
+            print("加入CompUI>>"," type:",type,"  name:",key);
+        end
+    end
+    
+    --注册Button事件
+    for key, comp in pairs(self.uiComp.Button) do
+        local e = 'on'..comp.name:gsub("^%l",string.upper)..'Click';
+        if self[e]~=nil then
+            print('注册Button事件',e)
+            comp.onClick:AddListener(function () self[e](self); end);
+        end
+    end
+
+end
+function UIBase:_onLoad()
+    print("加载UI-" .. self.info.name .. ">>>>>>>>>>>>>>>>>>>>>>>> onLoad")
+    self:onLoad()
+end
+function UIBase:_onDestroy()
+    print("卸载UI-" .. self.info.name .. " >>>>>>>>>>>>>>>>>>>>>>>> onDestroy")
+    self:onDestroy()
+end
+
+function UIBase:getAB()
+    return UIBase.ab=='' and self.info.name or UIBase.ab;
+end
+function UIBase:getABs()
+    return UIBase.abs;
+end
+
+
+
+return UIBase

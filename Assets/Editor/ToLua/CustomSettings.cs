@@ -153,10 +153,15 @@ public static class CustomSettings
         _GT(typeof(Resources)),
         _GT(typeof(LuaProfiler)),
 
+        _GT(typeof(RectTransform)),
         _GT(typeof(SceneManager)),
         _GT(typeof(Scene)),
         _GT(typeof(LoadSceneParameters)),
         _GT(typeof(UnityEngine.UI.CanvasScaler)),
+        _GT(typeof(UnityEngine.UI.Text)),
+        _GT(typeof(UnityEngine.UI.Image)),
+        _GT(typeof(UnityEngine.UI.Button)),
+        _GT(typeof(UnityEngine.UI.Button.ButtonClickedEvent)),
 
         _GT(typeof(PathConst)),
         _GT(typeof(Dictionary<string, JObject>)),

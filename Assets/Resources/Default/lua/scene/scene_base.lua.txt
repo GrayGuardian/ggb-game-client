@@ -1,4 +1,13 @@
 local SceneBase = class("SceneBase")
+
+------------------- 继承重写 -------------------
+function SceneBase:onLoad()
+end
+function SceneBase:onDestroy()
+end
+------------------- 继承重写 -------------------
+
+
 function SceneBase:init(info, param)
     print(
         "加载场景-" ..
@@ -18,9 +27,5 @@ function SceneBase:_onDestroy()
     print("卸载场景-" .. self.info.name .. " >>>>>>>>>>>>>>>>>>>>>>>> onDestroy")
     self:onDestroy()
 end
--- 继承覆盖
-function SceneBase:onLoad()
-end
-function SceneBase:onDestroy()
-end
+
 return SceneBase

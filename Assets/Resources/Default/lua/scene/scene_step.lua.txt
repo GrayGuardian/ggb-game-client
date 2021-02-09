@@ -3,5 +3,6 @@ local SceneLogin = class("SceneStep", base)
 
 function SceneLogin:onLoad()
     --ui:loadScene("UpRes")
+    ui:showUI("ui_tip",{msg="我是提示框"})
 end
 return SceneLogin

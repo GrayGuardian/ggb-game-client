@@ -1,0 +1,16 @@
+local base = require("ui_base")
+local UITip = class("UITip", base)
+
+base.static.abs = {  }
+
+function UITip:onLoad()
+    print("UI_Tip onLoad",self.param.msg)
+    self.uiComp.Text.msgText.text = self.param.msg
+end
+function UITip:onDestroy()
+    print("UI_Tip onDestroy")
+end
+function UITip:onConfirmBtnClick()
+    print('点击确定',self.param.msg)
+end
+return UITip

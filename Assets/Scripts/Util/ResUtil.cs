@@ -114,10 +114,12 @@ public class ResUtil
     private Dictionary<string, AssetBundle> _abMap = new Dictionary<string, AssetBundle>();
     public AssetBundle LoadAssetBundle(string key)
     {
-        UnityEngine.Debug.Log("加载AB包：" + key);
+       
         if (Util.Json["config"]["PRO_ENV"].ToString() != "Master") return null;
+        if (_abMap.ContainsKey(key)) return null;
         string filePath = Path.Combine(PathConst.RES_LOCAL_ROOT, "./AssetBundles", "./" + key);
         if (!File.Exists(filePath)) return null;
+        UnityEngine.Debug.Log("加载AB包：" + key);
         var data = Util.Encrypt.ReadBytes(filePath);
         MemoryStream steam = new MemoryStream();
         BinaryWriter writer = new BinaryWriter(steam);
@@ -125,18 +127,14 @@ public class ResUtil
         AssetBundle asset = AssetBundle.LoadFromStream(steam);
         writer.Close();
         steam.Close();
-        if (_abMap.ContainsKey(key))
-        {
-            UnLoadAssetBundle(key);
-        }
         _abMap.Add(key, asset);
         return asset;
     }
     public void UnLoadAssetBundle(string key, bool unloadAllLoadedObjects = false)
     {
-        UnityEngine.Debug.Log("卸载AB包：" + key);
         if (Util.Json["config"]["PRO_ENV"].ToString() != "Master") return;
         if (!_abMap.ContainsKey(key)) return;
+        UnityEngine.Debug.Log("卸载AB包：" + key);
         _abMap[key].Unload(unloadAllLoadedObjects);
         _abMap.Remove(key);
     }

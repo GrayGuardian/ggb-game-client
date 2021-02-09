@@ -10,6 +10,8 @@ function UI:init()
     self.sceneParamMap = {}
     self.sceneComp = nil
 
+    self.abKeyMap = {};
+
     self:createUIRoot()
 end
 -- 场景lua文件加载
@@ -17,7 +19,7 @@ function UI:sceneLoad(info)
     print("跳转场景>>>>", "idx:", info.idx, "name:", info.name)
     if self.sceneComp ~= nil then
         print("卸载场景lua脚本>>" .. util.serialize(self.sceneComp.info))
-        self.sceneComp._onDestroy(self.sceneComp)
+        self.sceneComp:_onDestroy()
     end
     luaName = string.lower("scene_" .. info.name)
     print("加载场景lua脚本>>" .. luaName)
@@ -25,9 +27,9 @@ function UI:sceneLoad(info)
     self.sceneParamMap[info.name] = nil
 end
 -- 切换场景
-function UI:loadScene(key, param)
-    self.sceneParamMap[key] = param
-    SceneManager.LoadScene(key)
+function UI:loadScene(name, param)
+    self.sceneParamMap[name] = param
+    SceneManager.LoadScene(name)
 end
 
 -- 初始化UIRoot
@@ -37,9 +39,64 @@ function UI:createUIRoot()
     GameObject.DontDestroyOnLoad(go)
     self.uiRoot = go.transform
     self.uiRoot.name = "UIRoot"
+    self.uiCamera = self.uiRoot:Find("UICamera"):GetComponent("Camera")
     self.uiCanvas = self.uiRoot:Find("UICanvas")
-    local canvasScaler = self.uiCanvas:GetComponent("CanvasScaler")
+    -- local canvasScaler = self.uiCanvas:GetComponent("CanvasScaler")
+    -- canvasScaler.referenceResolution = {x = UE.Screen.width, y = UE.Screen.height}
+end
+-- ShowUI
+function UI:showUI(name,param)
+    local info = {};
+    info.name = name;
+    local comp = require(name):new(info,param);
+    --加载AB依赖包
+    for index, abKey in ipairs(comp:getABs()) do
+        if self:existAB(abKey,name) == false and self:addAB(abKey,name) then
+            print("UI>>加载AB包:"..abKey);
+            resUtil:LoadAssetBundle(abKey);
+        end
+    end
+    --加载界面
+    local prefab = resUtil:Load(comp:getAB(),name);
+    local go = GameObject.Instantiate(prefab);
+    local node = go:GetComponent("RectTransform");
+    node.name = name;
+    node.parent = self.uiCanvas;
+    node.localScale = { x=1,y=1,z=1 }
+    node.anchorMin = { x=0,y=0 }
+    node.anchorMax = { x=1,y=1 }
+    node.pivot = { x=0.5,y=0.5 }
+    node.anchoredPosition3D = { x=0,y=0,z=0 }
+    node.offsetMax = { x=0,y=0 };
+    node.offsetMin = { x=0,y=0 };
+    comp:bind(node);
 
-    canvasScaler.referenceResolution = {x = UE.Screen.width, y = UE.Screen.height}
+end
+
+function UI:existAB(abKey,uiKey)
+    if uiKey == nil then
+        return self.abKeyMap[abKey]~=nil
+    end
+    return self.abKeyMap[abKey]~=nil and table.exist(self.abKeyMap[abKey],uiKey)
+end
+function UI:addAB(abKey,uiKey)
+    if self:existAB(abKey) == false then
+        self.abKeyMap[abKey] = {};
+    end
+    if self:existAB(abKey,uiKey) == false then
+        table.insert(self.abKeyMap[abKey],uiKey);
+        return true;
+    end
+    return false
+end
+function UI:delAB(abKey,uiKey)
+    if self:existAB(abKey,uiKey) == false then
+        return false
+    end
+    table.del(self.abKeyMap[abKey],uiKey)
+    if #self.abKeyMap[abKey] <= 0 then
+        self.abKeyMap[abKey] = nil
+    end
+    return true;
 end
 return UI
