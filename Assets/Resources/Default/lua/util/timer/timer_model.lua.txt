@@ -18,16 +18,16 @@ function TimerModel:init(time, loopCount, onTrigger)
     -- 周期完成事件
     self.onTrigger = null
 
-    -- 构造赋值
+    -- 构造赋值t
     self.time = time
-    local type = type(loopCount)
-    if type == "number" then
+    local t = type(loopCount)
+    if t == "number" then
         self.loopCount = loopCount
         self.onTrigger = onTrigger
-    elseif type == "boolean" then
+    elseif t == "boolean" then
         self.loopCount = loopCount and -1 or 1
         self.onTrigger = onTrigger
-    elseif type == "function" then
+    elseif t == "function" then
         self.loopCount = 1
         self.onTrigger = loopCount
     end

@@ -6,6 +6,10 @@ UIBase.static.ab = '';
 --通用AB依赖包 可通过子类 base.static.abs = {} 进行重写
 UIBase.static.abs = { 'common' }
 
+-- Button点击事件 组件名首字母自动大写 o-组件实例 order-组件序号，可区分多个重名组件
+-- function UITip:on[UIComp_Button_Name]Click(o,order)
+    
+-- end
 function UIBase:onLoad()
 end
 function UIBase:onDestroy()
@@ -21,6 +25,7 @@ function UIBase:init(info,param)
     )
     self.info = info;
     self.param = param;
+    self.uiComp = {};
     table.insert(UIBase.abs,1,self:getAB())
 end
 
@@ -33,28 +38,57 @@ function UIBase:bind(node)
 end
 -- ui组件初始化
 function UIBase:uiCompInit()
-    self.uiComp = {};
-
     local types = { 'Text' , 'Image' , 'Button' }
 
-    for index, type in ipairs(types) do
-        self.uiComp[type] = {};
-        local arr = self.node:GetComponentsInChildren(typeof(UEUI[type]));
+    for index, t in ipairs(types) do
+        self.uiComp[t] = {};
+        local arr = self.node:GetComponentsInChildren(typeof(UEUI[t]));
         for i = 0, arr.Length-1 do
             local comp = arr:GetValue(i);
             local key = comp.name;
-            self.uiComp[type][key] = comp;
-            print("加入CompUI>>"," type:",type,"  name:",key);
+            if type(self.uiComp[t][key]) == 'table' then
+                table.insert(self.uiComp[t][key],comp);
+            else
+                -- body
+                if self.uiComp[t][key] == nil then
+                    self.uiComp[t][key] = comp;
+                else
+                    local tempComp = self.uiComp[t][key];
+                    self.uiComp[t][key] = {};
+                    table.insert(self.uiComp[t][key],tempComp);
+                    table.insert(self.uiComp[t][key],comp);
+                    print('ui已存在',#self.uiComp[t][key]);
+                end
+                
+            end
+            print("加入CompUI>>"," type:",t,"  name:",key);
         end
     end
     
-    --注册Button事件
+    -- 注册Button事件
     for key, comp in pairs(self.uiComp.Button) do
-        local e = 'on'..comp.name:gsub("^%l",string.upper)..'Click';
-        if self[e]~=nil then
-            print('注册Button事件',e)
-            comp.onClick:AddListener(function () self[e](self); end);
+        local sum = 0;
+        local e = nil;
+        if type(comp) == 'table' then
+            e = 'on'..comp[1].name:gsub("^%l",string.upper)..'Click';   
+        else
+            e = 'on'..comp.name:gsub("^%l",string.upper)..'Click';
         end
+        if self[e]~=nil then
+            if type(comp) == 'table' then
+                sum = #comp;
+                for i, comp1 in pairs(comp) do
+                    comp1.onClick:AddListener(function () self[e](self,comp1,i); end);
+                end
+            else
+                sum = 1;
+                comp.onClick:AddListener(function () self[e](self,comp,1); end);
+            end
+        end
+            
+        
+        print('注册Button事件>',e,"  共计注册：",sum);
+       
     end
 
 end
