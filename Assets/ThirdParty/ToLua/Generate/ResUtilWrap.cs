@@ -8,7 +8,7 @@ public class ResUtilWrap
 	{
 		L.BeginClass(typeof(ResUtil), typeof(System.Object));
 		L.RegFunction("UpVersion", UpVersion);
-		L.RegFunction("getRefdata", getRefdata);
+		L.RegFunction("GetRefdata", GetRefdata);
 		L.RegFunction("LoadAssetBundle", LoadAssetBundle);
 		L.RegFunction("UnLoadAssetBundle", UnLoadAssetBundle);
 		L.RegFunction("Load", Load);
@@ -65,13 +65,13 @@ public class ResUtilWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int getRefdata(IntPtr L)
+	static int GetRefdata(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
 			ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
-			VObject o = obj.getRefdata();
+			VObject o = obj.GetRefdata();
 			ToLua.PushObject(L, o);
 			return 1;
 		}

@@ -3,9 +3,12 @@ local SceneLogin = class("SceneUpres", base)
 
 function SceneLogin:onLoad()
     print("Scene_Upres onLoad")
-    self.refdata = resUtil:getRefdata()
+    ui:showUI("ui_upres")
+
+    self.refdata = resUtil:GetRefdata()
     if self.refdata == nil then
         print("不需要更新")
+        self:downloadResOver();
     else
         print("需要更新")
         local size = 0;
@@ -15,14 +18,23 @@ function SceneLogin:onLoad()
                 size = size + self.refdata.ABs:GetValue(i).size;
             end
         end
-
-        if self.refdata.Version ~= resUtil.Version.Version then
+        if resUtil.Version == nil then 
+            print('首次在线下载资源');
+            ui:showUI("ui_tip",
+            {
+                msg=string.format("首次下载资源文件，共计需要下载%s资源文件",utils.sizeFormat(size)),
+                btnTitle = "开始下载",
+                onClick = function ()
+                    self:downloadRes();
+                end
+            });
+        elseif self.refdata.Version ~= resUtil.Version.Version then
             if self.refdata.UpdateType == 0 then
                 if absSum > 0 then
                     print("在线更新>>下载文件")
                     ui:showUI("ui_tip",
                     {
-                        msg=string.format("共计需要下载%s资源",utils.sizeFormat(size)),
+                        msg=string.format("发现新版本，共计需要下载%s资源文件",utils.sizeFormat(size)),
                         btnTitle = "开始下载",
                         onClick = function ()
                             self:downloadRes();
@@ -30,6 +42,7 @@ function SceneLogin:onLoad()
                     });
                 else
                     print("在线更新>>不需要下载文件 一般是版本文件丢失 只要更新版本文件")
+                    self:downloadResOver();
                 end
             elseif self.refdata.UpdateType == 1 then
                 print("自行前往更新")
@@ -46,7 +59,7 @@ function SceneLogin:onLoad()
             print("文件损坏 需要更新资源")
             ui:showUI("ui_tip",
             {
-                msg=string.format("文件损坏,需要重新下载\n共计需要下载%s资源",utils.sizeFormat(size)),
+                msg=string.format("文件损坏,需要重新下载\n共计需要下载%s资源文件",utils.sizeFormat(size)),
                 btnTitle = "开始下载",
                 onClick = function ()
                     self:downloadRes();
@@ -60,7 +73,7 @@ function SceneLogin:downloadRes()
     self:downloadABFile(
         self.refdata.ABs,
         function ()
-            print("AB包全部更新完毕");
+            self:downloadResOver();
         end,
         function (abInfo)
             print(string.format("AB包[%s]开始更新",abInfo.name));
@@ -73,7 +86,10 @@ function SceneLogin:downloadRes()
         end
     )
 end
-
+function SceneLogin:downloadResOver()
+    print("AB包全部更新完毕");
+    resUtil:UpVersion();
+end
 function SceneLogin:downloadABFile(abInfos,allDownloadOverEvent,singleDownloadStartEvent,singleDownloadOverEvent,singleDownloadUpdateEvent,order)
     print(abInfos);
     order = order and order or 0;

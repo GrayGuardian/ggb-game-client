@@ -1,0 +1,8 @@
+local base = require("ui_base")
+local UIUpres = class("UIUpres", base)
+
+
+function UIUpres:onLoad()
+    
+end
+return UIUpres

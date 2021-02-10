@@ -4,7 +4,7 @@ local UIBase = class("UIBase")
 --UI所在AB包 默认为UI名 可通过子类 base.static.ab = '' 进行重写
 UIBase.static.ab = ""
 --通用AB依赖包 可通过子类 base.static.abs = {} 进行重写
-UIBase.static.abs = {"common"}
+UIBase.static.abs = {"p1"}
 
 -- Button点击事件 组件名首字母自动大写 o-组件实例 order-组件序号，可区分多个重名组件
 -- function UITip:on[UIComp_Button_Name]Click(o,order)

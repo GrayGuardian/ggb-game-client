@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 372432771
+CRC: 261297577
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 182c65575dd9bf41014e4682ad5a37b1
+    Hash: 7c8cf9a209e05a55e1954564a4d8ae36
   TypeTreeHash:
     serializedVersion: 2
     Hash: 98389b4b07b41cb84e430329cd7ce89c
@@ -36,8 +36,6 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Resources/AB/ui_tip/bg_tip.png
-- Assets/Resources/AB/ui_tip/bg_btn1.png
-- Assets/Resources/AB/ui_tip/bg_title1.png
-- Assets/Resources/AB/ui_tip/ui_tip.prefab
-Dependencies: []
+- Assets/Resources/AB/ui1/ui_tip.prefab
+Dependencies:
+- F:/Git/ggame/koa-game-client/AssetBundles/p1

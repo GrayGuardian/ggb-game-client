@@ -1,7 +1,7 @@
 local base = require("ui_base")
 local UITip = class("UITip", base)
 
-base.static.abs = {}
+base.static.ab = "ui1"
 
 function UITip:onLoad()
     self.msg = self.param.msg

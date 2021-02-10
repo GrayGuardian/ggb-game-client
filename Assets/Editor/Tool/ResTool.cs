@@ -93,10 +93,10 @@ public class ResTool : MonoBehaviour
             abVObjectList.Add(new ABVObject() { name = name, size = size, hash = hash });
         }
         VObject vObject = new VObject();
-        vObject.Version = "1.0.1";
+        vObject.Version = "1.0.2";
         vObject.UpdateType = 0;
         vObject.IsRestart = false;
-        vObject.Content = "我是更新描述";
+        vObject.Content = "我是更新描述!";
         vObject.ABs = abVObjectList.ToArray();
 
         string json = vObject.toString();
@@ -104,10 +104,6 @@ public class ResTool : MonoBehaviour
 
         Util.Encrypt.WriteString(versionFile.FullName, json);
 
-        if (UnityEditor.EditorUtility.DisplayDialog("提示", "是否更新Resources内版本文件？", "确定", "取消"))
-        {
-            Util.Encrypt.WriteString(Path.Combine(GameConst.RESOURCES, "./Default/Version"), json);
-        }
     }
 
     [MenuItem("Tools/资源管理/Build/Build ＆ CopyTo Local")]
@@ -210,7 +206,7 @@ public class ResTool : MonoBehaviour
         Debug.Log(str);
     }
     //需要导出的默认AB包资源
-    static string[] DEFAULT_ABS = { "lua", "ui_tip" };
+    static string[] DEFAULT_ABS = { "lua", "p1","ui1","ui_upres","json" };
     [MenuItem("Tools/资源管理/Clear All Default_Res")]
     static void ClearAllDefaultRes()
     {

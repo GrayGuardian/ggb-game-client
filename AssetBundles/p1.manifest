@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 3524245394
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d68d5542f7de34226ba9bafafb4935fb
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: ea5a42e0fd8ea905efa7aa926a3b8944
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/AB/p1/bar1_bg.png
+- Assets/Resources/AB/p1/bg_tip.png
+- Assets/Resources/AB/p1/bar1_val.png
+- Assets/Resources/AB/p1/bg_btn1.png
+- Assets/Resources/AB/p1/bg_title1.png
+Dependencies: []

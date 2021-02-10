@@ -11,7 +11,7 @@ public class UpRes : MonoBehaviour
 
     private void Awake()
     {
-        refData = Util.Res.getRefdata();
+        refData = Util.Res.GetRefdata();
         if (refData == null)
         {
             Debug.Log("不需要更新");

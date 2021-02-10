@@ -9,9 +9,8 @@ public class ResUtil
     {
         get
         {
-            if (_version == null)
+            if (_vJson != "")
             {
-                Debug.Log("Local VJson:" + _vJson);
                 _version = JsonConvert.DeserializeObject<VObject>(_vJson);
             }
             return _version;
@@ -24,12 +23,6 @@ public class ResUtil
         {
             string path = Path.Combine(GameConst.RES_LOCAL_ROOT, "Version");
             string json = Util.Encrypt.ReadString(path);
-            if (json == "")
-            {
-                UnityEngine.Debug.Log("未找到资源文件夹内版本文件，获取本地版本文件，并加入资源文件夹内");
-                Util.File.CopyTo(Path.Combine(GameConst.RESOURCES, "./Default/Version"), path);
-                json = Util.Encrypt.ReadString(path);
-            }
             return json;
         }
     }
@@ -65,12 +58,12 @@ public class ResUtil
     /// 获取更新数据
     /// </summary>
     /// <returns></returns>
-    public VObject getRefdata()
+    public VObject GetRefdata()
     {
         bool isUp = false;
         VObject vObject;
         //校验远程Json文件
-        if (Version.toString() != WebVersion.toString())
+        if (Version == null || Version.toString() != WebVersion.toString())
         {
             isUp = true;
             vObject = JsonConvert.DeserializeObject<VObject>(WebVersion.toString());

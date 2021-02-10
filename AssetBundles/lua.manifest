@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1854158143
+CRC: 742671226
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 56dda54d7ba288c63b9e0ef799556146
+    Hash: d75d72009ce57ec934169eaab312fe9b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -85,6 +85,7 @@ Assets:
 - Assets/Resources/AB/lua/base/tolua/mime.lua.txt
 - Assets/Resources/AB/lua/util/broadcast/broadcast_code.lua.txt
 - Assets/Resources/AB/lua/base/tolua/protobuf/listener.lua.txt
+- Assets/Resources/AB/lua/ui/ui_upres.lua.txt
 - Assets/Resources/AB/lua/util/timer/timer_model.lua.txt
 - Assets/Resources/AB/lua/scene/scene_step.lua.txt
 - Assets/Resources/AB/lua/util/mono_util.lua.txt
