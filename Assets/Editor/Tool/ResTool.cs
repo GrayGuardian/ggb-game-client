@@ -209,26 +209,57 @@ public class ResTool : MonoBehaviour
         string str = Util.Encrypt.ReadString(versionFile.FullName);
         Debug.Log(str);
     }
-
-    [MenuItem("Tools/资源管理/Copy All Default AB To Resources")]
-    static void CopyAllDefaultABToResources()
+    //需要导出的默认AB包资源
+    static string[] DEFAULT_ABS = { "lua", "ui_tip" };
+    [MenuItem("Tools/资源管理/Clear All Default_Res")]
+    static void ClearAllDefaultRes()
     {
-        //需要导出的默认AB包资源
-        string[] abs = { "lua", "ui_tip" };
-        string root = Path.Combine(GameConst.RESOURCES, "./AB");
-        foreach (var ab in abs)
+        foreach (var ab in DEFAULT_ABS)
         {
-            //清理文件夹
             DirectoryInfo buildDir = new DirectoryInfo(Path.Combine(GameConst.RESOURCES, "./Default", "./" + ab));
-            Debug.Log(buildDir.FullName);
+            if (!Directory.Exists(buildDir.FullName))
+            {
+                continue;
+            }
             FileInfo[] files = buildDir.GetFiles();
-            if (files.Length > 0 && UnityEditor.EditorUtility.DisplayDialog("提示", "是否清空导出文件夹\n Url:" + buildDir.FullName, "确定", "取消"))
+            if (files.Length > 0)
             {
                 foreach (var file in files)
                 {
                     file.Delete();
                 }
             }
+            buildDir.Delete();
+        }
+        AssetDatabase.Refresh();
+    }
+
+    [MenuItem("Tools/资源管理/Copy All Default_Res To Resources")]
+    static void CopyAllDefaultResToResources()
+    {
+        string root = Path.Combine(GameConst.RESOURCES, "./AB");
+        foreach (var ab in DEFAULT_ABS)
+        {
+            FileInfo[] files;
+            DirectoryInfo buildDir = new DirectoryInfo(Path.Combine(GameConst.RESOURCES, "./Default", "./" + ab));
+            if (!Directory.Exists(buildDir.FullName))
+            {
+                //文件夹不存在 则创建
+                Directory.CreateDirectory(buildDir.FullName);
+            }
+            else
+            {
+                //文件夹存在 则判断是否清理文件夹
+                files = buildDir.GetFiles();
+                if (files.Length > 0 && UnityEditor.EditorUtility.DisplayDialog("提示", "是否清空导出文件夹\n Url:" + buildDir.FullName, "确定", "取消"))
+                {
+                    foreach (var file in files)
+                    {
+                        file.Delete();
+                    }
+                }
+            }
+
 
             //开始复制
             DirectoryInfo dir = new DirectoryInfo(Path.Combine(root, ab));

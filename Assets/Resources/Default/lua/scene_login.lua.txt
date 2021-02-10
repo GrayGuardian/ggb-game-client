@@ -1,7 +1,0 @@
-local base = require("scene_base")
-local SceneLogin = class("SceneLogin", base)
-function SceneLogin:onLoad()
-    print("Scene_Login onLoad")
-end
-
-return SceneLogin
