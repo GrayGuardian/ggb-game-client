@@ -9,7 +9,7 @@ public class ABVObject
     /// <summary>
     /// AB包大小
     /// </summary>
-    public long size;
+    public int size;
     /// <summary>
     /// AB包Hash值
     /// </summary>

@@ -210,7 +210,7 @@ public class HttpUtilWrap
 				string arg1 = ToLua.CheckString(L, 3);
 				string arg2 = ToLua.CheckString(L, 4);
 				System.Action arg3 = (System.Action)ToLua.CheckDelegate<System.Action>(L, 5);
-				System.Action<long,long> arg4 = (System.Action<long,long>)ToLua.CheckDelegate<System.Action<long,long>>(L, 6);
+				System.Action<int,int> arg4 = (System.Action<int,int>)ToLua.CheckDelegate<System.Action<int,int>>(L, 6);
 				obj.Download(arg0, arg1, arg2, arg3, arg4);
 				return 0;
 			}

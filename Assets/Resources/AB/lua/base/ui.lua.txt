@@ -89,6 +89,8 @@ function UI:showUI(name, param, opts)
     local go = GameObject.Instantiate(prefab)
     local node = go:GetComponent("RectTransform")
     comp:bind(node)
+
+    return comp;
 end
 function UI:closeUI(uiComp)
     uiComp:_onDestroy()

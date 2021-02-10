@@ -40,6 +40,7 @@ public static class CustomSettings
         _DT(typeof(UnityEngine.Events.UnityAction)),
         _DT(typeof(System.Predicate<int>)),
         _DT(typeof(System.Action<int>)),
+        _DT(typeof(System.Action<int,int>)),
         _DT(typeof(System.Action<string>)),
         _DT(typeof(System.Comparison<int>)),
         _DT(typeof(System.Func<int, int>)),
@@ -172,6 +173,7 @@ public static class CustomSettings
         _GT(typeof(HttpUtil)),
         _GT(typeof(ResUtil)),
         _GT(typeof(VObject)),
+        _GT(typeof(ABVObject)),
         _GT(typeof(ENV_TYPE)),
     };
 

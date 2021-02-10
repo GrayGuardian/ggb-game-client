@@ -75,11 +75,11 @@ public class HttpUtil
     }
 
 
-    public void Download(string url, string saveFile, string tempFileName = null, Action cb = null, Action<long, long> downloadingCb = null)
+    public void Download(string url, string saveFile, string tempFileName = null, Action cb = null, Action<int, int> downloadingCb = null)
     {
         MonoSingleton.Instance.StartCoroutine(_download(url, saveFile, tempFileName, cb, downloadingCb));
     }
-    IEnumerator _download(string url, string saveFile, string tempFileName = null, Action cb = null, Action<long, long> downloadingCb = null)
+    IEnumerator _download(string url, string saveFile, string tempFileName = null, Action cb = null, Action<int, int> downloadingCb = null)
     {
         string fileName = Path.GetFileName(saveFile);
         tempFileName = tempFileName == null ? (fileName + ".temp") : tempFileName;
@@ -131,8 +131,8 @@ public class HttpUtil
         {
             fs.Write(nbytes, 0, nReadSize);
             nReadSize = ns.Read(nbytes, 0, len);
-            long dDownloadedLength = (fs.Length - lStartPos);
-            long dTotalLength = countLength;
+            int dDownloadedLength = (int)(fs.Length - lStartPos);
+            int dTotalLength = (int)countLength;
             //UnityEngine.Debug.Log(string.Format("已下载 {0} / {1}", dDownloadedLength, dTotalLength));
             if (downloadingCb != null) downloadingCb(dDownloadedLength, dTotalLength);
             yield return false;

@@ -148,7 +148,7 @@ public class UpRes : MonoBehaviour
         RectTransform node = UI_Updata_Info_Node;
         node.Find("VersionText").GetComponent<Text>().text = refData.Version;
         node.Find("ContentText").GetComponent<Text>().text = refData.Content;
-
+              
 
         if (refData.UpdateType == 0)
         {

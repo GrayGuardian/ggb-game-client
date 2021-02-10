@@ -96,7 +96,7 @@ public class ResUtil
                 {
                     //存在缓存文件
                     FileInfo tempFile = new FileInfo(tempPath);
-                    ab.size = ab.size - tempFile.Length;
+                    ab.size = ab.size - (int)tempFile.Length;
                 }
                 abList.Add(ab);
             }

@@ -2,15 +2,6 @@ local base = require("scene_base")
 local SceneLogin = class("SceneStep", base)
 
 function SceneLogin:onLoad()
-    --ui:loadScene("Login")
-    ui:showUI(
-        "ui_tip",
-        {
-            msg = "马上转跳到UpRes场景111",
-            onClick = function()
-                ui:loadScene("UpRes")
-            end
-        }
-    )
+    ui:loadScene("UpRes")
 end
 return SceneLogin

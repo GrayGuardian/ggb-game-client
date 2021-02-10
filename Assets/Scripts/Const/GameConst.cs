@@ -18,7 +18,7 @@ public class GameConst
     /// 开发环境
     /// </summary>
 #if UNITY_EDITOR
-    public static ENV_TYPE PRO_ENV = ENV_TYPE.MASTER;
+    public static ENV_TYPE PRO_ENV = ENV_TYPE.DEV;
 #else
     public static ENV_TYPE PRO_ENV = ENV_TYPE.MASTER;
 #endif

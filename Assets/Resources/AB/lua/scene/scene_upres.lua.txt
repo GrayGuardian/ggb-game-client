@@ -8,22 +8,104 @@ function SceneLogin:onLoad()
         print("不需要更新")
     else
         print("需要更新")
+        local size = 0;
+        local absSum = self.refdata.ABs.Length;
+        if absSum > 0 then
+            for i = 0, absSum-1 do
+                size = size + self.refdata.ABs:GetValue(i).size;
+            end
+        end
+
         if self.refdata.Version ~= resUtil.Version.Version then
             if self.refdata.UpdateType == 0 then
-                if self.refdata.ABs.Length > 0 then
+                if absSum > 0 then
                     print("在线更新>>下载文件")
+                    ui:showUI("ui_tip",
+                    {
+                        msg=string.format("共计需要下载%s资源",utils.sizeFormat(size)),
+                        btnTitle = "开始下载",
+                        onClick = function ()
+                            self:downloadRes();
+                        end
+                    });
                 else
-                    print("在线更新>>不需要下载文件")
+                    print("在线更新>>不需要下载文件 一般是版本文件丢失 只要更新版本文件")
                 end
-            elseif self.refData.UpdateType == 1 then
+            elseif self.refdata.UpdateType == 1 then
                 print("自行前往更新")
+                ui:showUI("ui_tip",
+                {
+                    msg="需要手动下载安装包进行更新，是否前往下载？",
+                    btnTitle = "前往下载",
+                    onClick = function ()
+                        print("转跳下载，退出游戏");
+                    end
+                });
             end
         else
-            print("文件损坏 需要更新资源>>" + self.refData:toString())
+            print("文件损坏 需要更新资源")
+            ui:showUI("ui_tip",
+            {
+                msg=string.format("文件损坏,需要重新下载\n共计需要下载%s资源",utils.sizeFormat(size)),
+                btnTitle = "开始下载",
+                onClick = function ()
+                    self:downloadRes();
+                end
+            });
         end
     end
 end
-function SceneLogin:onDestroy()
-    print("Scene_Upres onDestroy")
+function SceneLogin:downloadRes()
+    print("开始下载资源")
+    self:downloadABFile(
+        self.refdata.ABs,
+        function ()
+            print("AB包全部更新完毕");
+        end,
+        function (abInfo)
+            print(string.format("AB包[%s]开始更新",abInfo.name));
+        end,
+        function (abInfo)
+            print(string.format("AB包[%s]更新完毕",abInfo.name));
+        end,
+        function (abInfo,order,size,count)
+            print(string.format("AB包[%s]正在下载：[%s/%s]：%s/%s",abInfo.name,order+1,self.refdata.ABs.Length,utils.sizeFormat(size),utils.sizeFormat(count)));
+        end
+    )
+end
+
+function SceneLogin:downloadABFile(abInfos,allDownloadOverEvent,singleDownloadStartEvent,singleDownloadOverEvent,singleDownloadUpdateEvent,order)
+    print(abInfos);
+    order = order and order or 0;
+    if abInfos.Length <= order then
+        if allDownloadOverEvent ~= nil then 
+            allDownloadOverEvent();
+        end
+        return;
+    end
+    local abInfo = abInfos:GetValue(order);
+    
+    if singleDownloadStartEvent ~= nil then 
+        singleDownloadStartEvent(abInfo);
+    end
+
+    local download_url = string.format("%sAssetBundles/%s",GameConst.DOWNLOAD_URL,abInfo.name);
+    local save_path = string.format("%s/AssetBundles/%s",GameConst.RES_LOCAL_ROOT,abInfo.name)
+    local temp_fileName = string.format("%s_%s.temp",abInfo.name,abInfo.hash)
+    httpUtil:Download(download_url,save_path,temp_fileName,
+        function()
+            if singleDownloadOverEvent ~= nil then 
+                singleDownloadOverEvent(abInfo);
+            end
+            self:downloadABFile(abInfos, allDownloadOverEvent, singleDownloadStartEvent, singleDownloadOverEvent, singleDownloadUpdateEvent, order + 1);
+        end,       
+        function(downloadSize, countSize)
+            if singleDownloadUpdateEvent ~= nil then 
+                singleDownloadUpdateEvent(abInfo, order, downloadSize, countSize);
+            end
+        end
+    )
+    --print(string.format("download_url:%s\nsave_path:%s\ntemp_fileName:%s",download_url,save_path,temp_fileName))
+    
 end
 return SceneLogin

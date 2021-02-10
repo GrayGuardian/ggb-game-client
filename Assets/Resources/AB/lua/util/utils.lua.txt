@@ -56,8 +56,21 @@ utils.serialize = function(obj)
     return lua
 end
 
+utils.sizeFormat = function(byteSize)
+    if byteSize > (1024*1024*1024)*0.95 then
+        return string.format("%0.2fGB",byteSize / (1024*1024*1024))
+    elseif byteSize > (1024*1024)*0.95 then
+        return string.format("%0.2fMB",byteSize / (1024*1024))
+    elseif byteSize > 1024*0.95 then
+        return string.format("%0.2fKB",byteSize / 1024)
+    end
+    return string.format("%0.2fBytes",byteSize)
+end
+
+
 -- c#
 resUtil = ResUtil.New()
+httpUtil = HttpUtil.New();
 -- tolua
 json = require("json_util"):new()
 BROADCAST_CODE = require("broadcast_code")
