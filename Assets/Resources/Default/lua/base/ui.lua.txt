@@ -53,9 +53,10 @@ function UI:showUI(name, param, opts)
         opts = OPTS_DEFAULT
     end
     local comp = require(name):new(name, param, opts)
+    self:addUI(comp)
     --加载AB依赖包
     for index, abKey in ipairs(comp:getABs()) do
-        if self:existAB(abKey, name) == false and self:addAB(abKey, name) then
+        if self:existAB(abKey, comp) == false and self:addAB(abKey, comp) then
             print("UI>>加载AB包:" .. abKey)
             resUtil:LoadAssetBundle(abKey)
         end
@@ -67,9 +68,20 @@ function UI:showUI(name, param, opts)
     node.name = name
     node.parent = ui.uiCanvas
     local relaOrder = self:getRelaOrder(opts.order and opts.order or 0) - 1
-    print("relaOrder>>>", relaOrder)
     node:SetSiblingIndex(relaOrder)
     comp:bind(node)
+end
+function UI:closeUI(uiComp)
+    uiComp:_onDestroy()
+    GameObject.Destroy(uiComp.node.gameObject)
+    --卸载AB依赖包
+    for index, abKey in ipairs(uiComp:getABs()) do
+        if self:existAB(abKey, uiComp) == true and self:delAB(abKey, uiComp) and self.abKeyMap[abKey] == nil then
+            print("UI>>卸载AB包:" .. abKey)
+            resUtil:UnLoadAssetBundle(abKey, true)
+        end
+    end
+    self:delUI(uiComp)
 end
 function UI:getRelaOrder(order)
     local index = #self.uiCompMap

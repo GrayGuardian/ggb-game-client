@@ -24,7 +24,6 @@ function UIBase:init(name, param, opts)
     self.node = nil
     self.uiComp = {}
     table.insert(UIBase.abs, 1, self:getAB())
-    ui:addUI(self)
 end
 
 --绑定物体
@@ -110,12 +109,10 @@ end
 function UIBase:_onDestroy()
     print("卸载UI-" .. self.name .. " >>>>>>>>>>>>>>>>>>>>>>>> onDestroy")
     self:onDestroy()
-    ui:delUI(self)
-    GameObject.Destroy(self.node.gameObject)
 end
 -- 卸载
 function UIBase:close()
-    self:_onDestroy()
+    ui:closeUI(self)
 end
 function UIBase:getAB()
     return UIBase.ab == "" and self.name or UIBase.ab
