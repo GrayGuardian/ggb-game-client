@@ -23,6 +23,7 @@ function UIBase:init(name, param, opts)
     self.opts = opts
     self.node = nil
     self.uiComp = {}
+    self.timerMap = {}
     table.insert(UIBase.abs, 1, self:getAB())
 end
 
@@ -30,6 +31,9 @@ end
 function UIBase:bind(node)
     self.node = node
     -- 更新位置
+    self.node.name = self.name
+    self.node.parent = ui.uiCanvas
+    self.node:SetSiblingIndex(self:getRelaOrder())
     self.node.localScale = {x = 1, y = 1, z = 1}
     self.node.anchorMin = {x = 0, y = 0}
     self.node.anchorMax = {x = 1, y = 1}
@@ -41,6 +45,7 @@ function UIBase:bind(node)
     self:uiCompInit()
     print("UI绑定成功>>>", self.name, self.node)
     self:_onLoad()
+    self:timer_on()
 end
 -- ui组件初始化
 function UIBase:uiCompInit()
@@ -108,6 +113,7 @@ function UIBase:_onLoad()
 end
 function UIBase:_onDestroy()
     print("卸载UI-" .. self.name .. " >>>>>>>>>>>>>>>>>>>>>>>> onDestroy")
+    self:timer_clear()
     self:onDestroy()
 end
 -- 卸载
@@ -120,5 +126,22 @@ end
 function UIBase:getABs()
     return UIBase.abs
 end
+function UIBase:getRelaOrder()
+    return ui:getRelaOrder(self.opts.order) - 1
+end
 
+function UIBase:timer_on(time, loopCount, onTrigger)
+    local t = timer:on(time, loopCount, onTrigger)
+    table.insert(self.timerMap, t)
+end
+function UIBase:timer_out(t)
+    timer:out(t)
+    table.del(self.timerMap, t)
+end
+function UIBase:timer_clear()
+    for index, t in ipairs(self.timerMap) do
+        self:timer_out(t)
+    end
+    self.timerMap = {}
+end
 return UIBase

@@ -4,7 +4,7 @@ local SceneLogin = class("SceneStep", base)
 function SceneLogin:onLoad()
     --ui:loadScene("UpRes")
     ui:showUI("ui_tip", {msg = "我是提示框"})
-    ui:showUI("ui_tip", {msg = "我是提示框1"})
-    ui:showUI("ui_tip", {msg = "我是提示框2"})
+    --ui:showUI("ui_tip", {msg = "我是提示框1"}, {order = 1})
+    --ui:showUI("ui_tip", {msg = "我是提示框2"})
 end
 return SceneLogin

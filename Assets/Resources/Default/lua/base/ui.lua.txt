@@ -65,10 +65,6 @@ function UI:showUI(name, param, opts)
     local prefab = resUtil:Load(comp:getAB(), name)
     local go = GameObject.Instantiate(prefab)
     local node = go:GetComponent("RectTransform")
-    node.name = name
-    node.parent = ui.uiCanvas
-    local relaOrder = self:getRelaOrder(opts.order and opts.order or 0) - 1
-    node:SetSiblingIndex(relaOrder)
     comp:bind(node)
 end
 function UI:closeUI(uiComp)
