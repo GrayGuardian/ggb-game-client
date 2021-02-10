@@ -1,0 +1,67 @@
+class = require("middle_class")
+
+table.exist = function(table, value)
+    for k, v in pairs(table) do
+        if v == value then
+            return true
+        end
+    end
+    return false
+end
+table.del = function(table, value)
+    for k, v in pairs(table) do
+        if v == value then
+            table[k] = nil
+            return true
+        end
+    end
+    return false
+end
+
+utils = {}
+utils.serialize = function(obj)
+    local lua = ""
+    if obj == nil then
+        return "nil"
+    end
+    local t = type(obj)
+    if t == "number" then
+        lua = lua .. obj
+    elseif t == "boolean" then
+        lua = lua .. tostring(obj)
+    elseif t == "string" then
+        lua = lua .. string.format("%q", obj)
+    elseif t == "table" then
+        lua = lua .. "{ "
+        for k, v in pairs(obj) do
+            lua = lua .. "[" .. utils.serialize(k) .. "]=" .. utils.serialize(v) .. ", "
+        end
+        local metatable = getmetatable(obj)
+        if metatable ~= nil and type(metatable.__index) == "table" then
+            for k, v in pairs(metatable.__index) do
+                lua = lua .. "[" .. utils.serialize(k) .. "]=" .. utils.serialize(v) .. ", "
+            end
+        end
+        lua = lua .. "}"
+        lua = string.gsub(lua, ", }", " }")
+    elseif t == "function" then
+        lua = lua .. "[function]"
+    elseif t == "userdata" then
+        lua = lua .. "[" .. tostring(t) .. "]"
+    elseif t == "nil" then
+        lua = lua .. "[nil]"
+    else
+        error("can not serialize a " .. t .. " type.")
+    end
+    return lua
+end
+
+-- c#
+resUtil = ResUtil.New()
+-- tolua
+json = require("json_util"):new()
+BROADCAST_CODE = require("broadcast_code")
+broadcast = require("broadcast_util"):new()
+mono = require("mono_util"):new()
+timer = require("timer_util"):new()
+ui = require("ui"):new()

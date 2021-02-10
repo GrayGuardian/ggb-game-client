@@ -1,0 +1,9 @@
+local base = require("scene_base")
+local SceneGame = class("SceneGame", base)
+function SceneGame:onLoad()
+    print("Scene_Game onLoad")
+end
+function SceneGame:onDestroy()
+    print("Scene_Game onDestroy")
+end
+return SceneGame

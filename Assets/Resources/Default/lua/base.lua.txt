@@ -1,0 +1,8 @@
+-- 缩写
+UE = UnityEngine
+UEUI = UE.UI
+GameObject = UE.GameObject
+SceneManager = UE.SceneManagement.SceneManager
+Application = UE.Application
+
+require("utils")

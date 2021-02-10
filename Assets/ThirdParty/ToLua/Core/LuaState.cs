@@ -183,17 +183,17 @@ namespace LuaInterface
             if (!LuaFileUtil.Instance.beZip)
             {
 #if UNITY_EDITOR
-                if (!Directory.Exists(LuaConst.luaDir))
-                {
-                    string msg = string.Format("luaDir path not exists: {0}, configer it in LuaConst.cs", LuaConst.luaDir);
-                    throw new LuaException(msg);
-                }
+                // if (!Directory.Exists(LuaConst.luaDir))
+                // {
+                //     string msg = string.Format("luaDir path not exists: {0}, configer it in LuaConst.cs", LuaConst.luaDir);
+                //     throw new LuaException(msg);
+                // }
 
-                if (!Directory.Exists(LuaConst.toluaDir))
-                {
-                    string msg = string.Format("toluaDir path not exists: {0}, configer it in LuaConst.cs", LuaConst.toluaDir);
-                    throw new LuaException(msg);
-                }
+                // if (!Directory.Exists(LuaConst.toluaRoot))
+                // {
+                //     string msg = string.Format("toluaDir path not exists: {0}, configer it in LuaConst.cs", LuaConst.toluaDir);
+                //     throw new LuaException(msg);
+                // }
 
                 AddSearchPath(LuaConst.toluaDir);
                 AddSearchPath(LuaConst.luaDir);
@@ -223,7 +223,7 @@ namespace LuaInterface
             LuaSetGlobal("tolua_tag");
 #if UNITY_EDITOR
             if (UnityEditor.EditorPrefs.GetInt(Application.dataPath + "InjectStatus") == 1)
-            { 
+            {
 #endif
                 DoFile("System/Injection/LuaInjectionStation.lua");
                 bInjectionInited = true;

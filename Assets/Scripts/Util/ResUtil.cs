@@ -27,7 +27,7 @@ public class ResUtil
             if (json == "")
             {
                 UnityEngine.Debug.Log("未找到资源文件夹内版本文件，获取本地版本文件，并加入资源文件夹内");
-                Util.File.CopyTo(Path.Combine(PathConst.RESOURCES, "./Version"), path);
+                Util.File.CopyTo(Path.Combine(PathConst.RESOURCES, "./Default/Version"), path);
                 json = Util.Encrypt.ReadString(path);
             }
             return json;
@@ -114,7 +114,7 @@ public class ResUtil
     private Dictionary<string, AssetBundle> _abMap = new Dictionary<string, AssetBundle>();
     public AssetBundle LoadAssetBundle(string key)
     {
-       
+
         if (Util.Json["config"]["PRO_ENV"].ToString() != "Master") return null;
         if (_abMap.ContainsKey(key)) return null;
         string filePath = Path.Combine(PathConst.RES_LOCAL_ROOT, "./AssetBundles", "./" + key);
@@ -162,8 +162,11 @@ public class ResUtil
             }
             if (asset != null)
             {
-                UnityEngine.Debug.Log(string.Format("通过AB包加载资源 key:{0} resName:{1}", key, resName));
                 data = asset.LoadAsset<T>(resName);
+                if (data != default(T))
+                {
+                    UnityEngine.Debug.Log(string.Format("通过AB包加载资源 key:{0} resName:{1}", key, resName));
+                }
             }
         }
         else
@@ -174,21 +177,32 @@ public class ResUtil
             {
                 string dirPath = PathConst.GetRelativePath(fileInfo.DirectoryName, PathConst.RESOURCES);
                 resPath = Path.Combine(dirPath, resName);
-                UnityEngine.Debug.Log(string.Format("通过Resources加载资源 key:{0} resName:{1} resPath:{2}", key, resName, resPath));
                 data = Resources.Load<T>(resPath);
+                if (data != default(T))
+                {
+                    UnityEngine.Debug.Log(string.Format("通过伪AB包(Resources)加载资源 key:{0} resName:{1} resPath:{2}", key, resName, resPath));
+                }
             }
         }
 
         if (data == default(T))
         {
-            string resPath = Path.Combine(PathConst.RESOURCES, "./Default/" + key);
-            FileInfo fileInfo = Util.File.GetChildFile(resPath, resName + ".*");
-            if (fileInfo == null) return data;
-            string dirPath = PathConst.GetRelativePath(fileInfo.DirectoryName, PathConst.RESOURCES);
-            resPath = Path.Combine(dirPath, resName);
-            //UnityEngine.Debug.Log(string.Format("通过默认文件夹加载资源 key:{0} resName:{1} resPath:{2}", key, resName, resPath));
-            data = Resources.Load<T>(resPath);
+            data = Resources.Load<T>("Default/" + key + "/" + resName);
+            if (data != default(T))
+            {
+                UnityEngine.Debug.Log(string.Format("通过默认文件夹加载资源 key:{0} resName:{1}", key, resName));
+            }
+
         }
+        if (data == default(T))
+        {
+            data = Resources.Load<T>(key + "/" + resName);
+            if (data != default(T))
+            {
+                UnityEngine.Debug.Log(string.Format("通过Base文件夹加载资源 key:{0} resName:{1}", key, resName));
+            }
+        }
+
         return data;
     }
 

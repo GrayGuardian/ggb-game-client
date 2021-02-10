@@ -1,0 +1,13 @@
+local Json = class("Json")
+local cjson = require("cjson")
+function Json:init()
+    csjson = JsonUtil.New()
+    iter = csjson.JsonDic:GetEnumerator()
+    while iter:MoveNext() do
+        local key = iter.Current.Key
+        local value = iter.Current.Value
+        self[key] = cjson.decode(tostring(value))
+    end
+end
+
+return Json

@@ -106,7 +106,7 @@ public class ResTool : MonoBehaviour
 
         if (UnityEditor.EditorUtility.DisplayDialog("提示", "是否更新Resources内版本文件？", "确定", "取消"))
         {
-            Util.Encrypt.WriteString(Path.Combine(PathConst.RESOURCES, "./Version"), json);
+            Util.Encrypt.WriteString(Path.Combine(PathConst.RESOURCES, "./Default/Version"), json);
         }
     }
 
@@ -208,5 +208,59 @@ public class ResTool : MonoBehaviour
         }
         string str = Util.Encrypt.ReadString(versionFile.FullName);
         Debug.Log(str);
+    }
+
+    [MenuItem("Tools/资源管理/Copy All Default AB To Resources")]
+    static void CopyAllDefaultABToResources()
+    {
+        //需要导出的默认AB包资源
+        string[] abs = { "lua", "ui_tip" };
+        string root = Path.Combine(PathConst.RESOURCES, "./AB");
+        foreach (var ab in abs)
+        {
+
+            DirectoryInfo dir = new DirectoryInfo(Path.Combine(root, ab));
+            FileInfo[] files = Util.File.GetChildFiles(dir.FullName, "*");
+            Dictionary<string, FileInfo> fileMap = new Dictionary<string, FileInfo>();
+            foreach (var file in files)
+            {
+                if (fileMap.ContainsKey(file.Name))
+                {
+                    Debug.LogError("Error:出现重复项：" + file.Name);
+                    return;
+                }
+                else
+                {
+                    fileMap.Add(file.Name, file);
+                }
+            }
+            foreach (var file in fileMap.Values)
+            {
+                UnityEngine.Debug.Log(file.FullName);
+                UnityEngine.Debug.Log(Path.Combine(PathConst.RESOURCES, "./Default", "./" + ab, "./" + file.Name));
+                Util.File.CopyTo(file.FullName, Path.Combine(PathConst.RESOURCES, "./Default", "./" + ab, "./" + file.Name));
+            }
+        }
+    }
+    [MenuItem("Tools/资源管理/Format LuaFileName")]
+    static void FormatLuaFileName()
+    {
+        string root = Path.Combine(PathConst.RESOURCES, "./AB/lua");
+        FileInfo[] files = Util.File.GetChildFiles(root, "*");
+        foreach (var file in files)
+        {
+            Debug.Log(Path.GetExtension(file.FullName));
+            switch (Path.GetExtension(file.FullName))
+            {
+                case ".meta":
+                    print("meta文件需要删除>>" + file.Name);
+                    File.Delete(file.FullName);
+                    break;
+                case ".lua":
+                    print("lua文件需要格式化>>" + file.Name);
+                    file.MoveTo(Path.Combine(file.Directory.FullName, file.Name + ".txt"));
+                    break;
+            }
+        }
     }
 }

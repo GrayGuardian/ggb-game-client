@@ -1,0 +1,29 @@
+local base = require("scene_base")
+local SceneLogin = class("SceneUpres", base)
+
+function SceneLogin:onLoad()
+    print("Scene_Upres onLoad")
+    self.refdata = resUtil:getRefdata()
+    if self.refdata == nil then
+        print("不需要更新")
+    else
+        print("需要更新")
+        if self.refdata.Version ~= resUtil.Version.Version then
+            if self.refdata.UpdateType == 0 then
+                if self.refdata.ABs.Length > 0 then
+                    print("在线更新>>下载文件")
+                else
+                    print("在线更新>>不需要下载文件")
+                end
+            elseif self.refData.UpdateType == 1 then
+                print("自行前往更新")
+            end
+        else
+            print("文件损坏 需要更新资源>>" + self.refData:toString())
+        end
+    end
+end
+function SceneLogin:onDestroy()
+    print("Scene_Upres onDestroy")
+end
+return SceneLogin

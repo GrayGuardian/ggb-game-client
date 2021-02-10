@@ -10,7 +10,7 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Unity.CecilTools;
 using Unity.CecilTools.Extensions;
-using CustomCecilRocks; 
+using CustomCecilRocks;
 using System.Reflection;
 using LuaInterface;
 using UnityEditor.Callbacks;
@@ -117,7 +117,7 @@ public static class ToLuaInjection
             EditorPrefs.SetInt(Application.dataPath + "WaitForInjection", 0);
         }
     }
-	
+
     [MenuItem("Lua/Inject All &i", false, 5)]
     static void InjectByMenu()
     {
@@ -311,13 +311,13 @@ public static class ToLuaInjection
         offset = targetBody.Instructions.IndexOf(startInsertPos);
     }
 
-#region GenericMethod
+    #region GenericMethod
     static void InjectGenericMethod(AssemblyDefinition assembly, MethodDefinition target, int methodIndex)
     {
     }
-#endregion GenericMethod
+    #endregion GenericMethod
 
-#region Coroutine
+    #region Coroutine
     static void InjectCoroutine(AssemblyDefinition assembly, MethodDefinition target, int methodIndex)
     {
         InjectType runtimeInjectType = GetMethodRuntimeInjectType(target);
@@ -463,9 +463,9 @@ public static class ToLuaInjection
         il.InsertBefore(cursor, il.Create(OpCodes.Ldfld, stateField));
     }
 
-#endregion Coroutine
+    #endregion Coroutine
 
-#region NormalMethod
+    #region NormalMethod
     static void InjectMethod(AssemblyDefinition assembly, MethodDefinition target, int methodIndex)
     {
         target.Body.SimplifyMacros();
@@ -679,7 +679,7 @@ public static class ToLuaInjection
             targetBody.Instructions.Remove(cursor.Previous);
         }
     }
-#endregion NormalMethod
+    #endregion NormalMethod
 
     static void FillArgs(MethodDefinition target, Instruction endPoint, Action<MethodDefinition, Instruction, int> parseReferenceProcess)
     {
@@ -922,7 +922,7 @@ public static class ToLuaInjection
         sb.Append("return ");
         ToLuaText.TransferDic(temp, sb);
         sb.Remove(sb.Length - 1, 1);
-        File.WriteAllText(CustomSettings.baseLuaDir + "System/Injection/InjectionBridgeInfo.lua", StringBuilderCache.GetStringAndRelease(sb));
+        File.WriteAllText(CustomSettings.baseLuaDir + "System/Injection/InjectionBridgeInfo.lua.txt", StringBuilderCache.GetStringAndRelease(sb));
     }
 
     static int AppendMethod(MethodDefinition method)
