@@ -6,9 +6,9 @@ function SceneLogin:onLoad()
     ui:showUI(
         "ui_tip",
         {
-            msg = "马上转跳到UpRes场景",
+            msg = "马上转跳到UpRes场景111",
             onClick = function()
-                --ui:loadScene("UpRes")
+                ui:loadScene("UpRes")
             end
         }
     )

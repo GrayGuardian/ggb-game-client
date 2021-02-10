@@ -218,9 +218,21 @@ public class ResTool : MonoBehaviour
         string root = Path.Combine(PathConst.RESOURCES, "./AB");
         foreach (var ab in abs)
         {
+            //清理文件夹
+            DirectoryInfo buildDir = new DirectoryInfo(Path.Combine(PathConst.RESOURCES, "./Default", "./" + ab));
+            Debug.Log(buildDir.FullName);
+            FileInfo[] files = buildDir.GetFiles();
+            if (files.Length > 0 && UnityEditor.EditorUtility.DisplayDialog("提示", "是否清空导出文件夹\n Url:" + buildDir.FullName, "确定", "取消"))
+            {
+                foreach (var file in files)
+                {
+                    file.Delete();
+                }
+            }
 
+            //开始复制
             DirectoryInfo dir = new DirectoryInfo(Path.Combine(root, ab));
-            FileInfo[] files = Util.File.GetChildFiles(dir.FullName, "*");
+            files = Util.File.GetChildFiles(dir.FullName, "*");
             Dictionary<string, FileInfo> fileMap = new Dictionary<string, FileInfo>();
             foreach (var file in files)
             {
@@ -241,26 +253,28 @@ public class ResTool : MonoBehaviour
                 Util.File.CopyTo(file.FullName, Path.Combine(PathConst.RESOURCES, "./Default", "./" + ab, "./" + file.Name));
             }
         }
+        AssetDatabase.Refresh();
     }
-    [MenuItem("Tools/资源管理/Format LuaFileName")]
-    static void FormatLuaFileName()
-    {
-        string root = Path.Combine(PathConst.RESOURCES, "./AB/lua");
-        FileInfo[] files = Util.File.GetChildFiles(root, "*");
-        foreach (var file in files)
-        {
-            Debug.Log(Path.GetExtension(file.FullName));
-            switch (Path.GetExtension(file.FullName))
-            {
-                case ".meta":
-                    print("meta文件需要删除>>" + file.Name);
-                    File.Delete(file.FullName);
-                    break;
-                case ".lua":
-                    print("lua文件需要格式化>>" + file.Name);
-                    file.MoveTo(Path.Combine(file.Directory.FullName, file.Name + ".txt"));
-                    break;
-            }
-        }
-    }
+    // [MenuItem("Tools/资源管理/Format Lua File Name")]
+    // static void FormatLuaFileName()
+    // {
+    //     string root = Path.Combine(PathConst.RESOURCES, "./AB/lua");
+    //     FileInfo[] files = Util.File.GetChildFiles(root, "*");
+    //     foreach (var file in files)
+    //     {
+    //         Debug.Log(Path.GetExtension(file.FullName));
+    //         switch (Path.GetExtension(file.FullName))
+    //         {
+    //             case ".meta":
+    //                 print("meta文件需要删除>>" + file.Name);
+    //                 File.Delete(file.FullName);
+    //                 break;
+    //             case ".lua":
+    //                 print("lua文件需要格式化>>" + file.Name);
+    //                 file.MoveTo(Path.Combine(file.Directory.FullName, file.Name + ".txt"));
+    //                 break;
+    //         }
+    //     }
+    //     AssetDatabase.Refresh();
+    // }
 }
