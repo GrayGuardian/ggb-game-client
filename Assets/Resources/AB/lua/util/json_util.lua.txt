@@ -1,13 +1,13 @@
 local Json = class("Json")
 local cjson = require("cjson")
 function Json:init()
-    csjson = JsonUtil.New()
-    iter = csjson.JsonDic:GetEnumerator()
-    while iter:MoveNext() do
-        local key = iter.Current.Key
-        local value = iter.Current.Value
-        self[key] = cjson.decode(tostring(value))
+    resUtil:LoadAssetBundle("json")
+    for i = 0, GameConst.RES_JSONS.Length - 1 do
+        local key = GameConst.RES_JSONS:GetValue(i)
+        local json = resUtil:LoadString("json", key)
+        self[key] = cjson.decode(json)
     end
+    resUtil:UnLoadAssetBundle("json")
 end
 
 return Json

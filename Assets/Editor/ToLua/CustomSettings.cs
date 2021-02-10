@@ -165,12 +165,9 @@ public static class CustomSettings
         _GT(typeof(UnityEngine.UI.Button.ButtonClickedEvent)),
 
         _GT(typeof(GameConst)),
-        _GT(typeof(Dictionary<string, JObject>)),
-        _GT(typeof(JObject)),
 
         _GT(typeof(MonoSingleton)),
         _GT(typeof(MonoComponent)),
-        _GT(typeof(JsonUtil)),
         _GT(typeof(EncryptUtil)),
         _GT(typeof(HttpUtil)),
         _GT(typeof(ResUtil)),

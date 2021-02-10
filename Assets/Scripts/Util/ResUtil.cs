@@ -138,13 +138,13 @@ public class ResUtil
         _abMap.Remove(key);
     }
 
-    public UnityEngine.Object Load(string key, string resName)
+    public UnityEngine.Object Load(string key, string resName, bool loadIsClose = false)
     {
 
-        return Load<UnityEngine.Object>(key, resName);
+        return Load<UnityEngine.Object>(key, resName, loadIsClose);
     }
 
-    public T Load<T>(string key, string resName) where T : UnityEngine.Object
+    public T Load<T>(string key, string resName, bool loadIsClose = false) where T : UnityEngine.Object
     {
 
         T data = default(T);
@@ -165,6 +165,10 @@ public class ResUtil
                 if (data != default(T))
                 {
                     UnityEngine.Debug.Log(string.Format("通过AB包加载资源 key:{0} resName:{1}", key, resName));
+                }
+                if (loadIsClose)
+                {
+                    UnLoadAssetBundle(key);
                 }
             }
         }
@@ -205,27 +209,27 @@ public class ResUtil
         return data;
     }
 
-    public string LoadString(string key, string resName)
+    public string LoadString(string key, string resName, bool loadIsClose = false)
     {
-        UnityEngine.Object o = Load(key, resName);
+        UnityEngine.Object o = Load(key, resName, loadIsClose);
         if (o == null) return null;
         return o.ToString();
     }
 
-    public byte[] LoadBytes(string key, string resName)
+    public byte[] LoadBytes(string key, string resName, bool loadIsClose = false)
     {
-        string str = LoadString(key, resName);
+        string str = LoadString(key, resName, loadIsClose);
         if (str == null) return null;
         return System.Text.Encoding.UTF8.GetBytes(str);
     }
 
-    public Sprite LoadSprite(string key, string resName)
+    public Sprite LoadSprite(string key, string resName, bool loadIsClose = false)
     {
-        return Load<Sprite>(key, resName);
+        return Load<Sprite>(key, resName, loadIsClose);
     }
 
-    public GameObject LoadGameObject(string key, string resName)
+    public GameObject LoadGameObject(string key, string resName, bool loadIsClose = false)
     {
-        return Load<GameObject>(key, resName);
+        return Load<GameObject>(key, resName, loadIsClose);
     }
 }

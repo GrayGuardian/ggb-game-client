@@ -6,7 +6,8 @@ public class Main : MonoBehaviour
     {
         //控制台输出
         MonoSingleton.Instance.MonoGo.AddComponent<TestConsole>();
-        Debug.Log("加载Main Awake" + "   " + gameObject.name);
+        Debug.Log("加载Main Awake");
+        Debug.Log("C#>>>" + Util.Json["test"]["test"]);
         MonoSingleton.Instance.MonoGo.AddComponent<LuaClient>();
     }
 }

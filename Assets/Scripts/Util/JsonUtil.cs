@@ -6,22 +6,18 @@ using UnityEngine;
 public class JsonUtil
 {
     public Dictionary<string, JObject> JsonDic = new Dictionary<string, JObject>();
-    
+
     public JsonUtil()
     {
-        string root = Path.Combine(Application.dataPath, "Scripts/Json");
-        FileInfo[] files = new DirectoryInfo(root).GetFiles();
-        foreach (var file in files)
+        Util.Res.LoadAssetBundle("json");
+        foreach (var key in GameConst.RES_JSONS)
         {
-            if (Path.GetExtension(file.ToString()) != ".json")
-            {
-                continue;
-            }
-            string key = Path.GetFileNameWithoutExtension(file.ToString());
-            string json = Util.File.ReadString(file.ToString());
+            string json = Util.Res.LoadString("json", key);
             JObject jObject = JObject.Parse(json);
             JsonDic.Add(key, jObject);
         }
+        Util.Res.UnLoadAssetBundle("json");
+
     }
     public JObject this[string key]
     {

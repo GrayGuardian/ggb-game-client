@@ -137,13 +137,31 @@ public class ResUtilWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
-			ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
-			string arg1 = ToLua.CheckString(L, 3);
-			UnityEngine.Object o = obj.Load(arg0, arg1);
-			ToLua.Push(L, o);
-			return 1;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 3)
+			{
+				ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				string arg1 = ToLua.CheckString(L, 3);
+				UnityEngine.Object o = obj.Load(arg0, arg1);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 4)
+			{
+				ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				string arg1 = ToLua.CheckString(L, 3);
+				bool arg2 = LuaDLL.luaL_checkboolean(L, 4);
+				UnityEngine.Object o = obj.Load(arg0, arg1, arg2);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: ResUtil.Load");
+			}
 		}
 		catch (Exception e)
 		{
@@ -156,13 +174,31 @@ public class ResUtilWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
-			ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
-			string arg1 = ToLua.CheckString(L, 3);
-			string o = obj.LoadString(arg0, arg1);
-			LuaDLL.lua_pushstring(L, o);
-			return 1;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 3)
+			{
+				ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				string arg1 = ToLua.CheckString(L, 3);
+				string o = obj.LoadString(arg0, arg1);
+				LuaDLL.lua_pushstring(L, o);
+				return 1;
+			}
+			else if (count == 4)
+			{
+				ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				string arg1 = ToLua.CheckString(L, 3);
+				bool arg2 = LuaDLL.luaL_checkboolean(L, 4);
+				string o = obj.LoadString(arg0, arg1, arg2);
+				LuaDLL.lua_pushstring(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: ResUtil.LoadString");
+			}
 		}
 		catch (Exception e)
 		{
@@ -175,13 +211,31 @@ public class ResUtilWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
-			ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
-			string arg1 = ToLua.CheckString(L, 3);
-			byte[] o = obj.LoadBytes(arg0, arg1);
-			ToLua.Push(L, o);
-			return 1;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 3)
+			{
+				ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				string arg1 = ToLua.CheckString(L, 3);
+				byte[] o = obj.LoadBytes(arg0, arg1);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 4)
+			{
+				ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				string arg1 = ToLua.CheckString(L, 3);
+				bool arg2 = LuaDLL.luaL_checkboolean(L, 4);
+				byte[] o = obj.LoadBytes(arg0, arg1, arg2);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: ResUtil.LoadBytes");
+			}
 		}
 		catch (Exception e)
 		{
@@ -194,13 +248,31 @@ public class ResUtilWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
-			ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
-			string arg1 = ToLua.CheckString(L, 3);
-			UnityEngine.Sprite o = obj.LoadSprite(arg0, arg1);
-			ToLua.PushSealed(L, o);
-			return 1;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 3)
+			{
+				ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				string arg1 = ToLua.CheckString(L, 3);
+				UnityEngine.Sprite o = obj.LoadSprite(arg0, arg1);
+				ToLua.PushSealed(L, o);
+				return 1;
+			}
+			else if (count == 4)
+			{
+				ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				string arg1 = ToLua.CheckString(L, 3);
+				bool arg2 = LuaDLL.luaL_checkboolean(L, 4);
+				UnityEngine.Sprite o = obj.LoadSprite(arg0, arg1, arg2);
+				ToLua.PushSealed(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: ResUtil.LoadSprite");
+			}
 		}
 		catch (Exception e)
 		{
@@ -213,13 +285,31 @@ public class ResUtilWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
-			ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
-			string arg1 = ToLua.CheckString(L, 3);
-			UnityEngine.GameObject o = obj.LoadGameObject(arg0, arg1);
-			ToLua.PushSealed(L, o);
-			return 1;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 3)
+			{
+				ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				string arg1 = ToLua.CheckString(L, 3);
+				UnityEngine.GameObject o = obj.LoadGameObject(arg0, arg1);
+				ToLua.PushSealed(L, o);
+				return 1;
+			}
+			else if (count == 4)
+			{
+				ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				string arg1 = ToLua.CheckString(L, 3);
+				bool arg2 = LuaDLL.luaL_checkboolean(L, 4);
+				UnityEngine.GameObject o = obj.LoadGameObject(arg0, arg1, arg2);
+				ToLua.PushSealed(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: ResUtil.LoadGameObject");
+			}
 		}
 		catch (Exception e)
 		{

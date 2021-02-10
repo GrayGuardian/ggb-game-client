@@ -14,7 +14,6 @@ public static class LuaBinder
 		GameConstWrap.Register(L);
 		MonoSingletonWrap.Register(L);
 		MonoComponentWrap.Register(L);
-		JsonUtilWrap.Register(L);
 		EncryptUtilWrap.Register(L);
 		HttpUtilWrap.Register(L);
 		ResUtilWrap.Register(L);
@@ -122,29 +121,6 @@ public static class LuaBinder
 		L.RegFunction("Func_bool", System_Func_bool);
 		L.RegFunction("Action_UnityEngine_AsyncOperation", System_Action_UnityEngine_AsyncOperation);
 		L.RegFunction("Action_long_long", System_Action_long_long);
-		L.BeginModule("Collections");
-		L.BeginModule("Generic");
-		System_Collections_Generic_Dictionary_string_Newtonsoft_Json_Linq_JObjectWrap.Register(L);
-		L.EndModule();
-		L.BeginModule("Specialized");
-		L.RegFunction("NotifyCollectionChangedEventHandler", System_Collections_Specialized_NotifyCollectionChangedEventHandler);
-		L.EndModule();
-		L.EndModule();
-		L.BeginModule("ComponentModel");
-		L.RegFunction("PropertyChangedEventHandler", System_ComponentModel_PropertyChangedEventHandler);
-		L.RegFunction("PropertyChangingEventHandler", System_ComponentModel_PropertyChangingEventHandler);
-		L.RegFunction("ListChangedEventHandler", System_ComponentModel_ListChangedEventHandler);
-		L.RegFunction("AddingNewEventHandler", System_ComponentModel_AddingNewEventHandler);
-		L.EndModule();
-		L.EndModule();
-		L.BeginModule("Newtonsoft");
-		L.BeginModule("Json");
-		L.BeginModule("Linq");
-		Newtonsoft_Json_Linq_JObjectWrap.Register(L);
-		Newtonsoft_Json_Linq_JContainerWrap.Register(L);
-		Newtonsoft_Json_Linq_JTokenWrap.Register(L);
-		L.EndModule();
-		L.EndModule();
 		L.EndModule();
 		L.EndModule();
 		L.BeginPreLoad();
@@ -721,141 +697,6 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateTraits<System.Action<long,long>>.Create(func, self);
-				ToLua.Push(L, arg1);
-			}
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Collections_Specialized_NotifyCollectionChangedEventHandler(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
-
-			if (count == 1)
-			{
-				Delegate arg1 = DelegateTraits<System.Collections.Specialized.NotifyCollectionChangedEventHandler>.Create(func);
-				ToLua.Push(L, arg1);
-			}
-			else
-			{
-				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateTraits<System.Collections.Specialized.NotifyCollectionChangedEventHandler>.Create(func, self);
-				ToLua.Push(L, arg1);
-			}
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_ComponentModel_PropertyChangedEventHandler(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
-
-			if (count == 1)
-			{
-				Delegate arg1 = DelegateTraits<System.ComponentModel.PropertyChangedEventHandler>.Create(func);
-				ToLua.Push(L, arg1);
-			}
-			else
-			{
-				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateTraits<System.ComponentModel.PropertyChangedEventHandler>.Create(func, self);
-				ToLua.Push(L, arg1);
-			}
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_ComponentModel_PropertyChangingEventHandler(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
-
-			if (count == 1)
-			{
-				Delegate arg1 = DelegateTraits<System.ComponentModel.PropertyChangingEventHandler>.Create(func);
-				ToLua.Push(L, arg1);
-			}
-			else
-			{
-				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateTraits<System.ComponentModel.PropertyChangingEventHandler>.Create(func, self);
-				ToLua.Push(L, arg1);
-			}
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_ComponentModel_ListChangedEventHandler(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
-
-			if (count == 1)
-			{
-				Delegate arg1 = DelegateTraits<System.ComponentModel.ListChangedEventHandler>.Create(func);
-				ToLua.Push(L, arg1);
-			}
-			else
-			{
-				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateTraits<System.ComponentModel.ListChangedEventHandler>.Create(func, self);
-				ToLua.Push(L, arg1);
-			}
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_ComponentModel_AddingNewEventHandler(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
-
-			if (count == 1)
-			{
-				Delegate arg1 = DelegateTraits<System.ComponentModel.AddingNewEventHandler>.Create(func);
-				ToLua.Push(L, arg1);
-			}
-			else
-			{
-				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateTraits<System.ComponentModel.AddingNewEventHandler>.Create(func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

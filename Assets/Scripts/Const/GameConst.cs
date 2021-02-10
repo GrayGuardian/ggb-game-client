@@ -18,7 +18,7 @@ public class GameConst
     /// 开发环境
     /// </summary>
 #if UNITY_EDITOR
-    public static ENV_TYPE PRO_ENV = ENV_TYPE.DEV;
+    public static ENV_TYPE PRO_ENV = ENV_TYPE.MASTER;
 #else
     public static ENV_TYPE PRO_ENV = ENV_TYPE.MASTER;
 #endif
@@ -71,4 +71,8 @@ public class GameConst
         string result = Path.GetFullPath(filePath).Replace(Path.GetFullPath(rootPath) + "\\", "");
         return filePath == result ? null : result;
     }
+    /// <summary>
+    /// Json资源名枚举
+    /// </summary>
+    public static string[] RES_JSONS = { "test" };
 }

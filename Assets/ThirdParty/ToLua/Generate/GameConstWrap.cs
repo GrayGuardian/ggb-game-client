@@ -19,6 +19,7 @@ public class GameConstWrap
 		L.RegVar("BUILD_ROOT", get_BUILD_ROOT, set_BUILD_ROOT);
 		L.RegVar("BUILD_AB_ROOT", get_BUILD_AB_ROOT, set_BUILD_AB_ROOT);
 		L.RegVar("DOWNLOAD_TEMPFILE_ROOT", get_DOWNLOAD_TEMPFILE_ROOT, set_DOWNLOAD_TEMPFILE_ROOT);
+		L.RegVar("RES_JSONS", get_RES_JSONS, set_RES_JSONS);
 		L.EndClass();
 	}
 
@@ -191,6 +192,20 @@ public class GameConstWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_RES_JSONS(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, GameConst.RES_JSONS);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_PRO_ENV(IntPtr L)
 	{
 		try
@@ -317,6 +332,21 @@ public class GameConstWrap
 		{
 			string arg0 = ToLua.CheckString(L, 2);
 			GameConst.DOWNLOAD_TEMPFILE_ROOT = arg0;
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_RES_JSONS(IntPtr L)
+	{
+		try
+		{
+			string[] arg0 = ToLua.CheckStringArray(L, 2);
+			GameConst.RES_JSONS = arg0;
 			return 0;
 		}
 		catch (Exception e)
