@@ -1,8 +1,37 @@
+
+
 using System.IO;
 using UnityEngine;
 
-public class PathConst
+
+public enum ENV_TYPE
 {
+    // 正式环境
+    MASTER = 0,
+    // 开发环境
+    DEV = 1,
+
+}
+public class GameConst
+{
+    /// <summary>
+    /// 开发环境
+    /// </summary>
+#if UNITY_EDITOR
+    public static ENV_TYPE PRO_ENV = ENV_TYPE.DEV;
+#else
+    public static ENV_TYPE PRO_ENV = ENV_TYPE.MASTER;
+#endif
+
+    /// <summary>
+    /// http
+    /// </summary>
+    public static string HTTP = "127.0.0.1:300/";
+    /// <summary>
+    /// 下载网址
+    /// </summary>
+    public static string DOWNLOAD_URL = "http://127.0.0.1:80/Download/";
+
     /// <summary>
     /// Resources文件夹
     /// </summary>
@@ -12,7 +41,7 @@ public class PathConst
     /// 本地 Res文件夹
     /// </summary>
     /// <returns></returns>
-    public static string RES_LOCAL_ROOT = Path.Combine(Application.persistentDataPath, (string)Util.Json["config"]["res_fileRoot"]);
+    public static string RES_LOCAL_ROOT = Path.Combine(Application.persistentDataPath, "./Res");
     /// <summary>
     /// Web Res文件夹
     /// </summary>
@@ -37,10 +66,9 @@ public class PathConst
     /// <summary>
     /// 获取相对路径
     /// </summary>
-    public static string GetRelativePath(string filePath,string rootPath)
+    public static string GetRelativePath(string filePath, string rootPath)
     {
         string result = Path.GetFullPath(filePath).Replace(Path.GetFullPath(rootPath) + "\\", "");
         return filePath == result ? null : result;
     }
-
 }

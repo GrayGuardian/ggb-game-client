@@ -79,6 +79,26 @@
     <Method Name="WriteBytes" PublishedName="WriteBytes" Signature="WriteBytes-string-byte[]" FullSignature="System.Void FileUtil::WriteBytes(System.String,System.Byte[])" Index="394" />
     <Method Name="WriteString" PublishedName="WriteString" Signature="WriteString-string-string-Encoding" FullSignature="System.Void FileUtil::WriteString(System.String,System.String,System.Text.Encoding)" Index="395" />
   </Type>
+  <Type Name="GameConst">
+    <Method Name="GetRelativePath" PublishedName="GetRelativePath" Signature="GetRelativePath-string-string" FullSignature="System.String GameConst::GetRelativePath(System.String,System.String)" Index="924" />
+  </Type>
+  <Type Name="GameConstWrap">
+    <Method Name="_CreateGameConst" PublishedName="_CreateGameConst" Signature="_CreateGameConst-IntPtr" FullSignature="System.Int32 GameConstWrap::_CreateGameConst(System.IntPtr)" Index="926" />
+    <Method Name="get_BUILD_AB_ROOT" PublishedName="get_BUILD_AB_ROOT" Signature="get_BUILD_AB_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::get_BUILD_AB_ROOT(System.IntPtr)" Index="932" />
+    <Method Name="get_BUILD_ROOT" PublishedName="get_BUILD_ROOT" Signature="get_BUILD_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::get_BUILD_ROOT(System.IntPtr)" Index="931" />
+    <Method Name="get_DOWNLOAD_TEMPFILE_ROOT" PublishedName="get_DOWNLOAD_TEMPFILE_ROOT" Signature="get_DOWNLOAD_TEMPFILE_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::get_DOWNLOAD_TEMPFILE_ROOT(System.IntPtr)" Index="933" />
+    <Method Name="get_RES_LOCAL_ROOT" PublishedName="get_RES_LOCAL_ROOT" Signature="get_RES_LOCAL_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::get_RES_LOCAL_ROOT(System.IntPtr)" Index="929" />
+    <Method Name="get_RES_WEB_ROOT" PublishedName="get_RES_WEB_ROOT" Signature="get_RES_WEB_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::get_RES_WEB_ROOT(System.IntPtr)" Index="930" />
+    <Method Name="get_RESOURCES" PublishedName="get_RESOURCES" Signature="get_RESOURCES-IntPtr" FullSignature="System.Int32 GameConstWrap::get_RESOURCES(System.IntPtr)" Index="928" />
+    <Method Name="GetRelativePath" PublishedName="GetRelativePath" Signature="GetRelativePath-IntPtr" FullSignature="System.Int32 GameConstWrap::GetRelativePath(System.IntPtr)" Index="927" />
+    <Method Name="Register" PublishedName="Register" Signature="Register-LuaState" FullSignature="System.Void GameConstWrap::Register(LuaInterface.LuaState)" Index="925" />
+    <Method Name="set_BUILD_AB_ROOT" PublishedName="set_BUILD_AB_ROOT" Signature="set_BUILD_AB_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::set_BUILD_AB_ROOT(System.IntPtr)" Index="938" />
+    <Method Name="set_BUILD_ROOT" PublishedName="set_BUILD_ROOT" Signature="set_BUILD_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::set_BUILD_ROOT(System.IntPtr)" Index="937" />
+    <Method Name="set_DOWNLOAD_TEMPFILE_ROOT" PublishedName="set_DOWNLOAD_TEMPFILE_ROOT" Signature="set_DOWNLOAD_TEMPFILE_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::set_DOWNLOAD_TEMPFILE_ROOT(System.IntPtr)" Index="939" />
+    <Method Name="set_RES_LOCAL_ROOT" PublishedName="set_RES_LOCAL_ROOT" Signature="set_RES_LOCAL_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::set_RES_LOCAL_ROOT(System.IntPtr)" Index="935" />
+    <Method Name="set_RES_WEB_ROOT" PublishedName="set_RES_WEB_ROOT" Signature="set_RES_WEB_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::set_RES_WEB_ROOT(System.IntPtr)" Index="936" />
+    <Method Name="set_RESOURCES" PublishedName="set_RESOURCES" Signature="set_RESOURCES-IntPtr" FullSignature="System.Int32 GameConstWrap::set_RESOURCES(System.IntPtr)" Index="934" />
+  </Type>
   <Type Name="HelloWorld">
     <Method Name="Awake" PublishedName="Awake" Signature="Awake" FullSignature="System.Void HelloWorld::Awake()" Index="21" />
   </Type>

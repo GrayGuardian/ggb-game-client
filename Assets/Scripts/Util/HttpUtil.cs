@@ -84,12 +84,12 @@ public class HttpUtil
         string fileName = Path.GetFileName(saveFile);
         tempFileName = tempFileName == null ? (fileName + ".temp") : tempFileName;
         //删除本地临时文件
-        string strTmpFile = Path.Combine(PathConst.DOWNLOAD_TEMPFILE_ROOT, tempFileName);
+        string strTmpFile = Path.Combine(GameConst.DOWNLOAD_TEMPFILE_ROOT, tempFileName);
 
         //临时文件夹不存在则创建
-        if (!File.Exists(PathConst.DOWNLOAD_TEMPFILE_ROOT))
+        if (!File.Exists(GameConst.DOWNLOAD_TEMPFILE_ROOT))
         {
-            Directory.CreateDirectory(PathConst.DOWNLOAD_TEMPFILE_ROOT);
+            Directory.CreateDirectory(GameConst.DOWNLOAD_TEMPFILE_ROOT);
         }
 
         //打开上次下载的文件或新建文件 

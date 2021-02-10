@@ -2,14 +2,17 @@
 using System;
 using LuaInterface;
 
-public class PathConstWrap
+public class GameConstWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(PathConst), typeof(System.Object));
+		L.BeginClass(typeof(GameConst), typeof(System.Object));
 		L.RegFunction("GetRelativePath", GetRelativePath);
-		L.RegFunction("New", _CreatePathConst);
+		L.RegFunction("New", _CreateGameConst);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("PRO_ENV", get_PRO_ENV, set_PRO_ENV);
+		L.RegVar("HTTP", get_HTTP, set_HTTP);
+		L.RegVar("DOWNLOAD_URL", get_DOWNLOAD_URL, set_DOWNLOAD_URL);
 		L.RegVar("RESOURCES", get_RESOURCES, set_RESOURCES);
 		L.RegVar("RES_LOCAL_ROOT", get_RES_LOCAL_ROOT, set_RES_LOCAL_ROOT);
 		L.RegVar("RES_WEB_ROOT", get_RES_WEB_ROOT, set_RES_WEB_ROOT);
@@ -20,7 +23,7 @@ public class PathConstWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int _CreatePathConst(IntPtr L)
+	static int _CreateGameConst(IntPtr L)
 	{
 		try
 		{
@@ -28,13 +31,13 @@ public class PathConstWrap
 
 			if (count == 0)
 			{
-				PathConst obj = new PathConst();
+				GameConst obj = new GameConst();
 				ToLua.PushObject(L, obj);
 				return 1;
 			}
 			else
 			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: PathConst.New");
+				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: GameConst.New");
 			}
 		}
 		catch (Exception e)
@@ -51,8 +54,50 @@ public class PathConstWrap
 			ToLua.CheckArgsCount(L, 2);
 			string arg0 = ToLua.CheckString(L, 1);
 			string arg1 = ToLua.CheckString(L, 2);
-			string o = PathConst.GetRelativePath(arg0, arg1);
+			string o = GameConst.GetRelativePath(arg0, arg1);
 			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PRO_ENV(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, GameConst.PRO_ENV);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_HTTP(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, GameConst.HTTP);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_DOWNLOAD_URL(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, GameConst.DOWNLOAD_URL);
 			return 1;
 		}
 		catch (Exception e)
@@ -66,7 +111,7 @@ public class PathConstWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, PathConst.RESOURCES);
+			LuaDLL.lua_pushstring(L, GameConst.RESOURCES);
 			return 1;
 		}
 		catch (Exception e)
@@ -80,7 +125,7 @@ public class PathConstWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, PathConst.RES_LOCAL_ROOT);
+			LuaDLL.lua_pushstring(L, GameConst.RES_LOCAL_ROOT);
 			return 1;
 		}
 		catch (Exception e)
@@ -94,7 +139,7 @@ public class PathConstWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, PathConst.RES_WEB_ROOT);
+			LuaDLL.lua_pushstring(L, GameConst.RES_WEB_ROOT);
 			return 1;
 		}
 		catch (Exception e)
@@ -108,7 +153,7 @@ public class PathConstWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, PathConst.BUILD_ROOT);
+			LuaDLL.lua_pushstring(L, GameConst.BUILD_ROOT);
 			return 1;
 		}
 		catch (Exception e)
@@ -122,7 +167,7 @@ public class PathConstWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, PathConst.BUILD_AB_ROOT);
+			LuaDLL.lua_pushstring(L, GameConst.BUILD_AB_ROOT);
 			return 1;
 		}
 		catch (Exception e)
@@ -136,8 +181,53 @@ public class PathConstWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, PathConst.DOWNLOAD_TEMPFILE_ROOT);
+			LuaDLL.lua_pushstring(L, GameConst.DOWNLOAD_TEMPFILE_ROOT);
 			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_PRO_ENV(IntPtr L)
+	{
+		try
+		{
+			ENV_TYPE arg0 = (ENV_TYPE)ToLua.CheckObject(L, 2, typeof(ENV_TYPE));
+			GameConst.PRO_ENV = arg0;
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_HTTP(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			GameConst.HTTP = arg0;
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_DOWNLOAD_URL(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			GameConst.DOWNLOAD_URL = arg0;
+			return 0;
 		}
 		catch (Exception e)
 		{
@@ -151,7 +241,7 @@ public class PathConstWrap
 		try
 		{
 			string arg0 = ToLua.CheckString(L, 2);
-			PathConst.RESOURCES = arg0;
+			GameConst.RESOURCES = arg0;
 			return 0;
 		}
 		catch (Exception e)
@@ -166,7 +256,7 @@ public class PathConstWrap
 		try
 		{
 			string arg0 = ToLua.CheckString(L, 2);
-			PathConst.RES_LOCAL_ROOT = arg0;
+			GameConst.RES_LOCAL_ROOT = arg0;
 			return 0;
 		}
 		catch (Exception e)
@@ -181,7 +271,7 @@ public class PathConstWrap
 		try
 		{
 			string arg0 = ToLua.CheckString(L, 2);
-			PathConst.RES_WEB_ROOT = arg0;
+			GameConst.RES_WEB_ROOT = arg0;
 			return 0;
 		}
 		catch (Exception e)
@@ -196,7 +286,7 @@ public class PathConstWrap
 		try
 		{
 			string arg0 = ToLua.CheckString(L, 2);
-			PathConst.BUILD_ROOT = arg0;
+			GameConst.BUILD_ROOT = arg0;
 			return 0;
 		}
 		catch (Exception e)
@@ -211,7 +301,7 @@ public class PathConstWrap
 		try
 		{
 			string arg0 = ToLua.CheckString(L, 2);
-			PathConst.BUILD_AB_ROOT = arg0;
+			GameConst.BUILD_AB_ROOT = arg0;
 			return 0;
 		}
 		catch (Exception e)
@@ -226,7 +316,7 @@ public class PathConstWrap
 		try
 		{
 			string arg0 = ToLua.CheckString(L, 2);
-			PathConst.DOWNLOAD_TEMPFILE_ROOT = arg0;
+			GameConst.DOWNLOAD_TEMPFILE_ROOT = arg0;
 			return 0;
 		}
 		catch (Exception e)

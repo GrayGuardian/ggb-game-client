@@ -528,7 +528,7 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   scriptingDefineSymbols:
-    1: ENABLE_LUA_INJECTION
+    1: 
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}

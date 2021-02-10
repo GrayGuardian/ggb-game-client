@@ -164,7 +164,7 @@ public static class CustomSettings
         _GT(typeof(UnityEngine.UI.Button)),
         _GT(typeof(UnityEngine.UI.Button.ButtonClickedEvent)),
 
-        _GT(typeof(PathConst)),
+        _GT(typeof(GameConst)),
         _GT(typeof(Dictionary<string, JObject>)),
         _GT(typeof(JObject)),
 
@@ -175,7 +175,7 @@ public static class CustomSettings
         _GT(typeof(HttpUtil)),
         _GT(typeof(ResUtil)),
         _GT(typeof(VObject)),
-
+        _GT(typeof(ENV_TYPE)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

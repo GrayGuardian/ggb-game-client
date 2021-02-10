@@ -29,29 +29,29 @@ public class ResTool : MonoBehaviour
     [MenuItem("Tools/资源管理/Open Folder/Build AssetBundles Folder")]
     static void OpenABFolder()
     {
-        OpenFolder(PathConst.BUILD_AB_ROOT);
+        OpenFolder(GameConst.BUILD_AB_ROOT);
     }
     [MenuItem("Tools/资源管理/Open Folder/Build Folder")]
     static void OpenBuildFolder()
     {
-        OpenFolder(PathConst.BUILD_ROOT);
+        OpenFolder(GameConst.BUILD_ROOT);
     }
     [MenuItem("Tools/资源管理/Open Folder/Local Resource Folder")]
     static void OpenLocalResFolder()
     {
-        OpenFolder(PathConst.RES_LOCAL_ROOT);
+        OpenFolder(GameConst.RES_LOCAL_ROOT);
     }
     [MenuItem("Tools/资源管理/Open Folder/Web Resource Folder")]
     static void OpenWebResFolder()
     {
-        OpenFolder(PathConst.RES_WEB_ROOT);
+        OpenFolder(GameConst.RES_WEB_ROOT);
     }
 
     [MenuItem("Tools/资源管理/Build/Build")]
     static void BuildRes()
     {
         //准备工作
-        var rootDir = new DirectoryInfo(PathConst.BUILD_ROOT);
+        var rootDir = new DirectoryInfo(GameConst.BUILD_ROOT);
         var rootABDir = new DirectoryInfo(Path.Combine(rootDir.FullName, "./AssetBundles"));
         var versionFile = new FileInfo(Path.Combine(rootDir.FullName, "./Version"));
         if (!Directory.Exists(rootABDir.FullName))
@@ -67,7 +67,7 @@ public class ResTool : MonoBehaviour
         //构建资源
         List<ABVObject> abVObjectList = new List<ABVObject>();
         string[] blackFilesName = new string[] { "AssetBundles" };
-        foreach (var file in new DirectoryInfo(PathConst.BUILD_AB_ROOT).GetFiles())
+        foreach (var file in new DirectoryInfo(GameConst.BUILD_AB_ROOT).GetFiles())
         {
             //Debug.Log(string.Format("文件路径：{0} 后缀名：{1} 文件名{2}",VARIABLE,Path.GetExtension(VARIABLE),Path.GetFileNameWithoutExtension(VARIABLE)) );
             //存在后缀名则跳过
@@ -106,7 +106,7 @@ public class ResTool : MonoBehaviour
 
         if (UnityEditor.EditorUtility.DisplayDialog("提示", "是否更新Resources内版本文件？", "确定", "取消"))
         {
-            Util.Encrypt.WriteString(Path.Combine(PathConst.RESOURCES, "./Default/Version"), json);
+            Util.Encrypt.WriteString(Path.Combine(GameConst.RESOURCES, "./Default/Version"), json);
         }
     }
 
@@ -132,13 +132,13 @@ public class ResTool : MonoBehaviour
     [MenuItem("Tools/资源管理/Copy/Copy To Local Folder")]
     static void CopyResToLocalRoot()
     {
-        var rootDir = new DirectoryInfo(PathConst.RES_LOCAL_ROOT);
+        var rootDir = new DirectoryInfo(GameConst.RES_LOCAL_ROOT);
         CopyResToRoot(rootDir);
     }
     [MenuItem("Tools/资源管理/Copy/Copy To Web Folder")]
     static void CopyResToWebRoot()
     {
-        var rootDir = new DirectoryInfo(PathConst.RES_WEB_ROOT);
+        var rootDir = new DirectoryInfo(GameConst.RES_WEB_ROOT);
         CopyResToRoot(rootDir);
     }
     [MenuItem("Tools/资源管理/Copy/Copy To Local Folder ＆ Web Folder")]
@@ -150,7 +150,7 @@ public class ResTool : MonoBehaviour
     static void CopyResToRoot(DirectoryInfo rootDir)
     {
         string path;
-        var rootBuildDir = new DirectoryInfo(PathConst.BUILD_ROOT);
+        var rootBuildDir = new DirectoryInfo(GameConst.BUILD_ROOT);
         var rootABDir = new DirectoryInfo(Path.Combine(rootBuildDir.FullName, "./AssetBundles"));
         var versionFile = new FileInfo(Path.Combine(rootBuildDir.FullName, "./Version"));
         if (!Directory.Exists(rootDir.FullName))
@@ -200,7 +200,7 @@ public class ResTool : MonoBehaviour
     [MenuItem("Tools/资源管理/Print Version Json")]
     static void PrintVersionJson()
     {
-        var versionFile = new FileInfo(Path.Combine(PathConst.BUILD_ROOT, "./Version"));
+        var versionFile = new FileInfo(Path.Combine(GameConst.BUILD_ROOT, "./Version"));
         if (!File.Exists(versionFile.FullName))
         {
             UnityEditor.EditorUtility.DisplayDialog("提示", "Build - Version文件不存在,请重新构建\n Url:" + versionFile.FullName, "确定");
@@ -215,11 +215,11 @@ public class ResTool : MonoBehaviour
     {
         //需要导出的默认AB包资源
         string[] abs = { "lua", "ui_tip" };
-        string root = Path.Combine(PathConst.RESOURCES, "./AB");
+        string root = Path.Combine(GameConst.RESOURCES, "./AB");
         foreach (var ab in abs)
         {
             //清理文件夹
-            DirectoryInfo buildDir = new DirectoryInfo(Path.Combine(PathConst.RESOURCES, "./Default", "./" + ab));
+            DirectoryInfo buildDir = new DirectoryInfo(Path.Combine(GameConst.RESOURCES, "./Default", "./" + ab));
             Debug.Log(buildDir.FullName);
             FileInfo[] files = buildDir.GetFiles();
             if (files.Length > 0 && UnityEditor.EditorUtility.DisplayDialog("提示", "是否清空导出文件夹\n Url:" + buildDir.FullName, "确定", "取消"))
@@ -249,8 +249,8 @@ public class ResTool : MonoBehaviour
             foreach (var file in fileMap.Values)
             {
                 UnityEngine.Debug.Log(file.FullName);
-                UnityEngine.Debug.Log(Path.Combine(PathConst.RESOURCES, "./Default", "./" + ab, "./" + file.Name));
-                Util.File.CopyTo(file.FullName, Path.Combine(PathConst.RESOURCES, "./Default", "./" + ab, "./" + file.Name));
+                UnityEngine.Debug.Log(Path.Combine(GameConst.RESOURCES, "./Default", "./" + ab, "./" + file.Name));
+                Util.File.CopyTo(file.FullName, Path.Combine(GameConst.RESOURCES, "./Default", "./" + ab, "./" + file.Name));
             }
         }
         AssetDatabase.Refresh();
@@ -258,7 +258,7 @@ public class ResTool : MonoBehaviour
     // [MenuItem("Tools/资源管理/Format Lua File Name")]
     // static void FormatLuaFileName()
     // {
-    //     string root = Path.Combine(PathConst.RESOURCES, "./AB/lua");
+    //     string root = Path.Combine(GameConst.RESOURCES, "./AB/lua");
     //     FileInfo[] files = Util.File.GetChildFiles(root, "*");
     //     foreach (var file in files)
     //     {

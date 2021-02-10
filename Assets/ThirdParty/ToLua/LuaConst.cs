@@ -4,7 +4,7 @@ using UnityEngine;
 public static class LuaConst
 {
     public static string toluaRoot = Application.dataPath + "/ThirdParty/ToLua/";        //tolua 文件目录
-    public static string luaDir = Path.Combine(PathConst.RESOURCES, "./AB/lua");                //lua逻辑代码目录
+    public static string luaDir = Path.Combine(GameConst.RESOURCES, "./AB/lua");                //lua逻辑代码目录
     public static string toluaDir = Path.Combine(luaDir, "./base/tolua");         //tolua lua文件目录
 
 #if UNITY_STANDALONE

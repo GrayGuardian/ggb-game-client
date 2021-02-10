@@ -84,7 +84,7 @@ public class UpRes : MonoBehaviour
     void ClearRedundantRes()
     {
         Debug.Log("清理冗余代码");
-        DirectoryInfo dirInfo = new DirectoryInfo(PathConst.DOWNLOAD_TEMPFILE_ROOT);
+        DirectoryInfo dirInfo = new DirectoryInfo(GameConst.DOWNLOAD_TEMPFILE_ROOT);
         foreach (var fileInfo in dirInfo.GetFiles())
         {
             fileInfo.Delete();
@@ -123,7 +123,7 @@ public class UpRes : MonoBehaviour
         }
         ABVObject abInfo = abInfos[order];
         if (singleDownloadStartEvent != null) singleDownloadStartEvent(abInfo);
-        Util.Http.Download(Util.Json["config"]["download_url"] + "AssetBundles/" + abInfo.name, Path.Combine(PathConst.RES_LOCAL_ROOT, "./AssetBundles/", abInfo.name), (abInfo.name + "_" + abInfo.hash + ".temp"),
+        Util.Http.Download(GameConst.DOWNLOAD_URL + "AssetBundles/" + abInfo.name, Path.Combine(GameConst.RES_LOCAL_ROOT, "./AssetBundles/", abInfo.name), (abInfo.name + "_" + abInfo.hash + ".temp"),
            () =>
            {
                if (singleDownloadOverEvent != null) singleDownloadOverEvent(abInfo);

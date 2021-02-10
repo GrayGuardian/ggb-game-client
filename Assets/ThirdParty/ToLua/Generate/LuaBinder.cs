@@ -11,7 +11,7 @@ public static class LuaBinder
 		L.BeginModule(null);
 		LuaInterface_DebuggerWrap.Register(L);
 		LuaProfilerWrap.Register(L);
-		PathConstWrap.Register(L);
+		GameConstWrap.Register(L);
 		MonoSingletonWrap.Register(L);
 		MonoComponentWrap.Register(L);
 		JsonUtilWrap.Register(L);
@@ -19,6 +19,7 @@ public static class LuaBinder
 		HttpUtilWrap.Register(L);
 		ResUtilWrap.Register(L);
 		VObjectWrap.Register(L);
+		ENV_TYPEWrap.Register(L);
 		Singleton_MonoSingletonWrap.Register(L);
 		L.BeginModule("LuaInterface");
 		LuaInterface_LuaInjectionStationWrap.Register(L);

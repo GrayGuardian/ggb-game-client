@@ -89,6 +89,28 @@ return {
 			["WriteBytes"] = 394, 
 			["WriteString"] = 395, 
 		},
+	["GameConst"] = 
+		{
+			["GetRelativePath"] = 924, 
+		},
+	["GameConstWrap"] = 
+		{
+			["_CreateGameConst"] = 926, 
+			["get_BUILD_AB_ROOT"] = 932, 
+			["get_BUILD_ROOT"] = 931, 
+			["get_DOWNLOAD_TEMPFILE_ROOT"] = 933, 
+			["get_RES_LOCAL_ROOT"] = 929, 
+			["get_RES_WEB_ROOT"] = 930, 
+			["get_RESOURCES"] = 928, 
+			["GetRelativePath"] = 927, 
+			["Register"] = 925, 
+			["set_BUILD_AB_ROOT"] = 938, 
+			["set_BUILD_ROOT"] = 937, 
+			["set_DOWNLOAD_TEMPFILE_ROOT"] = 939, 
+			["set_RES_LOCAL_ROOT"] = 935, 
+			["set_RES_WEB_ROOT"] = 936, 
+			["set_RESOURCES"] = 934, 
+		},
 	["HelloWorld"] = 
 		{
 			["Awake"] = 21, 
