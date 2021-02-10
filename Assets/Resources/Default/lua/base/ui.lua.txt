@@ -10,7 +10,8 @@ function UI:init()
     self.sceneParamMap = {}
     self.sceneComp = nil
 
-    self.abKeyMap = {};
+    self.uiCompMap = {}
+    self.abKeyMap = {}
 
     self:createUIRoot()
 end
@@ -45,58 +46,71 @@ function UI:createUIRoot()
     -- canvasScaler.referenceResolution = {x = UE.Screen.width, y = UE.Screen.height}
 end
 -- ShowUI
-function UI:showUI(name,param)
-    local info = {};
-    info.name = name;
-    local comp = require(name):new(info,param);
+function UI:showUI(name, param, opts)
+    -- 默认加载参数
+    local OPTS_DEFAULT = {order = 0}
+    if opts == nil then
+        opts = OPTS_DEFAULT
+    end
+    local comp = require(name):new(name, param, opts)
     --加载AB依赖包
     for index, abKey in ipairs(comp:getABs()) do
-        if self:existAB(abKey,name) == false and self:addAB(abKey,name) then
-            print("UI>>加载AB包:"..abKey);
-            resUtil:LoadAssetBundle(abKey);
+        if self:existAB(abKey, name) == false and self:addAB(abKey, name) then
+            print("UI>>加载AB包:" .. abKey)
+            resUtil:LoadAssetBundle(abKey)
         end
     end
     --加载界面
-    local prefab = resUtil:Load(comp:getAB(),name);
-    local go = GameObject.Instantiate(prefab);
-    local node = go:GetComponent("RectTransform");
-    node.name = name;
-    node.parent = self.uiCanvas;
-    node.localScale = { x=1,y=1,z=1 }
-    node.anchorMin = { x=0,y=0 }
-    node.anchorMax = { x=1,y=1 }
-    node.pivot = { x=0.5,y=0.5 }
-    node.anchoredPosition3D = { x=0,y=0,z=0 }
-    node.offsetMax = { x=0,y=0 };
-    node.offsetMin = { x=0,y=0 };
-    comp:bind(node);
-
+    local prefab = resUtil:Load(comp:getAB(), name)
+    local go = GameObject.Instantiate(prefab)
+    local node = go:GetComponent("RectTransform")
+    node.name = name
+    node.parent = ui.uiCanvas
+    local relaOrder = self:getRelaOrder(opts.order and opts.order or 0) - 1
+    print("relaOrder>>>", relaOrder)
+    node:SetSiblingIndex(relaOrder)
+    comp:bind(node)
 end
-
-function UI:existAB(abKey,uiKey)
+function UI:getRelaOrder(order)
+    local index = #self.uiCompMap
+    for i, uiComp in ipairs(self.uiCompMap) do
+        if uiComp.opts.order > order then
+            index = i
+            break
+        end
+    end
+    return index
+end
+function UI:addUI(uiComp)
+    table.insert(self.uiCompMap, uiComp)
+end
+function UI:delUI(uiComp)
+    table.del(self.uiCompMap, uiComp)
+end
+function UI:existAB(abKey, uiKey)
     if uiKey == nil then
-        return self.abKeyMap[abKey]~=nil
+        return self.abKeyMap[abKey] ~= nil
     end
-    return self.abKeyMap[abKey]~=nil and table.exist(self.abKeyMap[abKey],uiKey)
+    return self.abKeyMap[abKey] ~= nil and table.exist(self.abKeyMap[abKey], uiKey)
 end
-function UI:addAB(abKey,uiKey)
+function UI:addAB(abKey, uiKey)
     if self:existAB(abKey) == false then
-        self.abKeyMap[abKey] = {};
+        self.abKeyMap[abKey] = {}
     end
-    if self:existAB(abKey,uiKey) == false then
-        table.insert(self.abKeyMap[abKey],uiKey);
-        return true;
+    if self:existAB(abKey, uiKey) == false then
+        table.insert(self.abKeyMap[abKey], uiKey)
+        return true
     end
     return false
 end
-function UI:delAB(abKey,uiKey)
-    if self:existAB(abKey,uiKey) == false then
+function UI:delAB(abKey, uiKey)
+    if self:existAB(abKey, uiKey) == false then
         return false
     end
-    table.del(self.abKeyMap[abKey],uiKey)
+    table.del(self.abKeyMap[abKey], uiKey)
     if #self.abKeyMap[abKey] <= 0 then
         self.abKeyMap[abKey] = nil
     end
-    return true;
+    return true
 end
 return UI

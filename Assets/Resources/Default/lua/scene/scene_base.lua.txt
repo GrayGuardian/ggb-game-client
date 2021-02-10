@@ -7,16 +7,11 @@ function SceneBase:onDestroy()
 end
 ------------------- 继承重写 -------------------
 
-
 function SceneBase:init(info, param)
-    print(
-        "加载场景-" ..
-            info.name ..
-                " >>>>>>>>>>>>>>>>>>>>>>>> Init ----" ..
-                    " info:" .. util.serialize(info) .. " param:" .. util.serialize(param)
-    )
+    print("加载场景-", info.name, " Init >", " info:", util.serialize(info), " param:", util.serialize(param))
     self.info = info
     self.param = param
+
     self:_onLoad()
 end
 function SceneBase:_onLoad()

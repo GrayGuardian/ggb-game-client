@@ -2,13 +2,13 @@ local UIBase = class("UIBase")
 
 ------------------- 继承重写 -------------------
 --UI所在AB包 默认为UI名 可通过子类 base.static.ab = '' 进行重写
-UIBase.static.ab = '';
+UIBase.static.ab = ""
 --通用AB依赖包 可通过子类 base.static.abs = {} 进行重写
-UIBase.static.abs = { 'common' }
+UIBase.static.abs = {"common"}
 
 -- Button点击事件 组件名首字母自动大写 o-组件实例 order-组件序号，可区分多个重名组件
 -- function UITip:on[UIComp_Button_Name]Click(o,order)
-    
+
 -- end
 function UIBase:onLoad()
 end
@@ -16,98 +16,112 @@ function UIBase:onDestroy()
 end
 ------------------- 继承重写 -------------------
 
-function UIBase:init(info,param)
-    print(
-        "加载UI-" ..
-            info.name ..
-                " >>>>>>>>>>>>>>>>>>>>>>>> Init ----" ..
-                    " info:" .. util.serialize(info) .. " param:" .. util.serialize(param)
-    )
-    self.info = info;
-    self.param = param;
-    self.uiComp = {};
-    table.insert(UIBase.abs,1,self:getAB())
+function UIBase:init(name, param, opts)
+    print("加载UI-", name, " Init >", " name:", name, " param:", util.serialize(param), " opts:", util.serialize(opts))
+    self.name = name
+    self.param = param
+    self.opts = opts
+    self.node = nil
+    self.uiComp = {}
+    table.insert(UIBase.abs, 1, self:getAB())
+    ui:addUI(self)
 end
 
 --绑定物体
 function UIBase:bind(node)
-    self.node = node;
-    self:uiCompInit();
-    print('UI绑定成功>>>',self.info.name,self.node);
-    self:_onLoad();
+    self.node = node
+    -- 更新位置
+    self.node.localScale = {x = 1, y = 1, z = 1}
+    self.node.anchorMin = {x = 0, y = 0}
+    self.node.anchorMax = {x = 1, y = 1}
+    self.node.pivot = {x = 0.5, y = 0.5}
+    self.node.anchoredPosition3D = {x = 0, y = 0, z = 0}
+    self.node.offsetMax = {x = 0, y = 0}
+    self.node.offsetMin = {x = 0, y = 0}
+
+    self:uiCompInit()
+    print("UI绑定成功>>>", self.name, self.node)
+    self:_onLoad()
 end
 -- ui组件初始化
 function UIBase:uiCompInit()
-    local types = { 'Text' , 'Image' , 'Button' }
+    local types = {"Text", "Image", "Button"}
 
     for index, t in ipairs(types) do
-        self.uiComp[t] = {};
-        local arr = self.node:GetComponentsInChildren(typeof(UEUI[t]));
-        for i = 0, arr.Length-1 do
-            local comp = arr:GetValue(i);
-            local key = comp.name;
-            if type(self.uiComp[t][key]) == 'table' then
-                table.insert(self.uiComp[t][key],comp);
+        self.uiComp[t] = {}
+        local arr = self.node:GetComponentsInChildren(typeof(UEUI[t]))
+        for i = 0, arr.Length - 1 do
+            local comp = arr:GetValue(i)
+            local key = comp.name
+            if type(self.uiComp[t][key]) == "table" then
+                table.insert(self.uiComp[t][key], comp)
             else
                 -- body
                 if self.uiComp[t][key] == nil then
-                    self.uiComp[t][key] = comp;
+                    self.uiComp[t][key] = comp
                 else
-                    local tempComp = self.uiComp[t][key];
-                    self.uiComp[t][key] = {};
-                    table.insert(self.uiComp[t][key],tempComp);
-                    table.insert(self.uiComp[t][key],comp);
-                    print('ui已存在',#self.uiComp[t][key]);
+                    local tempComp = self.uiComp[t][key]
+                    self.uiComp[t][key] = {}
+                    table.insert(self.uiComp[t][key], tempComp)
+                    table.insert(self.uiComp[t][key], comp)
+                    print("ui已存在", #self.uiComp[t][key])
                 end
-                
             end
-            print("加入CompUI>>"," type:",t,"  name:",key);
+            print("加入CompUI>>", " type:", t, "  name:", key)
         end
-    end
-    
-    -- 注册Button事件
-    for key, comp in pairs(self.uiComp.Button) do
-        local sum = 0;
-        local e = nil;
-        if type(comp) == 'table' then
-            e = 'on'..comp[1].name:gsub("^%l",string.upper)..'Click';   
-        else
-            e = 'on'..comp.name:gsub("^%l",string.upper)..'Click';
-        end
-        if self[e]~=nil then
-            if type(comp) == 'table' then
-                sum = #comp;
-                for i, comp1 in pairs(comp) do
-                    comp1.onClick:AddListener(function () self[e](self,comp1,i); end);
-                end
-            else
-                sum = 1;
-                comp.onClick:AddListener(function () self[e](self,comp,1); end);
-            end
-        end
-            
-        
-        print('注册Button事件>',e,"  共计注册：",sum);
-       
     end
 
+    -- 注册Button事件
+    for key, comp in pairs(self.uiComp.Button) do
+        local sum = 0
+        local e = nil
+        if type(comp) == "table" then
+            e = "on" .. comp[1].name:gsub("^%l", string.upper) .. "Click"
+        else
+            e = "on" .. comp.name:gsub("^%l", string.upper) .. "Click"
+        end
+        if self[e] ~= nil then
+            if type(comp) == "table" then
+                sum = #comp
+                for i, comp1 in pairs(comp) do
+                    comp1.onClick:AddListener(
+                        function()
+                            self[e](self, comp1, i)
+                        end
+                    )
+                end
+            else
+                sum = 1
+                comp.onClick:AddListener(
+                    function()
+                        self[e](self, comp, 1)
+                    end
+                )
+            end
+        end
+
+        print("注册Button事件>", e, "  共计注册：", sum)
+    end
 end
 function UIBase:_onLoad()
-    print("加载UI-" .. self.info.name .. ">>>>>>>>>>>>>>>>>>>>>>>> onLoad")
+    print("加载UI-" .. self.name .. ">>>>>>>>>>>>>>>>>>>>>>>> onLoad")
     self:onLoad()
 end
 function UIBase:_onDestroy()
-    print("卸载UI-" .. self.info.name .. " >>>>>>>>>>>>>>>>>>>>>>>> onDestroy")
+    print("卸载UI-" .. self.name .. " >>>>>>>>>>>>>>>>>>>>>>>> onDestroy")
     self:onDestroy()
+    ui:delUI(self)
+    GameObject.Destroy(self.node.gameObject)
 end
-
+-- 卸载
+function UIBase:close()
+    self:_onDestroy()
+end
 function UIBase:getAB()
-    return UIBase.ab=='' and self.info.name or UIBase.ab;
+    return UIBase.ab == "" and self.name or UIBase.ab
 end
 function UIBase:getABs()
-    return UIBase.abs;
+    return UIBase.abs
 end
-
-
 
 return UIBase
