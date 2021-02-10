@@ -52,6 +52,7 @@ function SceneLogin:onLoad()
                     btnTitle = "前往下载",
                     onClick = function ()
                         print("转跳下载，退出游戏");
+                        Application.Quit();
                     end
                 });
             end
