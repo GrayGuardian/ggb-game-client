@@ -8,6 +8,7 @@ function UI:init()
         end
     )
     self.sceneParamMap = {}
+    self.sceneOptsMap = {}
     self.sceneComp = nil
 
     self.uiCompMap = {}
@@ -24,12 +25,27 @@ function UI:sceneLoad(info)
     end
     luaName = string.lower("scene_" .. info.name)
     print("加载场景lua脚本>>" .. luaName)
-    self.sceneComp = require(luaName):new(info, self.sceneParamMap[info.name])
+    self.sceneComp = require(luaName):new(info, self.sceneParamMap[info.name], self.sceneOptsMap[info.name])
     self.sceneParamMap[info.name] = nil
+    self.sceneOptsMap[info.name] = nil
 end
 -- 切换场景
-function UI:loadScene(name, param)
+function UI:loadScene(name, param, opts)
+    -- 默认加载参数
+    local OPTS_DEFAULT = {isCloseAllUI = true}
+    if opts == nil then
+        opts = OPTS_DEFAULT
+    else
+        for key, value in pairs(OPTS_DEFAULT) do
+            if opts[key] == nil then
+                opts[key] = value
+            end
+        end
+    end
+
     self.sceneParamMap[name] = param
+    self.sceneOptsMap[name] = opts
+
     SceneManager.LoadScene(name)
 end
 
@@ -51,7 +67,14 @@ function UI:showUI(name, param, opts)
     local OPTS_DEFAULT = {order = 0}
     if opts == nil then
         opts = OPTS_DEFAULT
+    else
+        for key, value in pairs(OPTS_DEFAULT) do
+            if opts[key] == nil then
+                opts[key] = value
+            end
+        end
     end
+    -- InitComp
     local comp = require(name):new(name, param, opts)
     self:addUI(comp)
     --加载AB依赖包
@@ -78,6 +101,11 @@ function UI:closeUI(uiComp)
         end
     end
     self:delUI(uiComp)
+end
+function UI:closeAllUI()
+    for key, uiComp in pairs(self.uiCompMap) do
+        uiComp:close()
+    end
 end
 function UI:getRelaOrder(order)
     local index = #self.uiCompMap

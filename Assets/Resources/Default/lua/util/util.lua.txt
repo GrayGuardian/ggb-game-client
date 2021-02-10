@@ -44,8 +44,12 @@ util.serialize = function(obj)
         end
         lua = lua .. "}"
         lua = string.gsub(lua, ", }", " }")
+    elseif t == "function" then
+        lua = lua .. "[function]"
+    elseif t == "userdata" then
+        lua = lua .. "[" .. tostring(t) .. "]"
     elseif t == "nil" then
-        return nil
+        lua = lua .. "[nil]"
     else
         error("can not serialize a " .. t .. " type.")
     end

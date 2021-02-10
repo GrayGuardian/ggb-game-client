@@ -4,15 +4,35 @@ local UITip = class("UITip", base)
 base.static.abs = {}
 
 function UITip:onLoad()
-    print("ui_tip onLoad")
+    --print("ui_tip onLoad")
     self.msg = self.param.msg
+    self.onClick = self.param.onClick
     self.uiComp.Text.msgText.text = self.msg
+
+    local i = 0
+    timer:on(
+        1,
+        true,
+        function()
+            broadcast:notify("aaaa", i)
+            i = i + 1
+        end
+    )
+    self:broadcast_on(
+        "aaaa",
+        function(data)
+            print(data)
+        end
+    )
 end
 function UITip:onDestroy()
-    print("ui_tip onDestroy")
+    --print("ui_tip onDestroy")
 end
 function UITip:onConfirmBtnClick(o, order)
     print("点击确定", self.msg, "  o:", o.name, "  order:", order)
+    if self.onClick ~= nil then
+        self.onClick()
+    end
     self:close()
 end
 return UITip

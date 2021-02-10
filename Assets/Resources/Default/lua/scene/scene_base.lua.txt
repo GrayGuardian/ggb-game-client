@@ -7,15 +7,27 @@ function SceneBase:onDestroy()
 end
 ------------------- 继承重写 -------------------
 
-function SceneBase:init(info, param)
-    print("加载场景-", info.name, " Init >", " info:", util.serialize(info), " param:", util.serialize(param))
+function SceneBase:init(info, param, opts)
+    print(
+        "加载场景-",
+        info.name,
+        " Init >",
+        " info:",
+        util.serialize(info),
+        " param:",
+        util.serialize(param),
+        " opts:",
+        util.serialize(opts)
+    )
     self.info = info
     self.param = param
-
+    self.opts = opts and opts or {}
     self:_onLoad()
 end
 function SceneBase:_onLoad()
-    print("加载场景-" .. self.info.name .. ">>>>>>>>>>>>>>>>>>>>>>>> onLoad")
+    if self.opts.isCloseAllUI == true then
+        ui:closeAllUI()
+    end
     self:onLoad()
 end
 function SceneBase:_onDestroy()
