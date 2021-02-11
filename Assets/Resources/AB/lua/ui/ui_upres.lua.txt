@@ -1,6 +1,8 @@
 local base = require("ui_base")
 local UIUpres = class("UIUpres", base)
 
+base.static.ab = "upres"
+base.static.abs = {}
 
 function UIUpres:onLoad()
     

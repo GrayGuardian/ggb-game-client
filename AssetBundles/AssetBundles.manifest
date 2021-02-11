@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1107296347
+CRC: 1596593754
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -12,10 +12,9 @@ AssetBundleManifest:
       Name: p1
       Dependencies: {}
     Info_3:
-      Name: ui_upres
-      Dependencies:
-        Dependency_0: p1
-    Info_4:
       Name: ui1
       Dependencies:
         Dependency_0: p1
+    Info_4:
+      Name: upres
+      Dependencies: {}

@@ -3,6 +3,31 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 
+/// <summary>
+/// 更新数据
+/// </summary>
+public class RefData
+{
+    /// <summary>
+    /// 更新类型
+    /// 0 - 无需更新
+    /// 1 - 客户端更新
+    /// 2 - 首次打开下载资源
+    /// 3 - 在线更新资源
+    /// 4 - 版本文件不符，无需下载资源
+    /// 5 - 文件损坏，需要更新
+    /// </summary>
+    public int type;
+    /// <summary>
+    /// 共计下载文件大小
+    /// </summary>
+    public int size;
+    /// <summary>
+    /// 更新数据
+    /// </summary>
+    public VObject data;
+}
+
 public class ResUtil
 {
     public VObject Version
@@ -11,12 +36,11 @@ public class ResUtil
         {
             if (_vJson != "")
             {
-                _version = JsonConvert.DeserializeObject<VObject>(_vJson);
+                return JsonConvert.DeserializeObject<VObject>(_vJson);
             }
-            return _version;
+            return null;
         }
     }
-    private VObject _version = null;
     private string _vJson
     {
         get
@@ -30,15 +54,15 @@ public class ResUtil
     {
         get
         {
-            if (_webVersion == null)
+            if(_webVersion == null)
             {
-                Debug.Log("Web VJson:" + _vWebJson);
                 _webVersion = JsonConvert.DeserializeObject<VObject>(_vWebJson);
             }
             return _webVersion;
         }
     }
-    private VObject _webVersion = null;
+    private VObject _webVersion;
+    
     public string _vWebJson
     {
         get
@@ -58,51 +82,89 @@ public class ResUtil
     /// 获取更新数据
     /// </summary>
     /// <returns></returns>
-    public VObject GetRefdata()
-    {
-        bool isUp = false;
-        VObject vObject;
-        //校验远程Json文件
-        if (Version == null || Version.toString() != WebVersion.toString())
-        {
-            isUp = true;
-            vObject = JsonConvert.DeserializeObject<VObject>(WebVersion.toString());
-        }
-        else
-        {
-            vObject = JsonConvert.DeserializeObject<VObject>(Version.toString());
-        }
+    public RefData GetRefData(){
+        VObject data = JsonConvert.DeserializeObject<VObject>(WebVersion.toString());
+
         //校验AB包文件
+        int sizeSum = 0;
         List<ABVObject> abList = new List<ABVObject>();
-        foreach (var ab in vObject.ABs)
+        foreach (var ab in WebVersion.ABs)
         {
             string path = Path.Combine(GameConst.RES_LOCAL_ROOT, "./AssetBundles", "./" + ab.name);
-            byte[] data = Util.File.ReadBytes(path);
-            string hash = Util.File.ComputeHash(data);
-            long size = data.Length;
+            byte[] bytes = Util.File.ReadBytes(path);
+            string hash = Util.File.ComputeHash(bytes);
+            long size = bytes.Length;
             if (hash != ab.hash || size != ab.size)
             {
-                isUp = true;
                 //判断是否存在缓存文件
                 string tempPath = Path.Combine(GameConst.DOWNLOAD_TEMPFILE_ROOT, ab.name + "_" + ab.hash + ".temp");
                 if (File.Exists(tempPath))
                 {
                     //存在缓存文件
                     FileInfo tempFile = new FileInfo(tempPath);
-                    ab.size = ab.size - (int)tempFile.Length;
+                    ab.size = ab.size - (int)tempFile.Length;  
                 }
+                sizeSum += ab.size;
                 abList.Add(ab);
             }
         }
-        vObject.ABs = abList.ToArray();
+        data.ABs = abList.ToArray();
 
-        if (isUp)
-        {
-            return vObject;
+        int type = 0;
+        if(data.ClientVersion != Application.version){
+            // 客户端更新
+            type = 1;
         }
-        return null;
-    }
+        else if(Version == null && data.ABs.Length>0){
+            // 首次打开，需要下载资源
+            type = 2;
+        }
+        else if((Version == null || Version.toString() != WebVersion.toString()) && data.ABs.Length > 0){
+            // 在线下载资源更新
+            type = 3;
+        }
+        else if((Version == null || Version.toString() != WebVersion.toString()) && data.ABs.Length == 0){
+            // 版本文件不符，无需下载资源
+            type = 4;
+        }
+        else if(data.ABs.Length>0){
+            // 文件损坏，需要更新
+            type = 5;
+        }
 
+        RefData refdata = new RefData();
+        refdata.type = type;
+        refdata.size = sizeSum;
+        refdata.data = data;
+        return refdata;
+    }
+    /// <summary>
+    /// 清理冗余资源
+    /// </summary>
+    public void ClearRedundantRes()
+    {
+        DirectoryInfo dirInfo;
+        // 清理临时文件
+        dirInfo = new DirectoryInfo(GameConst.DOWNLOAD_TEMPFILE_ROOT);
+        foreach (var fileInfo in dirInfo.GetFiles())
+        {
+            fileInfo.Delete();
+        }
+        // 清理多余AB包文件
+        List<string> abNameList = new List<string>();
+        foreach (var ab in WebVersion.ABs)
+        {
+            abNameList.Add(ab.name);
+        }
+        dirInfo = new DirectoryInfo(Path.Combine(GameConst.RES_LOCAL_ROOT, "./AssetBundles"));
+        foreach (var fileInfo in dirInfo.GetFiles())
+        {
+            if(abNameList.IndexOf(fileInfo.Name) == -1){
+                UnityEngine.Debug.Log("清理多余AB包文件>>"+fileInfo.Name);
+                fileInfo.Delete();
+            }
+        }
+    }
 
     private Dictionary<string, AssetBundle> _abMap = new Dictionary<string, AssetBundle>();
     public AssetBundle LoadAssetBundle(string key)

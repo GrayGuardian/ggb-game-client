@@ -64,6 +64,11 @@ public class ResTool : MonoBehaviour
             Directory.CreateDirectory(rootDir.FullName);
             Debug.Log("Build文件夹不存在，重新创建");
         }
+        foreach (var fileInfo in rootABDir.GetFiles())
+        {   
+            //清空导出AB包文件
+            fileInfo.Delete();
+        }
         //构建资源
         List<ABVObject> abVObjectList = new List<ABVObject>();
         string[] blackFilesName = new string[] { "AssetBundles" };
@@ -94,7 +99,7 @@ public class ResTool : MonoBehaviour
         }
         VObject vObject = new VObject();
         vObject.Version = "1.0.4";
-        vObject.UpdateType = 1;
+        vObject.ClientVersion = Application.version;
         vObject.IsRestart = false;
         vObject.Content = "我是更新描述!";
         vObject.ABs = abVObjectList.ToArray();
@@ -178,11 +183,18 @@ public class ResTool : MonoBehaviour
         }
         else
         {
-            path = Path.Combine(rootDir.FullName, "./AssetBundles");
+            path = Path.Combine(rootDir.FullName, "./AssetBundles");     
             if (!Directory.Exists(path))
             {
                 Debug.Log("创建资源文件夹 - AB包");
                 Directory.CreateDirectory(path);
+            }
+            else{
+                foreach (var fileInfo in new DirectoryInfo(path).GetFiles())
+                {
+                    //清空导出AB包文件
+                    fileInfo.Delete();
+                }
             }
             foreach (var file in rootABDir.GetFiles())
             {
@@ -193,31 +205,27 @@ public class ResTool : MonoBehaviour
         }
 
     }
-    [MenuItem("Tools/资源管理/Print Version Json")]
-    static void PrintVersionJson()
-    {
-        var versionFile = new FileInfo(Path.Combine(GameConst.BUILD_ROOT, "./Version"));
-        if (!File.Exists(versionFile.FullName))
-        {
-            UnityEditor.EditorUtility.DisplayDialog("提示", "Build - Version文件不存在,请重新构建\n Url:" + versionFile.FullName, "确定");
-            return;
-        }
-        string str = Util.Encrypt.ReadString(versionFile.FullName);
-        Debug.Log(str);
-    }
+    // [MenuItem("Tools/资源管理/Print Version Json")]
+    // static void PrintVersionJson()
+    // {
+    //     var versionFile = new FileInfo(Path.Combine(GameConst.BUILD_ROOT, "./Version"));
+    //     if (!File.Exists(versionFile.FullName))
+    //     {
+    //         UnityEditor.EditorUtility.DisplayDialog("提示", "Build - Version文件不存在,请重新构建\n Url:" + versionFile.FullName, "确定");
+    //         return;
+    //     }
+    //     string str = Util.Encrypt.ReadString(versionFile.FullName);
+    //     Debug.Log(str);
+    // }
     //需要导出的默认AB包资源
-    static string[] DEFAULT_ABS = { "lua", "p1","ui1","ui_upres","json" };
+    static string[] DEFAULT_ABS = { "lua", "upres","json" };
     [MenuItem("Tools/资源管理/Clear All Default_Res")]
     static void ClearAllDefaultRes()
     {
-        foreach (var ab in DEFAULT_ABS)
+        DirectoryInfo rootDir = new DirectoryInfo(Path.Combine(GameConst.RESOURCES, "./Default"));
+        foreach (var dir in rootDir.GetDirectories())
         {
-            DirectoryInfo buildDir = new DirectoryInfo(Path.Combine(GameConst.RESOURCES, "./Default", "./" + ab));
-            if (!Directory.Exists(buildDir.FullName))
-            {
-                continue;
-            }
-            FileInfo[] files = buildDir.GetFiles();
+            FileInfo[] files = dir.GetFiles();
             if (files.Length > 0)
             {
                 foreach (var file in files)
@@ -225,7 +233,7 @@ public class ResTool : MonoBehaviour
                     file.Delete();
                 }
             }
-            buildDir.Delete();
+            dir.Delete();
         }
         AssetDatabase.Refresh();
     }

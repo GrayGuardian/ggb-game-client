@@ -11,7 +11,7 @@ public class VObjectWrap
 		L.RegFunction("New", _CreateVObject);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("Version", get_Version, set_Version);
-		L.RegVar("UpdateType", get_UpdateType, set_UpdateType);
+		L.RegVar("ClientVersion", get_ClientVersion, set_ClientVersion);
 		L.RegVar("IsRestart", get_IsRestart, set_IsRestart);
 		L.RegVar("Content", get_Content, set_Content);
 		L.RegVar("ABs", get_ABs, set_ABs);
@@ -79,7 +79,7 @@ public class VObjectWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_UpdateType(IntPtr L)
+	static int get_ClientVersion(IntPtr L)
 	{
 		object o = null;
 
@@ -87,13 +87,13 @@ public class VObjectWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			VObject obj = (VObject)o;
-			int ret = obj.UpdateType;
-			LuaDLL.lua_pushinteger(L, ret);
+			string ret = obj.ClientVersion;
+			LuaDLL.lua_pushstring(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index UpdateType on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index ClientVersion on a nil value");
 		}
 	}
 
@@ -174,7 +174,7 @@ public class VObjectWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_UpdateType(IntPtr L)
+	static int set_ClientVersion(IntPtr L)
 	{
 		object o = null;
 
@@ -182,13 +182,13 @@ public class VObjectWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			VObject obj = (VObject)o;
-			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
-			obj.UpdateType = arg0;
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.ClientVersion = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index UpdateType on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index ClientVersion on a nil value");
 		}
 	}
 

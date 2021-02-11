@@ -1,4 +1,14 @@
 <Root>
+  <Type Name="ABVObjectWrap">
+    <Method Name="_CreateABVObject" PublishedName="_CreateABVObject" Signature="_CreateABVObject-IntPtr" FullSignature="System.Int32 ABVObjectWrap::_CreateABVObject(System.IntPtr)" Index="950" />
+    <Method Name="get_hash" PublishedName="get_hash" Signature="get_hash-IntPtr" FullSignature="System.Int32 ABVObjectWrap::get_hash(System.IntPtr)" Index="953" />
+    <Method Name="get_name" PublishedName="get_name" Signature="get_name-IntPtr" FullSignature="System.Int32 ABVObjectWrap::get_name(System.IntPtr)" Index="951" />
+    <Method Name="get_size" PublishedName="get_size" Signature="get_size-IntPtr" FullSignature="System.Int32 ABVObjectWrap::get_size(System.IntPtr)" Index="952" />
+    <Method Name="Register" PublishedName="Register" Signature="Register-LuaState" FullSignature="System.Void ABVObjectWrap::Register(LuaInterface.LuaState)" Index="949" />
+    <Method Name="set_hash" PublishedName="set_hash" Signature="set_hash-IntPtr" FullSignature="System.Int32 ABVObjectWrap::set_hash(System.IntPtr)" Index="956" />
+    <Method Name="set_name" PublishedName="set_name" Signature="set_name-IntPtr" FullSignature="System.Int32 ABVObjectWrap::set_name(System.IntPtr)" Index="954" />
+    <Method Name="set_size" PublishedName="set_size" Signature="set_size-IntPtr" FullSignature="System.Int32 ABVObjectWrap::set_size(System.IntPtr)" Index="955" />
+  </Type>
   <Type Name="AccessingArray">
     <Method Name="OnApplicationQuit" PublishedName="OnApplicationQuit" Signature="OnApplicationQuit" FullSignature="System.Void AccessingArray::OnApplicationQuit()" Index="54" />
     <Method Name="OnGUI" PublishedName="OnGUI" Signature="OnGUI" FullSignature="System.Void AccessingArray::OnGUI()" Index="53" />
@@ -67,6 +77,14 @@
     <Method Name="WriteBytes" PublishedName="WriteBytes" Signature="WriteBytes-IntPtr" FullSignature="System.Int32 EncryptUtilWrap::WriteBytes(System.IntPtr)" Index="425" />
     <Method Name="WriteString" PublishedName="WriteString" Signature="WriteString-IntPtr" FullSignature="System.Int32 EncryptUtilWrap::WriteString(System.IntPtr)" Index="426" />
   </Type>
+  <Type Name="ENV_TYPEWrap">
+    <Method Name="CheckType" PublishedName="CheckType" Signature="CheckType-IntPtr-int" FullSignature="System.Boolean ENV_TYPEWrap::CheckType(System.IntPtr,System.Int32)" Index="959" />
+    <Method Name="get_DEV" PublishedName="get_DEV" Signature="get_DEV-IntPtr" FullSignature="System.Int32 ENV_TYPEWrap::get_DEV(System.IntPtr)" Index="961" />
+    <Method Name="get_MASTER" PublishedName="get_MASTER" Signature="get_MASTER-IntPtr" FullSignature="System.Int32 ENV_TYPEWrap::get_MASTER(System.IntPtr)" Index="960" />
+    <Method Name="IntToEnum" PublishedName="IntToEnum" Signature="IntToEnum-IntPtr" FullSignature="System.Int32 ENV_TYPEWrap::IntToEnum(System.IntPtr)" Index="962" />
+    <Method Name="Push" PublishedName="Push" Signature="Push-IntPtr-ENV_TYPE" FullSignature="System.Void ENV_TYPEWrap::Push(System.IntPtr,ENV_TYPE)" Index="958" />
+    <Method Name="Register" PublishedName="Register" Signature="Register-LuaState" FullSignature="System.Void ENV_TYPEWrap::Register(LuaInterface.LuaState)" Index="957" />
+  </Type>
   <Type Name="FileUtil">
     <Method Name="ComputeHash" PublishedName="ComputeHash-byte[]" Signature="ComputeHash-byte[]" FullSignature="System.String FileUtil::ComputeHash(System.Byte[])" Index="398" />
     <Method Name="ComputeHash" PublishedName="ComputeHash-string" Signature="ComputeHash-string" FullSignature="System.String FileUtil::ComputeHash(System.String)" Index="399" />
@@ -87,6 +105,10 @@
     <Method Name="get_BUILD_AB_ROOT" PublishedName="get_BUILD_AB_ROOT" Signature="get_BUILD_AB_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::get_BUILD_AB_ROOT(System.IntPtr)" Index="932" />
     <Method Name="get_BUILD_ROOT" PublishedName="get_BUILD_ROOT" Signature="get_BUILD_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::get_BUILD_ROOT(System.IntPtr)" Index="931" />
     <Method Name="get_DOWNLOAD_TEMPFILE_ROOT" PublishedName="get_DOWNLOAD_TEMPFILE_ROOT" Signature="get_DOWNLOAD_TEMPFILE_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::get_DOWNLOAD_TEMPFILE_ROOT(System.IntPtr)" Index="933" />
+    <Method Name="get_DOWNLOAD_URL" PublishedName="get_DOWNLOAD_URL" Signature="get_DOWNLOAD_URL-IntPtr" FullSignature="System.Int32 GameConstWrap::get_DOWNLOAD_URL(System.IntPtr)" Index="965" />
+    <Method Name="get_HTTP" PublishedName="get_HTTP" Signature="get_HTTP-IntPtr" FullSignature="System.Int32 GameConstWrap::get_HTTP(System.IntPtr)" Index="964" />
+    <Method Name="get_PRO_ENV" PublishedName="get_PRO_ENV" Signature="get_PRO_ENV-IntPtr" FullSignature="System.Int32 GameConstWrap::get_PRO_ENV(System.IntPtr)" Index="963" />
+    <Method Name="get_RES_JSONS" PublishedName="get_RES_JSONS" Signature="get_RES_JSONS-IntPtr" FullSignature="System.Int32 GameConstWrap::get_RES_JSONS(System.IntPtr)" Index="966" />
     <Method Name="get_RES_LOCAL_ROOT" PublishedName="get_RES_LOCAL_ROOT" Signature="get_RES_LOCAL_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::get_RES_LOCAL_ROOT(System.IntPtr)" Index="929" />
     <Method Name="get_RES_WEB_ROOT" PublishedName="get_RES_WEB_ROOT" Signature="get_RES_WEB_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::get_RES_WEB_ROOT(System.IntPtr)" Index="930" />
     <Method Name="get_RESOURCES" PublishedName="get_RESOURCES" Signature="get_RESOURCES-IntPtr" FullSignature="System.Int32 GameConstWrap::get_RESOURCES(System.IntPtr)" Index="928" />
@@ -95,6 +117,10 @@
     <Method Name="set_BUILD_AB_ROOT" PublishedName="set_BUILD_AB_ROOT" Signature="set_BUILD_AB_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::set_BUILD_AB_ROOT(System.IntPtr)" Index="938" />
     <Method Name="set_BUILD_ROOT" PublishedName="set_BUILD_ROOT" Signature="set_BUILD_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::set_BUILD_ROOT(System.IntPtr)" Index="937" />
     <Method Name="set_DOWNLOAD_TEMPFILE_ROOT" PublishedName="set_DOWNLOAD_TEMPFILE_ROOT" Signature="set_DOWNLOAD_TEMPFILE_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::set_DOWNLOAD_TEMPFILE_ROOT(System.IntPtr)" Index="939" />
+    <Method Name="set_DOWNLOAD_URL" PublishedName="set_DOWNLOAD_URL" Signature="set_DOWNLOAD_URL-IntPtr" FullSignature="System.Int32 GameConstWrap::set_DOWNLOAD_URL(System.IntPtr)" Index="969" />
+    <Method Name="set_HTTP" PublishedName="set_HTTP" Signature="set_HTTP-IntPtr" FullSignature="System.Int32 GameConstWrap::set_HTTP(System.IntPtr)" Index="968" />
+    <Method Name="set_PRO_ENV" PublishedName="set_PRO_ENV" Signature="set_PRO_ENV-IntPtr" FullSignature="System.Int32 GameConstWrap::set_PRO_ENV(System.IntPtr)" Index="967" />
+    <Method Name="set_RES_JSONS" PublishedName="set_RES_JSONS" Signature="set_RES_JSONS-IntPtr" FullSignature="System.Int32 GameConstWrap::set_RES_JSONS(System.IntPtr)" Index="970" />
     <Method Name="set_RES_LOCAL_ROOT" PublishedName="set_RES_LOCAL_ROOT" Signature="set_RES_LOCAL_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::set_RES_LOCAL_ROOT(System.IntPtr)" Index="935" />
     <Method Name="set_RES_WEB_ROOT" PublishedName="set_RES_WEB_ROOT" Signature="set_RES_WEB_ROOT-IntPtr" FullSignature="System.Int32 GameConstWrap::set_RES_WEB_ROOT(System.IntPtr)" Index="936" />
     <Method Name="set_RESOURCES" PublishedName="set_RESOURCES" Signature="set_RESOURCES-IntPtr" FullSignature="System.Int32 GameConstWrap::set_RESOURCES(System.IntPtr)" Index="934" />
@@ -103,8 +129,10 @@
     <Method Name="Awake" PublishedName="Awake" Signature="Awake" FullSignature="System.Void HelloWorld::Awake()" Index="21" />
   </Type>
   <Type Name="HttpUtil">
-    <Method Name="_download" PublishedName="_download" Signature="_download-string-string-string-Action-Action&lt;long,long&gt;" FullSignature="System.Collections.IEnumerator HttpUtil::_download(System.String,System.String,System.String,System.Action,System.Action`2&lt;System.Int64,System.Int64&gt;)" Index="405" />
-    <Method Name="Download" PublishedName="Download" Signature="Download-string-string-string-Action-Action&lt;long,long&gt;" FullSignature="System.Void HttpUtil::Download(System.String,System.String,System.String,System.Action,System.Action`2&lt;System.Int64,System.Int64&gt;)" Index="404" />
+    <Method Name="_download" PublishedName="_download-string-string-string-Action-Action&lt;int,int&gt;" Signature="_download-string-string-string-Action-Action&lt;int,int&gt;" FullSignature="System.Collections.IEnumerator HttpUtil::_download(System.String,System.String,System.String,System.Action,System.Action`2&lt;System.Int32,System.Int32&gt;)" Index="941" />
+    <Method Name="_download" PublishedName="_download-string-string-string-Action-Action&lt;long,long&gt;" Signature="_download-string-string-string-Action-Action&lt;long,long&gt;" FullSignature="System.Collections.IEnumerator HttpUtil::_download(System.String,System.String,System.String,System.Action,System.Action`2&lt;System.Int64,System.Int64&gt;)" Index="405" />
+    <Method Name="Download" PublishedName="Download-string-string-string-Action-Action&lt;int,int&gt;" Signature="Download-string-string-string-Action-Action&lt;int,int&gt;" FullSignature="System.Void HttpUtil::Download(System.String,System.String,System.String,System.Action,System.Action`2&lt;System.Int32,System.Int32&gt;)" Index="940" />
+    <Method Name="Download" PublishedName="Download-string-string-string-Action-Action&lt;long,long&gt;" Signature="Download-string-string-string-Action-Action&lt;long,long&gt;" FullSignature="System.Void HttpUtil::Download(System.String,System.String,System.String,System.Action,System.Action`2&lt;System.Int64,System.Int64&gt;)" Index="404" />
     <Method Name="Get" PublishedName="Get" Signature="Get-string-string-int-Encoding" FullSignature="System.String HttpUtil::Get(System.String,System.String,System.Int32,System.Text.Encoding)" Index="402" />
     <Method Name="Post" PublishedName="Post" Signature="Post-string-string-CookieContainer-string-int-Encoding" FullSignature="System.String HttpUtil::Post(System.String,System.String,System.Net.CookieContainer,System.String,System.Int32,System.Text.Encoding)" Index="403" />
   </Type>
@@ -334,18 +362,35 @@
     <Method Name="set_RES_WEB_ROOT" PublishedName="set_RES_WEB_ROOT" Signature="set_RES_WEB_ROOT-IntPtr" FullSignature="System.Int32 PathConstWrap::set_RES_WEB_ROOT(System.IntPtr)" Index="559" />
     <Method Name="set_RESOURCES" PublishedName="set_RESOURCES" Signature="set_RESOURCES-IntPtr" FullSignature="System.Int32 PathConstWrap::set_RESOURCES(System.IntPtr)" Index="557" />
   </Type>
+  <Type Name="RefDataWrap">
+    <Method Name="_CreateRefData" PublishedName="_CreateRefData" Signature="_CreateRefData-IntPtr" FullSignature="System.Int32 RefDataWrap::_CreateRefData(System.IntPtr)" Index="972" />
+    <Method Name="get_data" PublishedName="get_data" Signature="get_data-IntPtr" FullSignature="System.Int32 RefDataWrap::get_data(System.IntPtr)" Index="975" />
+    <Method Name="get_size" PublishedName="get_size" Signature="get_size-IntPtr" FullSignature="System.Int32 RefDataWrap::get_size(System.IntPtr)" Index="974" />
+    <Method Name="get_type" PublishedName="get_type" Signature="get_type-IntPtr" FullSignature="System.Int32 RefDataWrap::get_type(System.IntPtr)" Index="973" />
+    <Method Name="Register" PublishedName="Register" Signature="Register-LuaState" FullSignature="System.Void RefDataWrap::Register(LuaInterface.LuaState)" Index="971" />
+    <Method Name="set_data" PublishedName="set_data" Signature="set_data-IntPtr" FullSignature="System.Int32 RefDataWrap::set_data(System.IntPtr)" Index="978" />
+    <Method Name="set_size" PublishedName="set_size" Signature="set_size-IntPtr" FullSignature="System.Int32 RefDataWrap::set_size(System.IntPtr)" Index="977" />
+    <Method Name="set_type" PublishedName="set_type" Signature="set_type-IntPtr" FullSignature="System.Int32 RefDataWrap::set_type(System.IntPtr)" Index="976" />
+  </Type>
   <Type Name="ResUtil">
+    <Method Name="ClearRedundantRes" PublishedName="ClearRedundantRes" Signature="ClearRedundantRes" FullSignature="System.Void ResUtil::ClearRedundantRes()" Index="943" />
     <Method Name="get__vJson" PublishedName="get__vJson" Signature="get__vJson" FullSignature="System.String ResUtil::get__vJson()" Index="408" />
     <Method Name="get__vWebJson" PublishedName="get__vWebJson" Signature="get__vWebJson" FullSignature="System.String ResUtil::get__vWebJson()" Index="410" />
     <Method Name="get_Version" PublishedName="get_Version" Signature="get_Version" FullSignature="VObject ResUtil::get_Version()" Index="407" />
     <Method Name="get_WebVersion" PublishedName="get_WebVersion" Signature="get_WebVersion" FullSignature="VObject ResUtil::get_WebVersion()" Index="409" />
     <Method Name="getRefdata" PublishedName="getRefdata" Signature="getRefdata" FullSignature="VObject ResUtil::getRefdata()" Index="412" />
-    <Method Name="Load" PublishedName="Load" Signature="Load-string-string" FullSignature="UnityEngine.Object ResUtil::Load(System.String,System.String)" Index="415" />
+    <Method Name="GetRefData" PublishedName="GetRefData" Signature="GetRefData" FullSignature="RefData ResUtil::GetRefData()" Index="942" />
     <Method Name="LoadAssetBundle" PublishedName="LoadAssetBundle" Signature="LoadAssetBundle-string" FullSignature="UnityEngine.AssetBundle ResUtil::LoadAssetBundle(System.String)" Index="413" />
-    <Method Name="LoadBytes" PublishedName="LoadBytes" Signature="LoadBytes-string-string" FullSignature="System.Byte[] ResUtil::LoadBytes(System.String,System.String)" Index="417" />
-    <Method Name="LoadGameObject" PublishedName="LoadGameObject" Signature="LoadGameObject-string-string" FullSignature="UnityEngine.GameObject ResUtil::LoadGameObject(System.String,System.String)" Index="419" />
-    <Method Name="LoadSprite" PublishedName="LoadSprite" Signature="LoadSprite-string-string" FullSignature="UnityEngine.Sprite ResUtil::LoadSprite(System.String,System.String)" Index="418" />
-    <Method Name="LoadString" PublishedName="LoadString" Signature="LoadString-string-string" FullSignature="System.String ResUtil::LoadString(System.String,System.String)" Index="416" />
+    <Method Name="LoadBytes" PublishedName="LoadBytes-string-string" Signature="LoadBytes-string-string" FullSignature="System.Byte[] ResUtil::LoadBytes(System.String,System.String)" Index="417" />
+    <Method Name="LoadBytes" PublishedName="LoadBytes-string-string-bool" Signature="LoadBytes-string-string-bool" FullSignature="System.Byte[] ResUtil::LoadBytes(System.String,System.String,System.Boolean)" Index="946" />
+    <Method Name="LoadGameObject" PublishedName="LoadGameObject-string-string" Signature="LoadGameObject-string-string" FullSignature="UnityEngine.GameObject ResUtil::LoadGameObject(System.String,System.String)" Index="419" />
+    <Method Name="LoadGameObject" PublishedName="LoadGameObject-string-string-bool" Signature="LoadGameObject-string-string-bool" FullSignature="UnityEngine.GameObject ResUtil::LoadGameObject(System.String,System.String,System.Boolean)" Index="948" />
+    <Method Name="LoadSprite" PublishedName="LoadSprite-string-string" Signature="LoadSprite-string-string" FullSignature="UnityEngine.Sprite ResUtil::LoadSprite(System.String,System.String)" Index="418" />
+    <Method Name="LoadSprite" PublishedName="LoadSprite-string-string-bool" Signature="LoadSprite-string-string-bool" FullSignature="UnityEngine.Sprite ResUtil::LoadSprite(System.String,System.String,System.Boolean)" Index="947" />
+    <Method Name="Load" PublishedName="Load-string-string" Signature="Load-string-string" FullSignature="UnityEngine.Object ResUtil::Load(System.String,System.String)" Index="415" />
+    <Method Name="Load" PublishedName="Load-string-string-bool" Signature="Load-string-string-bool" FullSignature="UnityEngine.Object ResUtil::Load(System.String,System.String,System.Boolean)" Index="944" />
+    <Method Name="LoadString" PublishedName="LoadString-string-string" Signature="LoadString-string-string" FullSignature="System.String ResUtil::LoadString(System.String,System.String)" Index="416" />
+    <Method Name="LoadString" PublishedName="LoadString-string-string-bool" Signature="LoadString-string-string-bool" FullSignature="System.String ResUtil::LoadString(System.String,System.String,System.Boolean)" Index="945" />
     <Method Name="UnLoadAssetBundle" PublishedName="UnLoadAssetBundle" Signature="UnLoadAssetBundle-string-bool" FullSignature="System.Void ResUtil::UnLoadAssetBundle(System.String,System.Boolean)" Index="414" />
     <Method Name="UpVersion" PublishedName="UpVersion" Signature="UpVersion" FullSignature="System.Void ResUtil::UpVersion()" Index="411" />
   </Type>
@@ -355,6 +400,7 @@
     <Method Name="get_Version" PublishedName="get_Version" Signature="get_Version-IntPtr" FullSignature="System.Int32 ResUtilWrap::get_Version(System.IntPtr)" Index="574" />
     <Method Name="get_WebVersion" PublishedName="get_WebVersion" Signature="get_WebVersion-IntPtr" FullSignature="System.Int32 ResUtilWrap::get_WebVersion(System.IntPtr)" Index="575" />
     <Method Name="getRefdata" PublishedName="getRefdata" Signature="getRefdata-IntPtr" FullSignature="System.Int32 ResUtilWrap::getRefdata(System.IntPtr)" Index="566" />
+    <Method Name="GetRefData" PublishedName="GetRefData" Signature="GetRefData-IntPtr" FullSignature="System.Int32 ResUtilWrap::GetRefData(System.IntPtr)" Index="979" />
     <Method Name="Load" PublishedName="Load" Signature="Load-IntPtr" FullSignature="System.Int32 ResUtilWrap::Load(System.IntPtr)" Index="569" />
     <Method Name="LoadAssetBundle" PublishedName="LoadAssetBundle" Signature="LoadAssetBundle-IntPtr" FullSignature="System.Int32 ResUtilWrap::LoadAssetBundle(System.IntPtr)" Index="567" />
     <Method Name="LoadBytes" PublishedName="LoadBytes" Signature="LoadBytes-IntPtr" FullSignature="System.Int32 ResUtilWrap::LoadBytes(System.IntPtr)" Index="571" />
@@ -1124,12 +1170,14 @@
   <Type Name="VObjectWrap">
     <Method Name="_CreateVObject" PublishedName="_CreateVObject" Signature="_CreateVObject-IntPtr" FullSignature="System.Int32 VObjectWrap::_CreateVObject(System.IntPtr)" Index="890" />
     <Method Name="get_ABs" PublishedName="get_ABs" Signature="get_ABs-IntPtr" FullSignature="System.Int32 VObjectWrap::get_ABs(System.IntPtr)" Index="896" />
+    <Method Name="get_ClientVersion" PublishedName="get_ClientVersion" Signature="get_ClientVersion-IntPtr" FullSignature="System.Int32 VObjectWrap::get_ClientVersion(System.IntPtr)" Index="980" />
     <Method Name="get_Content" PublishedName="get_Content" Signature="get_Content-IntPtr" FullSignature="System.Int32 VObjectWrap::get_Content(System.IntPtr)" Index="895" />
     <Method Name="get_IsRestart" PublishedName="get_IsRestart" Signature="get_IsRestart-IntPtr" FullSignature="System.Int32 VObjectWrap::get_IsRestart(System.IntPtr)" Index="894" />
     <Method Name="get_UpdateType" PublishedName="get_UpdateType" Signature="get_UpdateType-IntPtr" FullSignature="System.Int32 VObjectWrap::get_UpdateType(System.IntPtr)" Index="893" />
     <Method Name="get_Version" PublishedName="get_Version" Signature="get_Version-IntPtr" FullSignature="System.Int32 VObjectWrap::get_Version(System.IntPtr)" Index="892" />
     <Method Name="Register" PublishedName="Register" Signature="Register-LuaState" FullSignature="System.Void VObjectWrap::Register(LuaInterface.LuaState)" Index="889" />
     <Method Name="set_ABs" PublishedName="set_ABs" Signature="set_ABs-IntPtr" FullSignature="System.Int32 VObjectWrap::set_ABs(System.IntPtr)" Index="901" />
+    <Method Name="set_ClientVersion" PublishedName="set_ClientVersion" Signature="set_ClientVersion-IntPtr" FullSignature="System.Int32 VObjectWrap::set_ClientVersion(System.IntPtr)" Index="981" />
     <Method Name="set_Content" PublishedName="set_Content" Signature="set_Content-IntPtr" FullSignature="System.Int32 VObjectWrap::set_Content(System.IntPtr)" Index="900" />
     <Method Name="set_IsRestart" PublishedName="set_IsRestart" Signature="set_IsRestart-IntPtr" FullSignature="System.Int32 VObjectWrap::set_IsRestart(System.IntPtr)" Index="899" />
     <Method Name="set_UpdateType" PublishedName="set_UpdateType" Signature="set_UpdateType-IntPtr" FullSignature="System.Int32 VObjectWrap::set_UpdateType(System.IntPtr)" Index="898" />

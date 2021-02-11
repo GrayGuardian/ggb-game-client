@@ -18,6 +18,7 @@ public static class LuaBinder
 		HttpUtilWrap.Register(L);
 		ResUtilWrap.Register(L);
 		VObjectWrap.Register(L);
+		RefDataWrap.Register(L);
 		ABVObjectWrap.Register(L);
 		ENV_TYPEWrap.Register(L);
 		Singleton_MonoSingletonWrap.Register(L);

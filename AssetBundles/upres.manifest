@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3300330040
+CRC: 11287780
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 82abc1aac4631f67a8ae0b4152c25d22
+    Hash: f3d5068f25fff73d38fa56b10f8ad255
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 9282560e1d80bb50e2b04c6963f1d8d2
+    Hash: 98389b4b07b41cb84e430329cd7ce89c
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -18,7 +18,11 @@ ClassTypes:
 - Class: 48
   Script: {instanceID: 0}
 - Class: 114
+  Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
   Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
   Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 115
@@ -32,7 +36,12 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Resources/AB/ui_upres/ui_upres.prefab
-- Assets/Resources/AB/ui_upres/bg_upres.png
-Dependencies:
-- F:/Git/ggame/koa-game-client/AssetBundles/p1
+- Assets/Resources/AB/upres/ui_upres.prefab
+- Assets/Resources/AB/upres/bar1_bg.png
+- Assets/Resources/AB/upres/bg_upres.png
+- Assets/Resources/AB/upres/bg_title1.png
+- Assets/Resources/AB/upres/bar1_val.png
+- Assets/Resources/AB/upres/bg_btn1.png
+- Assets/Resources/AB/upres/ui_upres_tip.prefab
+- Assets/Resources/AB/upres/bg_tip.png
+Dependencies: []

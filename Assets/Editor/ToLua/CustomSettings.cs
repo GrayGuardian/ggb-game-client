@@ -173,6 +173,7 @@ public static class CustomSettings
         _GT(typeof(HttpUtil)),
         _GT(typeof(ResUtil)),
         _GT(typeof(VObject)),
+        _GT(typeof(RefData)),
         _GT(typeof(ABVObject)),
         _GT(typeof(ENV_TYPE)),
     };

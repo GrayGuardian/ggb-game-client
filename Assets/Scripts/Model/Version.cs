@@ -22,10 +22,9 @@ public class VObject
     /// </summary>
     public string Version;
     /// <summary>
-    /// 更新类型
-    /// 0-在线热更 1-自行下载
+    /// 客户端版本号（不一致则提示下载安装包更新）
     /// </summary>
-    public int UpdateType;
+    public string ClientVersion;
     /// <summary>
     /// 是否需要重启
     /// </summary>

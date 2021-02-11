@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4084670647
+CRC: 1078756576
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 6a41700db9c38c813b3c4638bfd3238c
+    Hash: ef0a0c9105b2b57dea1c4eb4b09c13a6
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -20,6 +20,7 @@ Assets:
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Touch.lua.txt
 - Assets/Resources/AB/lua/base/tolua/ltn12.lua.txt
 - Assets/Resources/AB/lua/base/tolua/socket/smtp.lua.txt
+- Assets/Resources/AB/lua/ui/ui_upres_tip.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Mathf.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/dis_x86.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/dis_arm64be.lua.txt
