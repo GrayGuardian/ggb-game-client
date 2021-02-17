@@ -75,7 +75,7 @@ function UI:showUI(name, param, opts)
         end
     end
     -- InitComp
-    local comp = require(name):new(name, param, opts)
+    local comp = require(name):new(name, param, opts);
     self:addUI(comp)
     --加载AB依赖包
     for index, abKey in ipairs(comp:getABs()) do

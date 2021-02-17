@@ -50,7 +50,7 @@ function UIBase:bind(node)
 end
 -- ui组件初始化
 function UIBase:uiCompInit()
-    local types = {"Text", "Image", "Button"}
+    local types = {"Text", "Image", "Button","InputField"}
 
     for index, t in ipairs(types) do
         self.uiComp[t] = {}

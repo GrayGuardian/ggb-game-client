@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1078756576
+CRC: 3669713095
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ef0a0c9105b2b57dea1c4eb4b09c13a6
+    Hash: 7e930b5c3f92464706a8f2eeea138180
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -38,6 +38,7 @@ Assets:
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Ray.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Vector4.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/RaycastHit.lua.txt
+- Assets/Resources/AB/lua/ui/ui_login.lua.txt
 - Assets/Resources/AB/lua/base/tolua/socket/mbox.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Time.lua.txt
 - Assets/Resources/AB/lua/base/tolua/misc/utf8.lua.txt
@@ -86,7 +87,6 @@ Assets:
 - Assets/Resources/AB/lua/base/tolua/mime.lua.txt
 - Assets/Resources/AB/lua/util/broadcast/broadcast_code.lua.txt
 - Assets/Resources/AB/lua/base/tolua/protobuf/listener.lua.txt
-- Assets/Resources/AB/lua/ui/ui_upres.lua.txt
 - Assets/Resources/AB/lua/util/timer/timer_model.lua.txt
 - Assets/Resources/AB/lua/scene/scene_step.lua.txt
 - Assets/Resources/AB/lua/util/mono_util.lua.txt

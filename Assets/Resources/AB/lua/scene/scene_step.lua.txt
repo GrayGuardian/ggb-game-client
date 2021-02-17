@@ -2,6 +2,11 @@ local base = require("scene_base")
 local SceneLogin = class("SceneStep", base)
 
 function SceneLogin:onLoad()
-    ui:loadScene("UpRes")
+    ui:loadScene("UpRes");
+    
+    --test
+    --ui:loadScene("Login");
+
+  
 end
 return SceneLogin

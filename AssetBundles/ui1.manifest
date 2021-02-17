@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 261297577
+CRC: 1529522832
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7c8cf9a209e05a55e1954564a4d8ae36
+    Hash: 9a56a5893fdab1c355e6f9265ded09bc
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 98389b4b07b41cb84e430329cd7ce89c
+    Hash: 513706a4b1ad1f4332e4ad0028f7f3f8
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -22,6 +22,8 @@ ClassTypes:
 - Class: 114
   Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
+  Script: {fileID: 575553740, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
   Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
   Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
@@ -36,6 +38,7 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
+- Assets/Resources/AB/ui1/ui_login.prefab
 - Assets/Resources/AB/ui1/ui_tip.prefab
 Dependencies:
 - F:/Git/ggame/koa-game-client/AssetBundles/p1
