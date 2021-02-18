@@ -2,11 +2,30 @@ local base = require("scene_base")
 local SceneLogin = class("SceneStep", base)
 
 function SceneLogin:onLoad()
-    ui:loadScene("UpRes");
-    
-    --test
-    --ui:loadScene("Login");
+    --ui:loadScene("UpRes");
 
-  
+    --test
+    local common_pb = require "common_pb"
+    local http_pb = require "http_pb"
+
+    local pb = common_pb.Error()
+    pb.code = 500
+    pb.msg = "error"
+    local data = pb:SerializeToString()
+    print(pb.msg)
+
+    local pb1 = http_pb.s2c()
+    pb1.Error.code = 500
+    pb1.Error.msg = "error"
+    pb1.Error.aaa = "sdfasdf"
+    local data1 = pb1:SerializeToString()
+
+    local pb2 = http_pb.s2c()
+    pb2:ParseFromString(data1)
+    for key, value in pb2:ListFields() do
+        print(key.name, tostring(value))
+    end
+    print(tostring(pb2))
+    --ui:loadScene("Login")
 end
 return SceneLogin
