@@ -775,6 +775,9 @@ local function _AddMergeFromStringMethod(message_descriptor, message_meta)
     message_meta._member._InternalParse = _internal_parse
 
     local merge_from_string = function(self, serialized)
+        if serialized == nil then
+            return 0
+        end
         local length = #serialized
         if _internal_parse(self, serialized, 0, length) ~= length then
             error("Unexpected end-group tag.")

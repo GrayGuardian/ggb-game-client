@@ -1,5 +1,17 @@
 class = require("middle_class")
 
+string.split = function(str, str1)
+    local arr = {}
+    string.gsub(
+        str,
+        "[^" .. str1 .. "]+",
+        function(w)
+            table.insert(arr, w)
+        end
+    )
+    return arr
+end
+
 table.exist = function(table, value)
     for k, v in pairs(table) do
         if v == value then
@@ -55,23 +67,22 @@ utils.serialize = function(obj)
     end
     return lua
 end
-
 utils.sizeFormat = function(byteSize)
-    if byteSize > (1024*1024*1024)*0.95 then
-        return string.format("%0.2fGB",byteSize / (1024*1024*1024))
-    elseif byteSize > (1024*1024)*0.95 then
-        return string.format("%0.2fMB",byteSize / (1024*1024))
-    elseif byteSize > 1024*0.95 then
-        return string.format("%0.2fKB",byteSize / 1024)
+    if byteSize > (1024 * 1024 * 1024) * 0.95 then
+        return string.format("%0.2fGB", byteSize / (1024 * 1024 * 1024))
+    elseif byteSize > (1024 * 1024) * 0.95 then
+        return string.format("%0.2fMB", byteSize / (1024 * 1024))
+    elseif byteSize > 1024 * 0.95 then
+        return string.format("%0.2fKB", byteSize / 1024)
     end
-    return string.format("%0.2fBytes",byteSize)
+    return string.format("%0.2fBytes", byteSize)
 end
-
 
 -- c#
 resUtil = ResUtil.New()
-httpUtil = HttpUtil.New();
+httpUtil = HttpUtil.New()
 -- tolua
+pb = require("pb_util"):new()
 json = require("json_util"):new()
 BROADCAST_CODE = require("broadcast_code")
 broadcast = require("broadcast_util"):new()
