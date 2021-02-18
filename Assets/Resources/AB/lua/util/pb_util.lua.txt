@@ -1,6 +1,6 @@
 local PB = class("PB")
 
-function PB:serialize(key, data)
+function PB:encode(key, data)
     local keys = string.split(key, ".")
     local pb = require(keys[1])[keys[2]]()
     for k, v in pairs(data) do
@@ -14,7 +14,7 @@ function PB:serialize(key, data)
     end
     return pb:SerializeToString()
 end
-function PB:deserialize(key, data)
+function PB:decode(key, data)
     local keys = string.split(key, ".")
     local pb = require(keys[1])[keys[2]]()
     pb:ParseFromString(data)

@@ -9,15 +9,44 @@ function SceneLogin:onLoad()
     local common_pb = require "common_pb"
     local http_pb = require "http_pb"
 
-    local data = pb:serialize("common_pb.Error", {code = 500, msg = "error"})
+    local data = pb:encode("common_pb.Error", {code = 500, msg = "error"})
 
     print(tostring(data))
-    print(tostring(pb:deserialize("common_pb.Error", data)))
+    print(tostring(pb:decode("common_pb.Error", data)))
 
-    local data = pb:serialize("http_pb.s2c", {Error = {code = 500, msg = "error"}})
+    local data = pb:encode("http_pb.s2c", {Error = {code = 500, msg = "error"}})
 
     print(tostring(data))
-    print(tostring(pb:deserialize("http_pb.s2c", data)))
+
+    print(tostring(pb:decode("http_pb.s2c", data)))
+
+    local data = pb:encode("s2s_pb.ttt", {msg= "aaa"})
+
+    print(tostring(data))
+    print(tostring(pb:decode("s2s_pb.ttt", data)))
+
+    --print(ltn12.source.string(data))
+
+    local http = require "socket.http"
+    local ltn12 = require "ltn12";
+
+    local respbody = {} 
+    local  body, code, headers, status = http.request {
+        method = "POST",
+        url = "https://127.0.0.1/",
+        source = ltn12.source.string(data),
+        headers = 
+                {
+                    ["Accept"] = "*/*",
+                    ["Accept-Encoding"] = "gzip, deflate",
+                    ["Accept-Language"] = "en-us",
+                    ["Content-Type"] = 'text/plain',
+                    ["content-length"] = #data
+                },
+        sink = ltn12.sink.table(respbody)
+    }
+    print(tostring(pb:decode("s2s_pb.ttt",respbody[1])))
+
     --ui:loadScene("Login")
 end
 return SceneLogin
