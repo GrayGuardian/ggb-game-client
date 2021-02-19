@@ -177,6 +177,7 @@ public static class CustomSettings
         _GT(typeof(RefData)),
         _GT(typeof(ABVObject)),
         _GT(typeof(ENV_TYPE)),
+        _GT(typeof(HttpResult)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

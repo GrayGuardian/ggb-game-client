@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -54,22 +55,31 @@ public class ResUtil
     {
         get
         {
-            if(_webVersion == null)
+            if (_webVersion == null)
             {
-                _webVersion = JsonConvert.DeserializeObject<VObject>(_vWebJson);
+                string json = Util.Encrypt.AesDecrypt(Util.Http.Get(GameConst.DOWNLOAD_URL + "Version").data);
+                _webVersion = JsonConvert.DeserializeObject<VObject>(json);
             }
             return _webVersion;
         }
     }
     private VObject _webVersion;
-    
-    public string _vWebJson
+
+    /// <summary>
+    /// 异步初始化远程版本文件
+    /// </summary>
+    public void WebVersionInit(Action<VObject> cb = null, Action errorCb = null)
     {
-        get
+        Util.Http.Get_Asyn(GameConst.DOWNLOAD_URL + "Version", (result) =>
         {
-            return Util.Encrypt.AesDecrypt(Util.Http.Get(GameConst.DOWNLOAD_URL + "Version"));
-        }
+            if (result.code == 200)
+            {
+                _webVersion = JsonConvert.DeserializeObject<VObject>(Util.Encrypt.AesDecrypt(result.data));
+                if (cb != null) cb(_webVersion);
+            }
+        }, errorCb);
     }
+
     /// <summary>
     /// 更新版本文件
     /// </summary>
@@ -82,7 +92,8 @@ public class ResUtil
     /// 获取更新数据
     /// </summary>
     /// <returns></returns>
-    public RefData GetRefData(){
+    public RefData GetRefData()
+    {
         VObject data = JsonConvert.DeserializeObject<VObject>(WebVersion.toString());
 
         //校验AB包文件
@@ -102,7 +113,7 @@ public class ResUtil
                 {
                     //存在缓存文件
                     FileInfo tempFile = new FileInfo(tempPath);
-                    ab.size = ab.size - (int)tempFile.Length;  
+                    ab.size = ab.size - (int)tempFile.Length;
                 }
                 sizeSum += ab.size;
                 abList.Add(ab);
@@ -111,23 +122,28 @@ public class ResUtil
         data.ABs = abList.ToArray();
 
         int type = 0;
-        if(data.ClientVersion != Application.version){
+        if (data.ClientVersion != Application.version)
+        {
             // 客户端更新
             type = 1;
         }
-        else if(Version == null && data.ABs.Length>0){
+        else if (Version == null && data.ABs.Length > 0)
+        {
             // 首次打开，需要下载资源
             type = 2;
         }
-        else if((Version == null || Version.toString() != WebVersion.toString()) && data.ABs.Length > 0){
+        else if ((Version == null || Version.toString() != WebVersion.toString()) && data.ABs.Length > 0)
+        {
             // 在线下载资源更新
             type = 3;
         }
-        else if((Version == null || Version.toString() != WebVersion.toString()) && data.ABs.Length == 0){
+        else if ((Version == null || Version.toString() != WebVersion.toString()) && data.ABs.Length == 0)
+        {
             // 版本文件不符，无需下载资源
             type = 4;
         }
-        else if(data.ABs.Length>0){
+        else if (data.ABs.Length > 0)
+        {
             // 文件损坏，需要更新
             type = 5;
         }
@@ -159,8 +175,9 @@ public class ResUtil
         dirInfo = new DirectoryInfo(Path.Combine(GameConst.RES_LOCAL_ROOT, "./AssetBundles"));
         foreach (var fileInfo in dirInfo.GetFiles())
         {
-            if(abNameList.IndexOf(fileInfo.Name) == -1){
-                UnityEngine.Debug.Log("清理多余AB包文件>>"+fileInfo.Name);
+            if (abNameList.IndexOf(fileInfo.Name) == -1)
+            {
+                UnityEngine.Debug.Log("清理多余AB包文件>>" + fileInfo.Name);
                 fileInfo.Delete();
             }
         }

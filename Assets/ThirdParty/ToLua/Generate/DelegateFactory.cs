@@ -39,6 +39,8 @@ public class DelegateFactory
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>), factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene);
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>), factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene);
 		dict.Add(typeof(UnityEngine.UI.InputField.OnValidateInput), factory.UnityEngine_UI_InputField_OnValidateInput);
+		dict.Add(typeof(System.Action<HttpResult>), factory.System_Action_HttpResult);
+		dict.Add(typeof(System.Action<VObject>), factory.System_Action_VObject);
 
 		DelegateTraits<System.Action>.Init(factory.System_Action);
 		DelegateTraits<UnityEngine.Events.UnityAction>.Init(factory.UnityEngine_Events_UnityAction);
@@ -62,6 +64,8 @@ public class DelegateFactory
 		DelegateTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>>.Init(factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene);
 		DelegateTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>>.Init(factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene);
 		DelegateTraits<UnityEngine.UI.InputField.OnValidateInput>.Init(factory.UnityEngine_UI_InputField_OnValidateInput);
+		DelegateTraits<System.Action<HttpResult>>.Init(factory.System_Action_HttpResult);
+		DelegateTraits<System.Action<VObject>>.Init(factory.System_Action_VObject);
 
 		TypeTraits<System.Action>.Init(factory.Check_System_Action);
 		TypeTraits<UnityEngine.Events.UnityAction>.Init(factory.Check_UnityEngine_Events_UnityAction);
@@ -85,6 +89,8 @@ public class DelegateFactory
 		TypeTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>>.Init(factory.Check_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene);
 		TypeTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>>.Init(factory.Check_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene);
 		TypeTraits<UnityEngine.UI.InputField.OnValidateInput>.Init(factory.Check_UnityEngine_UI_InputField_OnValidateInput);
+		TypeTraits<System.Action<HttpResult>>.Init(factory.Check_System_Action_HttpResult);
+		TypeTraits<System.Action<VObject>>.Init(factory.Check_System_Action_VObject);
 
 		StackTraits<System.Action>.Push = factory.Push_System_Action;
 		StackTraits<UnityEngine.Events.UnityAction>.Push = factory.Push_UnityEngine_Events_UnityAction;
@@ -108,6 +114,8 @@ public class DelegateFactory
 		StackTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>>.Push = factory.Push_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene;
 		StackTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>>.Push = factory.Push_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene;
 		StackTraits<UnityEngine.UI.InputField.OnValidateInput>.Push = factory.Push_UnityEngine_UI_InputField_OnValidateInput;
+		StackTraits<System.Action<HttpResult>>.Push = factory.Push_System_Action_HttpResult;
+		StackTraits<System.Action<VObject>>.Push = factory.Push_System_Action_VObject;
 	}
     
     public static Delegate CreateDelegate(Type t, LuaFunction func = null)
@@ -1495,6 +1503,120 @@ public class DelegateFactory
 	}
 
 	void Push_UnityEngine_UI_InputField_OnValidateInput(IntPtr L, UnityEngine.UI.InputField.OnValidateInput o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_Action_HttpResult_Event : LuaDelegate
+	{
+		public System_Action_HttpResult_Event(LuaFunction func) : base(func) { }
+		public System_Action_HttpResult_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(HttpResult param0)
+		{
+			func.BeginPCall();
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(HttpResult param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.Action<HttpResult> System_Action_HttpResult(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<HttpResult> fn = delegate(HttpResult param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_HttpResult_Event target = new System_Action_HttpResult_Event(func);
+			System.Action<HttpResult> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_HttpResult_Event target = new System_Action_HttpResult_Event(func, self);
+			System.Action<HttpResult> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Action_HttpResult(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Action<HttpResult>), L, pos);
+	}
+
+	void Push_System_Action_HttpResult(IntPtr L, System.Action<HttpResult> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_Action_VObject_Event : LuaDelegate
+	{
+		public System_Action_VObject_Event(LuaFunction func) : base(func) { }
+		public System_Action_VObject_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(VObject param0)
+		{
+			func.BeginPCall();
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(VObject param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.Action<VObject> System_Action_VObject(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<VObject> fn = delegate(VObject param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_VObject_Event target = new System_Action_VObject_Event(func);
+			System.Action<VObject> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_VObject_Event target = new System_Action_VObject_Event(func, self);
+			System.Action<VObject> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Action_VObject(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Action<VObject>), L, pos);
+	}
+
+	void Push_System_Action_VObject(IntPtr L, System.Action<VObject> o)
 	{
 		ToLua.Push(L, o);
 	}

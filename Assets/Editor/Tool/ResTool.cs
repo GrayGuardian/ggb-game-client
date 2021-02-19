@@ -65,7 +65,7 @@ public class ResTool : MonoBehaviour
             Debug.Log("Build文件夹不存在，重新创建");
         }
         foreach (var fileInfo in rootABDir.GetFiles())
-        {   
+        {
             //清空导出AB包文件
             fileInfo.Delete();
         }
@@ -98,7 +98,7 @@ public class ResTool : MonoBehaviour
             abVObjectList.Add(new ABVObject() { name = name, size = size, hash = hash });
         }
         VObject vObject = new VObject();
-        vObject.Version = "1.0.4";
+        vObject.Version = "1.0.0";
         vObject.ClientVersion = Application.version;
         vObject.IsRestart = false;
         vObject.Content = "我是更新描述!";
@@ -183,13 +183,14 @@ public class ResTool : MonoBehaviour
         }
         else
         {
-            path = Path.Combine(rootDir.FullName, "./AssetBundles");     
+            path = Path.Combine(rootDir.FullName, "./AssetBundles");
             if (!Directory.Exists(path))
             {
                 Debug.Log("创建资源文件夹 - AB包");
                 Directory.CreateDirectory(path);
             }
-            else{
+            else
+            {
                 foreach (var fileInfo in new DirectoryInfo(path).GetFiles())
                 {
                     //清空导出AB包文件
@@ -218,7 +219,7 @@ public class ResTool : MonoBehaviour
     //     Debug.Log(str);
     // }
     //需要导出的默认AB包资源
-    static string[] DEFAULT_ABS = { "lua", "upres","json" };
+    static string[] DEFAULT_ABS = { "lua", "upres", "json" };
     [MenuItem("Tools/资源管理/Clear All Default_Res")]
     static void ClearAllDefaultRes()
     {

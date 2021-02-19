@@ -37,7 +37,7 @@ function Broadcast:on(key, callback, order, isOnce)
         local index = -1
         for i = 1, #list do
             o = list[i]
-            if o.order > order then
+            if o.order > info.order then
                 index = i
                 break
             end

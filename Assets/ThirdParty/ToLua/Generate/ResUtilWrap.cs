@@ -7,6 +7,7 @@ public class ResUtilWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(ResUtil), typeof(System.Object));
+		L.RegFunction("WebVersionInit", WebVersionInit);
 		L.RegFunction("UpVersion", UpVersion);
 		L.RegFunction("GetRefData", GetRefData);
 		L.RegFunction("ClearRedundantRes", ClearRedundantRes);
@@ -21,7 +22,6 @@ public class ResUtilWrap
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("Version", get_Version, null);
 		L.RegVar("WebVersion", get_WebVersion, null);
-		L.RegVar("_vWebJson", get__vWebJson, null);
 		L.EndClass();
 	}
 
@@ -41,6 +41,45 @@ public class ResUtilWrap
 			else
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: ResUtil.New");
+			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int WebVersionInit(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 1)
+			{
+				ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
+				obj.WebVersionInit();
+				return 0;
+			}
+			else if (count == 2)
+			{
+				ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
+				System.Action<VObject> arg0 = (System.Action<VObject>)ToLua.CheckDelegate<System.Action<VObject>>(L, 2);
+				obj.WebVersionInit(arg0);
+				return 0;
+			}
+			else if (count == 3)
+			{
+				ResUtil obj = (ResUtil)ToLua.CheckObject<ResUtil>(L, 1);
+				System.Action<VObject> arg0 = (System.Action<VObject>)ToLua.CheckDelegate<System.Action<VObject>>(L, 2);
+				System.Action arg1 = (System.Action)ToLua.CheckDelegate<System.Action>(L, 3);
+				obj.WebVersionInit(arg0, arg1);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: ResUtil.WebVersionInit");
 			}
 		}
 		catch (Exception e)
@@ -369,25 +408,6 @@ public class ResUtilWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index WebVersion on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get__vWebJson(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			ResUtil obj = (ResUtil)o;
-			string ret = obj._vWebJson;
-			LuaDLL.lua_pushstring(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index _vWebJson on a nil value");
 		}
 	}
 }
