@@ -48,10 +48,10 @@ function SceneLogin:onLoad()
 
 
 
-    local data = {route="user_login",user_login={username="123",password="123"}}
+    local data = {User_Login={username="123",password="123"}};
     print(tostring(pb:decode("http_pb.c2s",pb:encode("http_pb.c2s", data))));
 
-    httpUtil:Post_Asyn("http://127.0.0.1:300",pb:encode("http_pb.c2s", data));
+    --httpUtil:Post_Asyn("http://127.0.0.1:300",pb:encode("http_pb.c2s", data));
 
     -- local http_pb = require "http_pb"
     -- local data = pb:encode("common_pb.Error", {code = 500, msg = "error"})
