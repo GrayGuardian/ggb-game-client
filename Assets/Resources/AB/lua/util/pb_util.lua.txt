@@ -1,22 +1,60 @@
 local PB = class("PB")
+local protobuf = require "protobuf"
 
 function PB:encode(key, data)
-    local keys = string.split(key, ".")
-    local pb = require(keys[1])[keys[2]]()
+    local message_type = nil;
+    if type(key) == "string" then
+        local keys = string.split(key, ".")
+        message_type = require(keys[1])[keys[2]];
+    else
+        message_type = protobuf.Message(key);
+    end
+    --print('encode message_type:'..message_type:DescriptorType());
+    local pb = message_type()
     for k, v in pairs(data) do
-        if type(v) ~= "table" then
-            pb[k] = v
-        else
-            for k1, v1 in pairs(v) do
-                pb[k][k1] = v1
+        local field = pb.fieldMap[k];
+        if field~= nil then
+            --print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",message_type:DescriptorType(),k);
+            if field.message_type==nil then
+                --非嵌套直接赋值
+                --print('非嵌套递归赋值>>>>>',message_type:DescriptorType(),k);
+                if type(field.default_value) ~= 'table' then
+                    pb[k] = v;
+                else
+                    for index, v1 in ipairs(v) do
+                        pb[k]:append(v1);
+                    end
+                end
+            else
+                --嵌套递归赋值
+                --print('嵌套递归赋值>>>>>',message_type:DescriptorType(),k);
+                if type(field.default_value) ~= 'table' then
+                    pb[k]:MergeFromString(self:encode(field.message_type,v));
+                else
+                    
+                    for index, v1 in ipairs(v) do
+                        print(tostring(self:encode(field.message_type,v1)));
+                        print(pb[k].MergeFromString)
+                        local t_pb = pb[k]:add();
+                        t_pb:MergeFromString(self:encode(field.message_type,v1));
+                    end
+                end
             end
+
         end
     end
+    --return nil
     return pb:SerializeToString()
 end
 function PB:decode(key, data)
-    local keys = string.split(key, ".")
-    local pb = require(keys[1])[keys[2]]()
+    local message_type = nil;
+    if type(key) == "string" then
+        local keys = string.split(key, ".")
+        message_type = require(keys[1])[keys[2]];
+    else
+        message_type = protobuf.Message(key);
+    end
+    local pb = message_type();
     pb:ParseFromString(data)
     return pb
 end

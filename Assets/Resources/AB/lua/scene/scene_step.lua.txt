@@ -2,9 +2,49 @@ local base = require("scene_base")
 local SceneLogin = class("SceneStep", base)
 
 function SceneLogin:onLoad()
-    ui:loadScene("UpRes")
+    -- ui:loadScene("UpRes")
     --test
-    -- local common_pb = require "common_pb"
+    local common_pb = require "common_pb"
+
+    local data = {Error = {code=400,msg = "error"}};
+    local pb1 = common_pb.Error();
+    pb1.code = 504;
+    pb1.msg = "error1"
+
+    local pb2 = common_pb.cbc();
+    pb2.NumArr:append(1)
+    pb2.NumArr:append(2)
+    pb2.NumArr:append(3)
+
+    local pb3 = common_pb.cac();
+    t_pb = pb3.errorArr:add();
+    t_pb.code =1;
+    t_pb.msg = "error1"
+    t_pb = pb3.errorArr:add();
+    t_pb.code = 2;
+    t_pb.msg = "error2"
+    t_pb = pb3.errorArr:add();
+    t_pb.code = 3;
+    t_pb.msg = "error3"
+
+    local pb111 = common_pb.test();
+    pb111.str = "我是str";
+    pb111.error:MergeFromString(pb1:SerializeToString());
+    pb111.ccccc:MergeFromString(pb2:SerializeToString());
+    pb111.aaaaa:MergeFromString(pb3:SerializeToString());
+    
+    print(">>>>>>>>>>>>>>>>>>>>>",pb111['errorArr'])
+
+    print(tostring(pb111))
+    print(tostring(pb1))
+    print(tostring(pb2))
+
+    local error = { code = 505 , msg = 'error' };
+    local ccccc = { NumArr = {1,2,3} };
+    local aaaaa = { errorArr = {{ code = 401 , msg = 'error1' },{ code = 402 , msg = 'error2' },{ code = 403 , msg = 'error3' }} };
+    local data = {str="我是str",numArr = {1,2,3},aaaaa=aaaaa,ccccc=ccccc,error=error};
+    print(tostring(pb:decode("common_pb.test",pb:encode("common_pb.test", data))));
+
     -- local http_pb = require "http_pb"
     -- local data = pb:encode("common_pb.Error", {code = 500, msg = "error"})
     -- print(tostring(data))
@@ -15,25 +55,9 @@ function SceneLogin:onLoad()
     -- local data = pb:encode("s2s_pb.ttt", {msg= "aaa"})
     -- print(tostring(data))
     -- print(tostring(pb:decode("s2s_pb.ttt", data)))
-    -- --print(ltn12.source.string(data))
-    -- local http = require "socket.http"
-    -- local ltn12 = require "ltn12";
-    -- local respbody = {}
-    -- local  body, code, headers, status = http.request {
-    --     method = "POST",
-    --     url = "https://127.0.0.1/",
-    --     source = ltn12.source.string(data),
-    --     headers =
-    --             {
-    --                 ["Accept"] = "*/*",
-    --                 ["Accept-Encoding"] = "gzip, deflate",
-    --                 ["Accept-Language"] = "en-us",
-    --                 ["Content-Type"] = 'text/plain',
-    --                 ["content-length"] = #data
-    --             },
-    --     sink = ltn12.sink.table(respbody)
-    -- }
-    -- print(tostring(pb:decode("s2s_pb.ttt",respbody[1])))
+
+    --local common_pb = require "common_pb"
+
     --ui:loadScene("Login")
 end
 return SceneLogin

@@ -16,7 +16,10 @@
 --------------------------------------------------------------------------------
 --
 
-module "protobuf.descriptor"
+-- module "descriptor"
+local descriptor = {}
+setmetatable(descriptor,{__index = _G})
+local _ENV = descriptor
 
 FieldDescriptor = {
     TYPE_DOUBLE         = 1,
@@ -62,3 +65,5 @@ FieldDescriptor = {
     LABEL_REPEATED      = 3,
     MAX_LABEL           = 3
 }
+
+return descriptor

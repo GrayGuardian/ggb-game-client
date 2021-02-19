@@ -17,7 +17,10 @@
 --
 local setmetatable = setmetatable
 
-module "protobuf.listener"
+-- module "listener"
+local listener = {}
+setmetatable(listener,{__index = _G})
+local _ENV = listener
 
 local _null_listener = {
     Modified = function()
@@ -47,4 +50,6 @@ function Listener(parent_message)
     o.dirty = false
     return setmetatable(o, _listener_meta)
 end
+
+return listener
 
