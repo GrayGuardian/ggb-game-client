@@ -23,18 +23,36 @@ function SceneLogin:onLoad()
 
     local data = {}
     data.router = "login"
-    data.login = {username = "123", password = "123"}
+    data[data.router] = {username = "123", password = "123"};
     print(pb:encode("http_pb.c2s", data))
+    print(tostring(pb:decode("http_pb.c2s", pb:encode("http_pb.c2s", data))))
     local result = httpUtil:Post("http://127.0.0.1:300/api", pb:encode("http_pb.c2s", data)).bytes
 
     local aa = ""
     print(tostring(result))
     for i = 0, result.Length - 1 do
-        print(result[i], string.char(result[i]))
+        --print(result[i], string.char(result[i]))
         aa = aa .. string.char(result[i])
     end
     print(aa, #aa)
-    print(tostring(pb:decode("http_pb.s2c", aa)))
+    print(tostring(pb:decode("http_pb.s2c", aa)));
+
+    local data = {}
+    data.router = "register"
+    data[data.router] = {username = "1223144fd3", password = "11223144fd323", password1 = "11223144fd323"};
+    print(pb:encode("http_pb.c2s", data))
+    print(tostring(pb:decode("http_pb.c2s", pb:encode("http_pb.c2s", data))))
+    local result = httpUtil:Post("http://127.0.0.1:300/api", pb:encode("http_pb.c2s", data)).bytes
+
+    local aa = ""
+    print(tostring(result))
+    for i = 0, result.Length - 1 do
+        --print(result[i], string.char(result[i]))
+        aa = aa .. string.char(result[i])
+    end
+    --print(aa, #aa)
+    print(tostring(pb:decode("http_pb.s2c", aa)));
+
 
     --ui:loadScene("Login")
 end

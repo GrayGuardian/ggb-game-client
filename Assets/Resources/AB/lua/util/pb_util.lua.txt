@@ -1,7 +1,8 @@
 local PB = class("PB")
 local protobuf = require "protobuf"
 
-function PB:encode(key, data)
+local _encode = nil
+_encode = function(key, data)
     local message_type = nil
     if type(key) == "string" then
         local keys = string.split(key, ".")
@@ -29,11 +30,11 @@ function PB:encode(key, data)
                 --嵌套递归赋值
                 --print('嵌套递归赋值>>>>>',message_type:DescriptorType(),k);
                 if type(field.default_value) ~= "table" then
-                    pb[k]:MergeFromString(self:encode(field.message_type, v))
+                    pb[k]:MergeFromString(_encode(field.message_type, v))
                 else
                     for index, v1 in ipairs(v) do
                         local t_pb = pb[k]:add()
-                        t_pb:MergeFromString(self:encode(field.message_type, v1))
+                        t_pb:MergeFromString(_encode(field.message_type, v1))
                     end
                 end
             end
@@ -42,7 +43,9 @@ function PB:encode(key, data)
     --return nil
     return pb:SerializeToString()
 end
-function PB:decode(key, data)
+
+local _decode = nil
+_decode = function(key, data)
     local message_type = nil
     if type(key) == "string" then
         local keys = string.split(key, ".")
@@ -53,6 +56,33 @@ function PB:decode(key, data)
     local pb = message_type()
     pb:ParseFromString(data)
     return pb
+end
+
+function PB:encode(key, data)
+    local result = nil
+    local ok, errors = pcall(
+        function ()
+            result = _encode(key, data);
+        end
+    )
+    if ok then
+        return result;
+    else
+        return ""
+    end
+end
+function PB:decode(key, data)
+    local result = nil
+    local ok, errors = pcall(
+        function ()
+            result = _decode(key, data);
+        end
+    )
+    if ok then
+        return result;
+    else
+        return nil
+    end
 end
 
 return PB
