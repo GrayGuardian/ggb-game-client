@@ -57,7 +57,7 @@ public class ResUtil
         {
             if (_webVersion == null)
             {
-                string json = Util.Encrypt.AesDecrypt(Util.Http.Get(GameConst.DOWNLOAD_URL + "Version").data);
+                string json = Util.Encrypt.AesDecrypt(Util.Http.Get(GameConst.DOWNLOAD_URL + "Version").content);
                 _webVersion = JsonConvert.DeserializeObject<VObject>(json);
             }
             return _webVersion;
@@ -74,7 +74,7 @@ public class ResUtil
         {
             if (result.code == 200)
             {
-                _webVersion = JsonConvert.DeserializeObject<VObject>(Util.Encrypt.AesDecrypt(result.data));
+                _webVersion = JsonConvert.DeserializeObject<VObject>(Util.Encrypt.AesDecrypt(result.content));
                 if (cb != null) cb(_webVersion);
             }
         }, errorCb);

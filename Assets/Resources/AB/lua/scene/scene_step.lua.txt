@@ -4,67 +4,33 @@ local SceneLogin = class("SceneStep", base)
 function SceneLogin:onLoad()
     -- ui:loadScene("UpRes")
     --test
-    local common_pb = require "common_pb"
+    local error = {code = 82222, msg = "error"}
+    local ccccc = {NumArr = {1, 2, 3}}
+    local aaaaa = {
+        errorArr = {{code = 401, msg = "error1"}, {code = 402, msg = "error2"}, {code = 403, msg = "error3"}}
+    }
+    local data = {str = "我是str", numArr = {1, 2, 3}, aaaaa = aaaaa, ccccc = ccccc, error = error}
+    print(pb:encode("common_pb.test", data))
+    print(tostring(pb:decode("common_pb.test", pb:encode("common_pb.test", data))))
 
-    local data = {Error = {code=400,msg = "error"}};
-    local pb1 = common_pb.Error();
-    pb1.code = 504;
-    pb1.msg = "error1"
+    --httpUtil:Post_Asyn("http://127.0.0.1", pb:encode("common_pb.test", data))
 
-    local pb2 = common_pb.cbc();
-    pb2.NumArr:append(1)
-    pb2.NumArr:append(2)
-    pb2.NumArr:append(3)
+    --print(pb:decode("common_pb.Error", pb:encode("common_pb.Error", error)):ByteSize())
+    --httpUtil:Post_Asyn("http://127.0.0.1", pb:encode("common_pb.Error", error))
 
-    local pb3 = common_pb.cac();
-    t_pb = pb3.errorArr:add();
-    t_pb.code =1;
-    t_pb.msg = "error1"
-    t_pb = pb3.errorArr:add();
-    t_pb.code = 2;
-    t_pb.msg = "error2"
-    t_pb = pb3.errorArr:add();
-    t_pb.code = 3;
-    t_pb.msg = "error3"
+    -- print(pb:encode("common_pb.Error", error))
+    -- print(#pb:encode("common_pb.Error", error))
 
-    local pb111 = common_pb.test();
-    pb111.str = "我是str";
-    pb111.error:MergeFromString(pb1:SerializeToString());
-    pb111.ccccc:MergeFromString(pb2:SerializeToString());
-    pb111.aaaaa:MergeFromString(pb3:SerializeToString());
-    
-    print(">>>>>>>>>>>>>>>>>>>>>",pb111['errorArr'])
+    local result = httpUtil:Post("http://127.0.0.1:300", pb:encode("common_pb.test", data)).bytes
 
-    print(tostring(pb111))
-    print(tostring(pb1))
-    print(tostring(pb2))
-
-    local error = { code = 505 , msg = 'error' };
-    local ccccc = { NumArr = {1,2,3} };
-    local aaaaa = { errorArr = {{ code = 401 , msg = 'error1' },{ code = 402 , msg = 'error2' },{ code = 403 , msg = 'error3' }} };
-    local data = {str="我是str",numArr = {1,2,3},aaaaa=aaaaa,ccccc=ccccc,error=error};
-    print(tostring(pb:decode("common_pb.test",pb:encode("common_pb.test", data))));
-
-
-
-
-    local data = {User_Login={username="123",password="123"}};
-    print(tostring(pb:decode("http_pb.c2s",pb:encode("http_pb.c2s", data))));
-
-    --httpUtil:Post_Asyn("http://127.0.0.1:300",pb:encode("http_pb.c2s", data));
-
-    -- local http_pb = require "http_pb"
-    -- local data = pb:encode("common_pb.Error", {code = 500, msg = "error"})
-    -- print(tostring(data))
-    -- print(tostring(pb:decode("common_pb.Error", data)))
-    -- local data = pb:encode("http_pb.s2c", {Error = {code = 500, msg = "error"}})
-    -- print(tostring(data))
-    -- print(tostring(pb:decode("http_pb.s2c", data)))
-    -- local data = pb:encode("s2s_pb.ttt", {msg= "aaa"})
-    -- print(tostring(data))
-    -- print(tostring(pb:decode("s2s_pb.ttt", data)))
-
-    --local common_pb = require "common_pb"
+    local aa = ""
+    print(tostring(result))
+    for i = 0, result.Length - 1 do
+        print(result[i], string.char(result[i]))
+        aa = aa .. string.char(result[i])
+    end
+    print(aa, #aa)
+    print(tostring(pb:decode("common_pb.test", aa)))
 
     --ui:loadScene("Login")
 end

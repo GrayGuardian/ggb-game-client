@@ -12,6 +12,8 @@ public class HttpUtilWrap
 		L.RegFunction("Post_Asyn", Post_Asyn);
 		L.RegFunction("Post", Post);
 		L.RegFunction("Download", Download);
+		L.RegFunction("Test", Test);
+		L.RegFunction("Test1", Test1);
 		L.RegFunction("New", _CreateHttpUtil);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
@@ -129,7 +131,7 @@ public class HttpUtilWrap
 			{
 				HttpUtil obj = (HttpUtil)ToLua.CheckObject<HttpUtil>(L, 1);
 				string arg0 = ToLua.CheckString(L, 2);
-				string arg1 = ToLua.CheckString(L, 3);
+				byte[] arg1 = ToLua.CheckByteBuffer(L, 3);
 				obj.Post_Asyn(arg0, arg1);
 				return 0;
 			}
@@ -137,7 +139,7 @@ public class HttpUtilWrap
 			{
 				HttpUtil obj = (HttpUtil)ToLua.CheckObject<HttpUtil>(L, 1);
 				string arg0 = ToLua.CheckString(L, 2);
-				string arg1 = ToLua.CheckString(L, 3);
+				byte[] arg1 = ToLua.CheckByteBuffer(L, 3);
 				System.Action<HttpResult> arg2 = (System.Action<HttpResult>)ToLua.CheckDelegate<System.Action<HttpResult>>(L, 4);
 				obj.Post_Asyn(arg0, arg1, arg2);
 				return 0;
@@ -146,7 +148,7 @@ public class HttpUtilWrap
 			{
 				HttpUtil obj = (HttpUtil)ToLua.CheckObject<HttpUtil>(L, 1);
 				string arg0 = ToLua.CheckString(L, 2);
-				string arg1 = ToLua.CheckString(L, 3);
+				byte[] arg1 = ToLua.CheckByteBuffer(L, 3);
 				System.Action<HttpResult> arg2 = (System.Action<HttpResult>)ToLua.CheckDelegate<System.Action<HttpResult>>(L, 4);
 				System.Action arg3 = (System.Action)ToLua.CheckDelegate<System.Action>(L, 5);
 				obj.Post_Asyn(arg0, arg1, arg2, arg3);
@@ -174,7 +176,7 @@ public class HttpUtilWrap
 			{
 				HttpUtil obj = (HttpUtil)ToLua.CheckObject<HttpUtil>(L, 1);
 				string arg0 = ToLua.CheckString(L, 2);
-				string arg1 = ToLua.CheckString(L, 3);
+				byte[] arg1 = ToLua.CheckByteBuffer(L, 3);
 				HttpResult o = obj.Post(arg0, arg1);
 				ToLua.PushObject(L, o);
 				return 1;
@@ -183,7 +185,7 @@ public class HttpUtilWrap
 			{
 				HttpUtil obj = (HttpUtil)ToLua.CheckObject<HttpUtil>(L, 1);
 				string arg0 = ToLua.CheckString(L, 2);
-				string arg1 = ToLua.CheckString(L, 3);
+				byte[] arg1 = ToLua.CheckByteBuffer(L, 3);
 				System.Action arg2 = (System.Action)ToLua.CheckDelegate<System.Action>(L, 4);
 				HttpResult o = obj.Post(arg0, arg1, arg2);
 				ToLua.PushObject(L, o);
@@ -260,6 +262,78 @@ public class HttpUtilWrap
 			else
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: HttpUtil.Download");
+			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Test(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 3)
+			{
+				HttpUtil obj = (HttpUtil)ToLua.CheckObject<HttpUtil>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				byte[] arg1 = ToLua.CheckByteBuffer(L, 3);
+				byte[] o = obj.Test(arg0, arg1);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 4)
+			{
+				HttpUtil obj = (HttpUtil)ToLua.CheckObject<HttpUtil>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				byte[] arg1 = ToLua.CheckByteBuffer(L, 3);
+				System.Action arg2 = (System.Action)ToLua.CheckDelegate<System.Action>(L, 4);
+				byte[] o = obj.Test(arg0, arg1, arg2);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: HttpUtil.Test");
+			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Test1(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 2)
+			{
+				HttpUtil obj = (HttpUtil)ToLua.CheckObject<HttpUtil>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				byte[] o = obj.Test1(arg0);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 3)
+			{
+				HttpUtil obj = (HttpUtil)ToLua.CheckObject<HttpUtil>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				System.Action arg1 = (System.Action)ToLua.CheckDelegate<System.Action>(L, 3);
+				byte[] o = obj.Test1(arg0, arg1);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: HttpUtil.Test1");
 			}
 		}
 		catch (Exception e)

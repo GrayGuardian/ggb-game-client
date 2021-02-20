@@ -5,11 +5,13 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Collections.Generic;
 
 public class HttpResult
 {
     public int code;
-    public string data;
+    public byte[] bytes;
+    public string content;
 }
 public class HttpUtil
 {
@@ -83,22 +85,31 @@ public class HttpUtil
             req.AllowAutoRedirect = false;
             req.Timeout = 1000;
             res = (HttpWebResponse)req.GetResponse();
-            StreamReader sr = new StreamReader(res.GetResponseStream(), Encoding.Default);
             int code = (int)res.StatusCode;
-            string data = sr.ReadToEnd();
+
+            Stream sr = res.GetResponseStream();
+            List<byte> byteArray = new List<byte>();
+            while (true)
+            {
+                int b = sr.ReadByte();
+                if (b == -1) break;
+                byteArray.Add((byte)b);
+            }
             sr.Close();
             res.Close();
             req.Abort();
-            return new HttpResult() { code = code, data = data };
+            byte[] bytes = byteArray.ToArray();
+            string content = Encoding.UTF8.GetString(bytes);
+            return new HttpResult() { code = code, bytes = bytes, content = content };
         }
         catch
         {
             if (errorCb != null) errorCb();
-            return new HttpResult() { code = -1, data = null };
+            return new HttpResult() { code = -1, bytes = new byte[] { }, content = "" };
         }
     }
 
-    public void Post_Asyn(string url, string body, Action<HttpResult> cb = null, Action errorCb = null)
+    public void Post_Asyn(string url, byte[] body, Action<HttpResult> cb = null, Action errorCb = null)
     {
         Thread thread = new Thread(new ThreadStart(() =>
         {
@@ -116,37 +127,46 @@ public class HttpUtil
     /// <summary>
     /// Post方法
     /// </summary>
-    public HttpResult Post(string url, string body, Action errorCb = null)
+    public HttpResult Post(string url, byte[] body, Action errorCb = null)
     {
         HttpWebResponse res;
         HttpWebRequest req;
         Encoding encode = Encoding.Default;
         try
         {
-            byte[] byteArray = encode.GetBytes(body);
+            UnityEngine.Debug.Log(body.Length);
             req = (HttpWebRequest)WebRequest.Create(new Uri(url));
             req.Method = "POST";
             req.Accept = "*/*";
             req.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322; InfoPath.1)";
             req.ContentType = "text/plain";
-            req.ContentLength = byteArray.Length;
+            req.ContentLength = body.Length;
             req.Timeout = 1000;
             Stream newStream = req.GetRequestStream();
-            newStream.Write(byteArray, 0, byteArray.Length);    //写入参数
+            newStream.Write(body, 0, body.Length);    //写入参数
             newStream.Close();
             res = (HttpWebResponse)req.GetResponse();
-            StreamReader sr = new StreamReader(res.GetResponseStream(), encode);
             int code = (int)res.StatusCode;
-            string data = sr.ReadToEnd();
+
+            Stream sr = res.GetResponseStream();
+            List<byte> byteArray = new List<byte>();
+            while (true)
+            {
+                int b = sr.ReadByte();
+                if (b == -1) break;
+                byteArray.Add((byte)b);
+            }
             sr.Close();
             res.Close();
             req.Abort();
-            return new HttpResult() { code = code, data = data };
+            byte[] bytes = byteArray.ToArray();
+            string content = Encoding.UTF8.GetString(bytes);
+            return new HttpResult() { code = code, bytes = bytes, content = content };
         }
         catch
         {
             if (errorCb != null) errorCb();
-            return new HttpResult() { code = -1, data = null };
+            return new HttpResult() { code = -1, bytes = new byte[] { }, content = "" };
         }
     }
 
@@ -242,6 +262,82 @@ public class HttpUtil
             if (cb != null) cb();
         }
 
+    }
+
+    public byte[] Test(string url, byte[] body, Action errorCb = null)
+    {
+        HttpWebResponse res;
+        HttpWebRequest req;
+        Encoding encode = Encoding.Default;
+        try
+        {
+            req = (HttpWebRequest)WebRequest.Create(new Uri(url));
+            req.Method = "POST";
+            req.Accept = "*/*";
+            req.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322; InfoPath.1)";
+            // req.ContentType = "text/plain";
+            req.ContentLength = body.Length;
+            req.Timeout = 1000;
+            Stream newStream = req.GetRequestStream();
+            newStream.Write(body, 0, body.Length);    //写入参数
+            newStream.Close();
+            res = (HttpWebResponse)req.GetResponse();
+
+            Stream sr = res.GetResponseStream();
+
+            List<byte> byteArray = new List<byte>();
+            while (true)
+            {
+                int b = sr.ReadByte();
+                if (b == -1) break;
+                byteArray.Add((byte)b);
+            }
+            sr.Close();
+            res.Close();
+            req.Abort();
+            byte[] data = byteArray.ToArray();
+            UnityEngine.Debug.Log(encode.GetString(data).Length);
+            return data;
+        }
+        catch
+        {
+            if (errorCb != null) errorCb();
+            return new byte[] { };
+        }
+    }
+    public byte[] Test1(string url, Action errorCb = null)
+    {
+        HttpWebResponse res;
+        HttpWebRequest req;
+        Encoding encode = Encoding.Default;
+        try
+        {
+            req = (HttpWebRequest)WebRequest.Create(new Uri(url));
+            req.Method = "Get";
+            req.Timeout = 1000;
+            res = (HttpWebResponse)req.GetResponse();
+
+            Stream sr = res.GetResponseStream();
+
+            List<byte> byteArray = new List<byte>();
+            while (true)
+            {
+                int b = sr.ReadByte();
+                if (b == -1) break;
+                byteArray.Add((byte)b);
+            }
+            sr.Close();
+            res.Close();
+            req.Abort();
+            byte[] data = byteArray.ToArray();
+            UnityEngine.Debug.Log(encode.GetString(data));
+            return data;
+        }
+        catch
+        {
+            if (errorCb != null) errorCb();
+            return new byte[] { };
+        }
     }
 }
 
