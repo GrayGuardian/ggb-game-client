@@ -60,7 +60,6 @@ function Timer:update()
     timerDelTempList = {}
 end
 function Timer:init()
-    print("Timer Init")
     broadcast:on(
         BROADCAST_CODE.MONO_UPDATE,
         function()

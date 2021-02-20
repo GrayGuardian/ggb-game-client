@@ -1,5 +1,13 @@
 class = require("middle_class")
 
+csbytesToluabytes = function (bytes)
+    local data = ""
+    for i = 0, bytes.Length - 1 do
+        data = data .. string.char(bytes[i])
+    end
+    return data;
+end
+
 string.split = function(str, str1)
     local arr = {}
     string.gsub(
@@ -80,7 +88,6 @@ end
 
 -- c#
 resUtil = ResUtil.New()
-httpUtil = HttpUtil.New()
 -- tolua
 pb = require("pb_util"):new()
 json = require("json_util"):new()
@@ -89,3 +96,6 @@ broadcast = require("broadcast_util"):new()
 mono = require("mono_util"):new()
 timer = require("timer_util"):new()
 ui = require("ui"):new()
+http = require("http_util"):new();
+
+

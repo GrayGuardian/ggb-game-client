@@ -224,7 +224,7 @@ function UIUpres:downloadABFile(
     local download_url = string.format("%sAssetBundles/%s", GameConst.DOWNLOAD_URL, abInfo.name)
     local save_path = string.format("%s/AssetBundles/%s", GameConst.RES_LOCAL_ROOT, abInfo.name)
     local temp_fileName = string.format("%s_%s.temp", abInfo.name, abInfo.hash)
-    httpUtil:Download(
+    CSHttpUtil:Download(
         download_url,
         save_path,
         temp_fileName,

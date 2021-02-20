@@ -1,9 +1,9 @@
 local BroadcastCode = {}
 
---场景切换回调
+--场景切换
 BroadcastCode.SCENE_LOADED = "SCENE_LOADED"
 
---Mono生命周期回调
+--Mono生命周期
 BroadcastCode.MONO_AWAKE = "MONO_AWAKE"
 BroadcastCode.MONO_START = "MONO_START"
 BroadcastCode.MONO_ONENABLE = "MONO_ONENABLE"
@@ -12,5 +12,11 @@ BroadcastCode.MONO_ONDESTROY = "MONO_ONDESTROY"
 BroadcastCode.MONO_UPDATE = "MONO_UPDATE"
 BroadcastCode.MONO_FIXEDUPDATE = "MONO_FIXEDUPDATE"
 BroadcastCode.MONO_QUIT = "MONO_QUIT"
+
+--网络部分
+--HTTP
+BroadcastCode.HTTP_LOGICERROR = "HTTP_LOGICERROR"
+BroadcastCode.HTTP_CONNONERROR = "HTTP_CONNONERROR"
+
 
 return BroadcastCode

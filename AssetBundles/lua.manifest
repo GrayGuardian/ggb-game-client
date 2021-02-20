@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3669713095
+CRC: 3128606980
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7e930b5c3f92464706a8f2eeea138180
+    Hash: 9723e538e1aa70b149b364eef7180261
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -55,12 +55,14 @@ Assets:
 - Assets/Resources/AB/lua/base/middle_class.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Plane.lua.txt
 - Assets/Resources/AB/lua/util/json_util.lua.txt
+- Assets/Resources/AB/lua/util/pb_util.lua.txt
 - Assets/Resources/AB/lua/ui/ui_tip.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/v.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/dis_mips.lua.txt
 - Assets/Resources/AB/lua/base/tolua/event.lua.txt
 - Assets/Resources/AB/lua/base/tolua/lpeg/re.lua.txt
 - Assets/Resources/AB/lua/base/tolua/socket/tp.lua.txt
+- Assets/Resources/AB/lua/pb/http_pb.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/dis_ppc.lua.txt
 - Assets/Resources/AB/lua/base/tolua/System/Injection/LuaInjectionBus.lua.txt
 - Assets/Resources/AB/lua/util/utils.lua.txt
@@ -76,6 +78,7 @@ Assets:
 - Assets/Resources/AB/lua/base/tolua/socket/http.lua.txt
 - Assets/Resources/AB/lua/base/tolua/protobuf/wire_format.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/bc.lua.txt
+- Assets/Resources/AB/lua/util/http_util.lua.txt
 - Assets/Resources/AB/lua/base/tolua/System/Injection/InjectionBridgeInfo.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Vector3.lua.txt
 - Assets/Resources/AB/lua/base/tolua/protobuf/protobuf.lua.txt
@@ -87,6 +90,7 @@ Assets:
 - Assets/Resources/AB/lua/base/tolua/mime.lua.txt
 - Assets/Resources/AB/lua/util/broadcast/broadcast_code.lua.txt
 - Assets/Resources/AB/lua/base/tolua/protobuf/listener.lua.txt
+- Assets/Resources/AB/lua/ui/ui_upres.lua.txt
 - Assets/Resources/AB/lua/util/timer/timer_model.lua.txt
 - Assets/Resources/AB/lua/scene/scene_step.lua.txt
 - Assets/Resources/AB/lua/util/mono_util.lua.txt
@@ -94,8 +98,10 @@ Assets:
 - Assets/Resources/AB/lua/main.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/bcsave.lua.txt
 - Assets/Resources/AB/lua/base/tolua/slot.lua.txt
+- Assets/Resources/AB/lua/pb/common_pb.lua.txt
 - Assets/Resources/AB/lua/base/base.lua.txt
 - Assets/Resources/AB/lua/scene/scene_game.lua.txt
 - Assets/Resources/AB/lua/base/ui.lua.txt
+- Assets/Resources/AB/lua/pb/server_pb.lua.txt
 - Assets/Resources/AB/lua/base/tolua/protobuf/text_format.lua.txt
 Dependencies: []

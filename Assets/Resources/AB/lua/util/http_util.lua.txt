@@ -1,0 +1,64 @@
+local Http = class("Json")
+CSHttpUtil = HttpUtil.New()
+
+local url = GameConst.HTTP
+function Http:init()
+    print("url>>",url);
+
+
+    broadcast:on(BROADCAST_CODE.HTTP_LOGICERROR,function (data)
+        --print('业务逻辑错误:>>>',tostring(error));
+        ui:showUI("ui_tip",{msg=data.error.msg});
+    end)
+    broadcast:on(BROADCAST_CODE.HTTP_CONNONERROR,function (data)
+        --print('业务逻辑错误:>>>',tostring(error));
+        ui:showUI(
+            "ui_tip",
+            {
+                msg = "网络连接超时，是否重试？",
+                btnTitle = "重试",
+                onClick = function()
+                    http:send(data.router,data.data,data.cb);
+                end
+            }
+        )
+    end)
+end
+
+function Http:send(router,data,cb)
+    local body = {}
+    body.router = router;
+    body[router] = data;
+    local bytes = pb:encode("http_pb.c2s", body);
+    if bytes=="" then return end
+
+    print(string.format("http.c2s router:%s body:%s",router,pb:decode("http_pb.c2s",bytes)))   
+
+    CSHttpUtil:Post_Asyn(
+        url, bytes,
+        function(result)
+            local t_body =pb:decode("http_pb.s2c", csbytesToluabytes(result.bytes))
+            local t_router = t_body.router;
+            local t_data = t_body[t_router];
+            
+            print(string.format("http.s2c router:%s body:%s",t_router,t_body))
+
+            if t_router=='error' then
+                --出现业务逻辑错误
+                broadcast:notify(BROADCAST_CODE.HTTP_LOGICERROR,{router=router,error=t_data});
+                return;
+            end
+
+            if cb~=nil then cb(t_data) end
+        end,
+        function()
+            --出现连接错误
+            broadcast:notify(BROADCAST_CODE.HTTP_CONNONERROR,{router=router,data=data,cb=cb});
+        end
+    )
+
+end
+
+
+
+return Http

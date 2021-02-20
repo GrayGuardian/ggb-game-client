@@ -26,7 +26,7 @@ public class GameConst
     /// <summary>
     /// http
     /// </summary>
-    public static string HTTP = "127.0.0.1:300/";
+    public static string HTTP = "http://127.0.0.1:300/";
     /// <summary>
     /// 下载网址
     /// </summary>

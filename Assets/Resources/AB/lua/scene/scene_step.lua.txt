@@ -2,58 +2,8 @@ local base = require("scene_base")
 local SceneLogin = class("SceneStep", base)
 
 function SceneLogin:onLoad()
-    -- ui:loadScene("UpRes")
+    --ui:loadScene("UpRes")
     --test
-    -- local error = {code = 82222, msg = "error"}
-    -- local ccccc = {NumArr = {1, 2, 3}}
-    -- local aaaaa = {
-    --     errorArr = {{code = 401, msg = "error1"}, {code = 402, msg = "error2"}, {code = 403, msg = "error3"}}
-    -- }
-    -- local data = {str = "我是str", numArr = {1, 2, 3}, aaaaa = aaaaa, ccccc = ccccc, error = error}
-    -- print(pb:encode("common_pb.test", data))
-    -- print(tostring(pb:decode("common_pb.test", pb:encode("common_pb.test", data))))
-
-    --httpUtil:Post_Asyn("http://127.0.0.1", pb:encode("common_pb.test", data))
-
-    --print(pb:decode("common_pb.Error", pb:encode("common_pb.Error", error)):ByteSize())
-    --httpUtil:Post_Asyn("http://127.0.0.1", pb:encode("common_pb.Error", error))
-
-    -- print(pb:encode("common_pb.Error", error))
-    -- print(#pb:encode("common_pb.Error", error))
-
-    local data = {}
-    data.router = "login"
-    data[data.router] = {username = "123", password = "123"};
-    print(pb:encode("http_pb.c2s", data))
-    print(tostring(pb:decode("http_pb.c2s", pb:encode("http_pb.c2s", data))))
-    local result = httpUtil:Post("http://127.0.0.1:300/api", pb:encode("http_pb.c2s", data)).bytes
-
-    local aa = ""
-    print(tostring(result))
-    for i = 0, result.Length - 1 do
-        --print(result[i], string.char(result[i]))
-        aa = aa .. string.char(result[i])
-    end
-    print(aa, #aa)
-    print(tostring(pb:decode("http_pb.s2c", aa)));
-
-    local data = {}
-    data.router = "register"
-    data[data.router] = {username = "1223144fd3", password = "11223144fd323", password1 = "11223144fd323"};
-    print(pb:encode("http_pb.c2s", data))
-    print(tostring(pb:decode("http_pb.c2s", pb:encode("http_pb.c2s", data))))
-    local result = httpUtil:Post("http://127.0.0.1:300/api", pb:encode("http_pb.c2s", data)).bytes
-
-    local aa = ""
-    print(tostring(result))
-    for i = 0, result.Length - 1 do
-        --print(result[i], string.char(result[i]))
-        aa = aa .. string.char(result[i])
-    end
-    --print(aa, #aa)
-    print(tostring(pb:decode("http_pb.s2c", aa)));
-
-
-    --ui:loadScene("Login")
+    ui:loadScene("Login")
 end
 return SceneLogin

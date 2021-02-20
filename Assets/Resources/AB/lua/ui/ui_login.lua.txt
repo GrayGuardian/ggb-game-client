@@ -9,54 +9,12 @@ function UILogin:onLoad()
 end
 
 function UILogin:onLoginBtnClick(o, order)
-    print(
-        httpUtil:Get_Asyn(
-            "http://127.0.0.1/",
-            function(result)
-                print("get", "code:", result.code, "   data:", result.data)
-            end,
-            function()
-                print("get error")
-            end
-        )
-    )
-
-    print(
-        httpUtil:Post_Asyn(
-            "http://127.0.0.1/",
-            pb:encode("s2s_pb.ttt", {msg = "aaa"}),
-            function(result)
-                print("post", "code:", result.code, "   data:", result.data)
-                print(tostring(pb:decode("s2s_pb.ttt", result.data)))
-            end,
-            function()
-                print("post error")
-            end
-        )
-    )
-
-    -- httpUtil:Download(
-    --     "http://127.0.0.1:80/Download/AssetBundles/UnitySetup64",
-    --     "C:/Users/1/AppData/LocalLow/GrayGuardian/GGame/Res/AssetBundles/UnitySetup64",
-    --     "UnitySetup64_fe01138a822b88e6af2650935a62fc0c.temp",
-    --     function()
-    --         print("下载完毕")
-    --     end,
-    --     function(size, count)
-    --         print("正在下载>>>" .. size .. "/" .. count)
-    --     end,
-    --     function()
-    --         print("下载失败")
-    --     end
-    -- )
-
     local username = self.uiComp.InputField.usernameInput.text
     local password = self.uiComp.InputField.passwordInput.text
-    print("点击登录按钮", username, password)
-    if username == "123" and password == "123" then
-        ui:showUI("ui_tip", {msg = "登录成功"})
-    else
-        ui:showUI("ui_tip", {msg = "正确账号密码均为123"})
-    end
+
+    http:send("login", {username = username, password = password},function (data)
+        print(tostring(data));
+        ui:showUI("ui_tip", {msg = "登录成功"});
+    end);
 end
 return UILogin
