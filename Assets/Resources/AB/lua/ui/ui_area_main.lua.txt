@@ -1,0 +1,16 @@
+local base = require("ui_base")
+local UIAreaMain = class("UIAreaMain", base)
+
+base.static.ab = "ui1"
+base.static.abs = {"p1"}
+
+function UIAreaMain:onLoad()
+    
+end
+function UIAreaMain:onAreaItemClick(o, order)
+    print("点击列表")
+end
+function UIAreaMain:onNextBtnClick(o, order)
+    print("点击进入按钮");
+end
+return UIAreaMain

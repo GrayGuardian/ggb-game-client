@@ -20,18 +20,19 @@ string.split = function(str, str1)
     return arr
 end
 
-table.exist = function(table, value)
-    for k, v in pairs(table) do
+table.exist = function(t, value)
+    for k, v in pairs(t) do
         if v == value then
             return true
         end
     end
     return false
 end
-table.del = function(table, value)
-    for k, v in pairs(table) do
+table.del = function(t, value)
+    for k, v in pairs(t) do
         if v == value then
-            table[k] = nil
+            table.remove(t,k);
+            --t[k] = nil
             return true
         end
     end

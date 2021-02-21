@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3146184278
+CRC: 1275086897
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 23949dfd6513149ea5919e8f0dc94525
+    Hash: ab92fbe1fa307566e9a5acd16ef2c3e0
   TypeTreeHash:
     serializedVersion: 2
     Hash: ea5a42e0fd8ea905efa7aa926a3b8944
@@ -15,8 +15,10 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/Resources/AB/p1/btn_close1.png
+- Assets/Resources/AB/p1/icon_red_point.png
 - Assets/Resources/AB/p1/bar1_bg.png
 - Assets/Resources/AB/p1/bg_input1.png
+- Assets/Resources/AB/p1/icon_gray_point.png
 - Assets/Resources/AB/p1/bg_ui1.png
 - Assets/Resources/AB/p1/bar1_val.png
 - Assets/Resources/AB/p1/bg_btn1.png

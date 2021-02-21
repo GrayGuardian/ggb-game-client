@@ -93,9 +93,11 @@ function UI:showUI(name, param, opts)
     local node = go:GetComponent("RectTransform")
     comp:bind(node)
 
+
     return comp;
 end
 function UI:closeUI(uiComp)
+
     uiComp:_onDestroy()
     GameObject.Destroy(uiComp.node.gameObject)
     --卸载AB依赖包
@@ -106,6 +108,7 @@ function UI:closeUI(uiComp)
         end
     end
     self:delUI(uiComp)
+
 end
 function UI:closeAllUI()
     for key, uiComp in pairs(self.uiCompMap) do
@@ -148,7 +151,9 @@ function UI:delAB(abKey, uiKey)
     if self:existAB(abKey, uiKey) == false then
         return false
     end
-    table.del(self.abKeyMap[abKey], uiKey)
+
+    table.del(self.abKeyMap[abKey],uiKey);
+    
     if #self.abKeyMap[abKey] <= 0 then
         self.abKeyMap[abKey] = nil
     end
