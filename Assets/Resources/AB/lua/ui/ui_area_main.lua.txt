@@ -9,6 +9,7 @@ function UIAreaMain:onLoad()
 end
 function UIAreaMain:onAreaItemClick(o, order)
     print("点击列表")
+    ui:showUI("ui_area_sel");
 end
 function UIAreaMain:onNextBtnClick(o, order)
     print("点击进入按钮");
