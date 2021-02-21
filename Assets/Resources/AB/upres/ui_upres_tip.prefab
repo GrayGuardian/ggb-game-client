@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 573044301804417608}
   - component: {fileID: 4154090778524758528}
   m_Layer: 5
-  m_Name: confirmBtn (1)
+  m_Name: confirmBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 6318941214373436960}
   - component: {fileID: 131394718405369971}
   m_Layer: 5
-  m_Name: msgText (1)
+  m_Name: msgText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

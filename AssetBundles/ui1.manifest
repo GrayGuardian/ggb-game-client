@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3960390818
+CRC: 1008065516
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a5ba2e3e7247adf3627180e9118c617b
+    Hash: ca079a953d63a630b4ef6654f683915e
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 513706a4b1ad1f4332e4ad0028f7f3f8
+    Hash: 6830d5dfb2a3184c89661d48cb5532b4
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -20,11 +20,19 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
+  Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: -2095666955, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
   Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
   Script: {fileID: 575553740, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
+  Script: {fileID: -1200242548, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
   Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 1367256648, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
   Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 115
@@ -39,8 +47,8 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/Resources/AB/ui1/ui_msg.prefab
+- Assets/Resources/AB/ui1/ui_area_sel.prefab
 - Assets/Resources/AB/ui1/ui_login.prefab
 - Assets/Resources/AB/ui1/ui_area_main.prefab
 - Assets/Resources/AB/ui1/ui_tip.prefab
-Dependencies:
-- F:/Git/ggame/koa-game-client/AssetBundles/p1
+Dependencies: []

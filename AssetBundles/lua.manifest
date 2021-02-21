@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3249497293
+CRC: 3837201959
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d21861cca42199d20fe490b7f28a2317
+    Hash: dcf59033e56e46650024786b6c1f895b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -36,6 +36,7 @@ Assets:
 - Assets/Resources/AB/lua/base/tolua/socket.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Vector2.lua.txt
 - Assets/Resources/AB/lua/scene/scene_upres.lua.txt
+- Assets/Resources/AB/lua/ui/ui_area_sel.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Ray.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Vector4.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/RaycastHit.lua.txt

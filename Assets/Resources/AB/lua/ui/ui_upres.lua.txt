@@ -170,7 +170,8 @@ function UIUpres:downloadRes()
     )
 end
 function UIUpres:downloadResOver()
-    print("资源全部下载完毕")
+    print("资源全部下载完毕");
+    self:hideBarNode()
     if self.refdata.data.IsRestart then
         resUtil:UpVersion()
         ui:showUI(
@@ -184,7 +185,6 @@ function UIUpres:downloadResOver()
         )
         return
     end
-    self:hideBarNode()
     self:upResOver()
 end
 function UIUpres:upResOver()
