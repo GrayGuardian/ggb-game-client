@@ -58,8 +58,11 @@ function UI:createUIRoot()
     self.uiRoot.name = "UIRoot"
     self.uiCamera = self.uiRoot:Find("UICamera"):GetComponent("Camera")
     self.uiCanvas = self.uiRoot:Find("UICanvas")
-    -- local canvasScaler = self.uiCanvas:GetComponent("CanvasScaler")
-    -- canvasScaler.referenceResolution = {x = UE.Screen.width, y = UE.Screen.height}
+    
+    -- if GameConst.PRO_ENV == ENV_TYPE.MASTER then
+    --     local canvasScaler = self.uiCanvas:GetComponent("CanvasScaler")
+    --     canvasScaler.referenceResolution = {x = UE.Screen.width, y = UE.Screen.height}
+    -- end
 end
 -- ShowUI
 function UI:showUI(name, param, opts)

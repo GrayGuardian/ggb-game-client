@@ -3,17 +3,14 @@ CSHttpUtil = HttpUtil.New()
 
 local url = GameConst.HTTP
 function Http:init()
-    print("url>>",url);
-
-
     broadcast:on(BROADCAST_CODE.HTTP_LOGICERROR,function (data)
         --print('业务逻辑错误:>>>',tostring(error));
-        ui:showUI("ui_tip",{msg=data.error.msg});
+        ui:showUI("ui_msg",{msg=data.error.msg});
     end)
     broadcast:on(BROADCAST_CODE.HTTP_CONNONERROR,function (data)
         --print('业务逻辑错误:>>>',tostring(error));
         ui:showUI(
-            "ui_tip",
+            "ui_msg",
             {
                 msg = "网络连接超时，是否重试？",
                 btnTitle = "重试",

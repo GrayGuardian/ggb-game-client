@@ -2,6 +2,8 @@ require("base")
 
 --主入口函数。从这里开始lua逻辑
 function Main()
+    --UE.Screen.orientation = UE.ScreenOrientation.LandscapeRight;
+
     print("logic start")
 end
 

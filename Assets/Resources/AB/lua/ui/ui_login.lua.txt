@@ -14,7 +14,7 @@ function UILogin:onLoginBtnClick(o, order)
 
     http:send("login", {username = username, password = password},function (data)
         print(tostring(data));
-        ui:showUI("ui_tip", {msg = "登录成功"});
+        ui:showUI("ui_msg", {msg = "登录成功"});
     end);
 end
 return UILogin

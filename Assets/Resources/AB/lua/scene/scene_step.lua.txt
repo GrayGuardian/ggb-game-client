@@ -2,8 +2,19 @@ local base = require("scene_base")
 local SceneLogin = class("SceneStep", base)
 
 function SceneLogin:onLoad()
-    --ui:loadScene("UpRes")
-    --test
-    ui:loadScene("Login")
+
+    if GameConst.PRO_ENV == ENV_TYPE.MASTER then
+        
+        ui:loadScene("UpRes")
+
+    else
+
+        --ui:loadScene("UpRes")
+        --test
+        ui:loadScene("Login")
+
+    end
+
+    
 end
 return SceneLogin

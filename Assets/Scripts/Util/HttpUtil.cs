@@ -67,7 +67,9 @@ public class HttpUtil
                 _mainThreadSynContext.Post(new SendOrPostCallback(MainCallBack), new { tag = "GetError", cb = errorCb });
             });
             Action t_cb = () => { if (cb != null) cb(result); };
-            _mainThreadSynContext.Post(new SendOrPostCallback(MainCallBack), new { tag = "Get", cb = t_cb });
+            if(result.bytes.Length>0){
+                _mainThreadSynContext.Post(new SendOrPostCallback(MainCallBack), new { tag = "Get", cb = t_cb });
+            }
         }));
         thread.Start();
     }
@@ -100,13 +102,15 @@ public class HttpUtil
             req.Abort();
             byte[] bytes = byteArray.ToArray();
             string content = Encoding.UTF8.GetString(bytes);
-            return new HttpResult() { code = code, bytes = bytes, content = content };
+            if(bytes.Length>0){
+                return new HttpResult() { code = code, bytes = bytes, content = content };
+            }
         }
         catch
         {
             if (errorCb != null) errorCb();
-            return new HttpResult() { code = -1, bytes = new byte[] { }, content = "" };
         }
+        return new HttpResult() { code = -1, bytes = new byte[] { }, content = "" };
     }
 
     public void Post_Asyn(string url, byte[] body, Action<HttpResult> cb = null, Action errorCb = null)
@@ -119,7 +123,9 @@ public class HttpUtil
             });
 
             Action t_cb = () => { if (cb != null) cb(result); };
-            _mainThreadSynContext.Post(new SendOrPostCallback(MainCallBack), new { tag = "Post", cb = t_cb });
+            if(result.bytes.Length>0){
+                _mainThreadSynContext.Post(new SendOrPostCallback(MainCallBack), new { tag = "Post", cb = t_cb });
+            }
         }));
         thread.Start();
     }
@@ -162,13 +168,15 @@ public class HttpUtil
             req.Abort();
             byte[] bytes = byteArray.ToArray();
             string content = Encoding.UTF8.GetString(bytes);
-            return new HttpResult() { code = code, bytes = bytes, content = content };
+            if(bytes.Length>0){
+                return new HttpResult() { code = code, bytes = bytes, content = content };
+            }
         }
         catch
         {
             if (errorCb != null) errorCb();
-            return new HttpResult() { code = -1, bytes = new byte[] { }, content = "" };
         }
+        return new HttpResult() { code = -1, bytes = new byte[] { }, content = "" };
     }
 
     public void Download(string url, string saveFile, string tempFileName = null, Action cb = null, Action<int, int> downloadingCb = null, Action errorCb = null)

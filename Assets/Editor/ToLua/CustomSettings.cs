@@ -159,6 +159,7 @@ public static class CustomSettings
         _GT(typeof(SceneManager)),
         _GT(typeof(Scene)),
         _GT(typeof(LoadSceneParameters)),
+        _GT(typeof(UnityEngine.ScreenOrientation)),
         _GT(typeof(UnityEngine.UI.CanvasScaler)),
         _GT(typeof(UnityEngine.UI.Text)),
         _GT(typeof(UnityEngine.UI.Image)),

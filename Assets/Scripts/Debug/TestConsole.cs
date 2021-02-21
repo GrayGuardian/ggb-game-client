@@ -48,7 +48,7 @@ class TestConsole : MonoBehaviour
 
     readonly List<Log> logs = new List<Log>();
     Vector2 scrollPosition;
-    bool visible;
+    public bool visible;
     bool collapse;
 
     // Visual elements:

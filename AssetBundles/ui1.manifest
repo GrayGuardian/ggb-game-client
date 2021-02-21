@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1529522832
+CRC: 1957477057
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9a56a5893fdab1c355e6f9265ded09bc
+    Hash: feaa3eb18eef7838120ac39d7a4da1fe
   TypeTreeHash:
     serializedVersion: 2
     Hash: 513706a4b1ad1f4332e4ad0028f7f3f8
@@ -38,6 +38,7 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
+- Assets/Resources/AB/ui1/ui_msg.prefab
 - Assets/Resources/AB/ui1/ui_login.prefab
 - Assets/Resources/AB/ui1/ui_tip.prefab
 Dependencies:

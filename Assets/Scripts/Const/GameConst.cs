@@ -24,13 +24,22 @@ public class GameConst
 #endif
 
     /// <summary>
-    /// http
+    /// URL
     /// </summary>
-    public static string HTTP = "http://127.0.0.1:300/";
+#if UNITY_EDITOR
+    public static string URL = "http://127.0.0.1";
+#else
+    public static string URL = "http://192.168.0.104";
+#endif
+
+    /// <summary>
+    /// HTTP
+    /// </summary>
+    public static string HTTP = URL + ":300/";
     /// <summary>
     /// 下载网址
     /// </summary>
-    public static string DOWNLOAD_URL = "http://127.0.0.1:80/Download/";
+    public static string DOWNLOAD_URL = URL + ":80/Download/";
 
     /// <summary>
     /// Resources文件夹

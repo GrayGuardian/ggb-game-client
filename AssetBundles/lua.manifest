@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3128606980
+CRC: 3639540138
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9723e538e1aa70b149b364eef7180261
+    Hash: 21c18d91f873bc0cd01c9f833bbb0751
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -16,6 +16,7 @@ Assets:
 - Assets/Resources/AB/lua/base/tolua/protobuf/encoder.lua.txt
 - Assets/Resources/AB/lua/base/tolua/System/coroutine.lua.txt
 - Assets/Resources/AB/lua/util/timer/timer_util.lua.txt
+- Assets/Resources/AB/lua/ui/ui_msg.lua.txt
 - Assets/Resources/AB/lua/base/tolua/protobuf/containers.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Touch.lua.txt
 - Assets/Resources/AB/lua/base/tolua/ltn12.lua.txt
