@@ -67,7 +67,8 @@ public class HttpUtil
                 _mainThreadSynContext.Post(new SendOrPostCallback(MainCallBack), new { tag = "GetError", cb = errorCb });
             });
             Action t_cb = () => { if (cb != null) cb(result); };
-            if(result.bytes.Length>0){
+            if (result.bytes.Length > 0)
+            {
                 _mainThreadSynContext.Post(new SendOrPostCallback(MainCallBack), new { tag = "Get", cb = t_cb });
             }
         }));
@@ -102,7 +103,8 @@ public class HttpUtil
             req.Abort();
             byte[] bytes = byteArray.ToArray();
             string content = Encoding.UTF8.GetString(bytes);
-            if(bytes.Length>0){
+            if (bytes.Length > 0)
+            {
                 return new HttpResult() { code = code, bytes = bytes, content = content };
             }
         }
@@ -113,17 +115,18 @@ public class HttpUtil
         return new HttpResult() { code = -1, bytes = new byte[] { }, content = "" };
     }
 
-    public void Post_Asyn(string url, byte[] body, Action<HttpResult> cb = null, Action errorCb = null)
+    public void Post_Asyn(string url, byte[] body, string token, Action<HttpResult> cb = null, Action errorCb = null)
     {
         Thread thread = new Thread(new ThreadStart(() =>
         {
-            HttpResult result = Post(url, body, () =>
-            {
-                _mainThreadSynContext.Post(new SendOrPostCallback(MainCallBack), new { tag = "PostError", cb = errorCb });
-            });
+            HttpResult result = Post(url, body, token, () =>
+             {
+                 _mainThreadSynContext.Post(new SendOrPostCallback(MainCallBack), new { tag = "PostError", cb = errorCb });
+             });
 
             Action t_cb = () => { if (cb != null) cb(result); };
-            if(result.bytes.Length>0){
+            if (result.bytes.Length > 0)
+            {
                 _mainThreadSynContext.Post(new SendOrPostCallback(MainCallBack), new { tag = "Post", cb = t_cb });
             }
         }));
@@ -134,20 +137,23 @@ public class HttpUtil
     /// <summary>
     /// Post方法
     /// </summary>
-    public HttpResult Post(string url, byte[] body, Action errorCb = null)
+    public HttpResult Post(string url, byte[] body, string token = "", Action errorCb = null)
     {
         HttpWebResponse res;
         HttpWebRequest req;
         Encoding encode = Encoding.Default;
         try
         {
-            UnityEngine.Debug.Log(body.Length);
             req = (HttpWebRequest)WebRequest.Create(new Uri(url));
             req.Method = "POST";
             req.Accept = "*/*";
             req.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322; InfoPath.1)";
             req.ContentType = "text/plain";
             req.ContentLength = body.Length;
+            if (token != "")
+            {
+                req.Headers.Add("Token", token);
+            }
             req.Timeout = 1000;
             Stream newStream = req.GetRequestStream();
             newStream.Write(body, 0, body.Length);    //写入参数
@@ -168,7 +174,8 @@ public class HttpUtil
             req.Abort();
             byte[] bytes = byteArray.ToArray();
             string content = Encoding.UTF8.GetString(bytes);
-            if(bytes.Length>0){
+            if (bytes.Length > 0)
+            {
                 return new HttpResult() { code = code, bytes = bytes, content = content };
             }
         }
@@ -273,80 +280,5 @@ public class HttpUtil
 
     }
 
-    public byte[] Test(string url, byte[] body, Action errorCb = null)
-    {
-        HttpWebResponse res;
-        HttpWebRequest req;
-        Encoding encode = Encoding.Default;
-        try
-        {
-            req = (HttpWebRequest)WebRequest.Create(new Uri(url));
-            req.Method = "POST";
-            req.Accept = "*/*";
-            req.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322; InfoPath.1)";
-            // req.ContentType = "text/plain";
-            req.ContentLength = body.Length;
-            req.Timeout = 1000;
-            Stream newStream = req.GetRequestStream();
-            newStream.Write(body, 0, body.Length);    //写入参数
-            newStream.Close();
-            res = (HttpWebResponse)req.GetResponse();
-
-            Stream sr = res.GetResponseStream();
-
-            List<byte> byteArray = new List<byte>();
-            while (true)
-            {
-                int b = sr.ReadByte();
-                if (b == -1) break;
-                byteArray.Add((byte)b);
-            }
-            sr.Close();
-            res.Close();
-            req.Abort();
-            byte[] data = byteArray.ToArray();
-            UnityEngine.Debug.Log(encode.GetString(data).Length);
-            return data;
-        }
-        catch
-        {
-            if (errorCb != null) errorCb();
-            return new byte[] { };
-        }
-    }
-    public byte[] Test1(string url, Action errorCb = null)
-    {
-        HttpWebResponse res;
-        HttpWebRequest req;
-        Encoding encode = Encoding.Default;
-        try
-        {
-            req = (HttpWebRequest)WebRequest.Create(new Uri(url));
-            req.Method = "Get";
-            req.Timeout = 1000;
-            res = (HttpWebResponse)req.GetResponse();
-
-            Stream sr = res.GetResponseStream();
-
-            List<byte> byteArray = new List<byte>();
-            while (true)
-            {
-                int b = sr.ReadByte();
-                if (b == -1) break;
-                byteArray.Add((byte)b);
-            }
-            sr.Close();
-            res.Close();
-            req.Abort();
-            byte[] data = byteArray.ToArray();
-            UnityEngine.Debug.Log(encode.GetString(data));
-            return data;
-        }
-        catch
-        {
-            if (errorCb != null) errorCb();
-            return new byte[] { };
-        }
-    }
 }
 

@@ -10,23 +10,16 @@ end
 function UI:onLoginBtnClick(o, order)
     local username = self.uiComp.InputField.usernameInput.text
     local password = self.uiComp.InputField.passwordInput.text
-
+    if username == "" or password == "" then
+        ui:showUI("ui_msg", {msg = "用户名及密码不可为空"})
+        return
+    end
     http:send(
         "login",
         {username = username, password = password},
         function(data)
-            print(tostring(data))
-            ui:showUI(
-                "ui_tip",
-                {
-                    msg = "登录成功",
-                    onClick = function()
-                        print(data.area, data.areas)
-                        ui:showUI("ui_area_main", {area = data.area, areas = data.areas})
-                        self:close()
-                    end
-                }
-            )
+            ui:showUI("ui_area_main", {area = data.area, areas = data.areas})
+            self:close()
         end
     )
 end

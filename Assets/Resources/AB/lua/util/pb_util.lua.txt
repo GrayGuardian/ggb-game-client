@@ -60,26 +60,28 @@ end
 
 function PB:encode(key, data)
     local result = nil
-    local ok, errors = pcall(
-        function ()
-            result = _encode(key, data);
+    local ok, errors =
+        pcall(
+        function()
+            result = _encode(key, data)
         end
     )
     if ok then
-        return result;
+        return result
     else
         return ""
     end
 end
 function PB:decode(key, data)
     local result = nil
-    local ok, errors = pcall(
-        function ()
-            result = _decode(key, data);
+    local ok, errors =
+        pcall(
+        function()
+            result = _decode(key, data)
         end
     )
     if ok then
-        return result;
+        return result
     else
         return nil
     end

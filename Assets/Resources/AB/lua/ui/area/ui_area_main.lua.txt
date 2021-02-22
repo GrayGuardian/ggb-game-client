@@ -25,6 +25,17 @@ function UI:onAreaItemClick(o, order)
     )
 end
 function UI:onNextBtnClick(o, order)
-    print("点击进入按钮", tostring(self.areaInfo))
+    if self.areaInfo.ismaintenance == 1 then
+        ui:showUI("ui_msg", {msg = "区服正在维护"})
+        return
+    end
+    http:send(
+        "nextArea",
+        {aid = self.areaInfo.aid},
+        function(data)
+            print("进入选人界面")
+            self:close()
+        end
+    )
 end
 return UI
