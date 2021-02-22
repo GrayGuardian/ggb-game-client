@@ -23,8 +23,11 @@ end
 function UIBase:onDestroy()
 end
 ------------------- 继承重写 -------------------
-
-UIBase.static.DEFAULT_OPTS = {order = 0}
+-- 默认加载参数
+-- order：渲染数值，越大越前 
+-- blockInput：是否阻挡下层Input消息
+-- blackMask: 背景黑色遮罩透明度
+UIBase.static.DEFAULT_OPTS = {order = 0,blockInput = true,blackMask = 30}
 
 function UIBase:init(name, param, opts)
     self.name = name
@@ -43,7 +46,7 @@ function UIBase:init(name, param, opts)
     end
 
     self.ab = self:GET_AB() == "" and self.name or self:GET_AB();
-    self.abs = self:GET_ABS()
+    self.abs = self:GET_ABS();
     table.insert(self.abs, 1, self.ab);
     
 
@@ -69,7 +72,9 @@ function UIBase:bind(node)
     self.node.offsetMin = {x = 0, y = 0}
 
     --加载配置设置
-    
+    local maskImage = comp:addCSComponent(self.node,UEUI.Image);
+    maskImage.raycastTarget = self.opts.blockInput;
+    maskImage.color = {r=0,g=0,b=0,a=self.opts.blackMask/100}
 
     self:uiCompInit()
     self:_onLoad()
