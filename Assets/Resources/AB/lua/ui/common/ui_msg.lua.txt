@@ -1,0 +1,31 @@
+local base = require("ui_base")
+local UI = class("msg", base)
+
+base.static.ab = "ui1"
+base.static.abs = {"p1"}
+
+function UI:onLoad()
+    self.msg = self.param.msg
+    self.btnTitle = self.param.btnTitle
+    self.onClick = self.param.onClick
+    self.onCloseClick = self.param.onCloseClick
+    self.uiComp.Text.msgText.text = self.msg
+
+    if self.btnTitle ~= nil then
+        self.uiComp.Text.btnText.text = self.btnTitle
+    end
+end
+
+function UI:onConfirmBtnClick(o, order)
+    if self.onClick ~= nil then
+        self.onClick()
+    end
+    self:close()
+end
+function UI:onCloseBtnClick(o, order)
+    if self.onCloseClick ~= nil then
+        self.onCloseClick()
+    end
+    self:close()
+end
+return UI

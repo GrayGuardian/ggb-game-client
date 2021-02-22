@@ -1,0 +1,16 @@
+local base = require("ui_base")
+local UI = class("area_main", base)
+
+base.static.ab = "ui1"
+base.static.abs = {"p1"}
+
+function UI:onLoad()
+end
+function UI:onAreaItemClick(o, order)
+    print("点击列表")
+    ui:showUI("ui_area_sel")
+end
+function UI:onNextBtnClick(o, order)
+    print("点击进入按钮")
+end
+return UI

@@ -1,24 +1,24 @@
 local base = require("ui_base")
-local UITip = class("UITip", base)
+local UI = class("upres_tip", base)
 
-base.static.ab = "ui1"
-base.static.abs = { "p1" }
+base.static.ab = "upres"
+base.static.abs = {}
 
-function UITip:onLoad()
+function UI:onLoad()
     self.msg = self.param.msg
-    self.btnTitle = self.param.btnTitle;
+    self.btnTitle = self.param.btnTitle
     self.onClick = self.param.onClick
     self.uiComp.Text.msgText.text = self.msg
 
     if self.btnTitle ~= nil then
-        self.uiComp.Text.btnText.text = self.btnTitle;
+        self.uiComp.Text.btnText.text = self.btnTitle
     end
 end
 
-function UITip:onConfirmBtnClick(o, order)
+function UI:onConfirmBtnClick(o, order)
     if self.onClick ~= nil then
         self.onClick()
     end
     self:close()
 end
-return UITip
+return UI

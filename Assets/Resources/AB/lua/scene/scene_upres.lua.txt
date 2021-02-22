@@ -1,8 +1,8 @@
 local base = require("scene_base")
-local SceneUpres = class("SceneUpres", base)
+local Scene = class("upres", base)
 
-function SceneUpres:onLoad()
+function Scene:onLoad()
     print("Scene_Upres onLoad")
-    ui:showUI("ui_upres");
+    ui:showUI("ui_upres")
 end
-return SceneUpres
+return Scene

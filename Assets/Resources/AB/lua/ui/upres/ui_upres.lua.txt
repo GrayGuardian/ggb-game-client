@@ -1,16 +1,16 @@
 local base = require("ui_base")
-local UIUpres = class("UIUpres", base)
+local UI = class("upres", base)
 
 base.static.ab = "upres"
 base.static.abs = {}
 
-function UIUpres:onLoad()
+function UI:onLoad()
     self.barNode = self.node:Find("loadBarNode")
     self:hideBarNode()
 
     self:networkInit()
 end
-function UIUpres:networkInit()
+function UI:networkInit()
     --通过进度条检查 防止无更新一闪的情况
     self:showBarNode()
     self:setBarDesc("正在检查更新。。。")
@@ -50,7 +50,7 @@ function UIUpres:networkInit()
     )
 end
 
-function UIUpres:upResLoad()
+function UI:upResLoad()
     self.refdata = resUtil:GetRefData()
     print(string.format("更新状态：%s refdata:%s", self.refdata.type, self.refdata.data:toString()))
     if self.refdata.type == 0 then
@@ -104,19 +104,19 @@ function UIUpres:upResLoad()
     end
 end
 
-function UIUpres:showBarNode()
+function UI:showBarNode()
     self.barNode.gameObject:SetActive(true)
 end
-function UIUpres:hideBarNode()
+function UI:hideBarNode()
     self.barNode.gameObject:SetActive(false)
 end
-function UIUpres:setBarVal(val)
+function UI:setBarVal(val)
     self.uiComp.Image.valImage.fillAmount = val
 end
-function UIUpres:setBarDesc(desc)
+function UI:setBarDesc(desc)
     self.uiComp.Text.descText.text = desc
 end
-function UIUpres:downloadRes()
+function UI:downloadRes()
     print("开始下载资源")
     self:showBarNode()
     self:downloadABFile(
@@ -169,8 +169,8 @@ function UIUpres:downloadRes()
         end
     )
 end
-function UIUpres:downloadResOver()
-    print("资源全部下载完毕");
+function UI:downloadResOver()
+    print("资源全部下载完毕")
     self:hideBarNode()
     if self.refdata.data.IsRestart then
         resUtil:UpVersion()
@@ -187,19 +187,19 @@ function UIUpres:downloadResOver()
     end
     self:upResOver()
 end
-function UIUpres:upResOver()
+function UI:upResOver()
     print("资源全部更新完毕")
     resUtil:UpVersion()
     resUtil:ClearRedundantRes()
     self:allOver()
 end
-function UIUpres:allOver()
+function UI:allOver()
     print("全部更新完毕")
 
     ui:loadScene("Login")
 end
 
-function UIUpres:downloadABFile(
+function UI:downloadABFile(
     abInfos,
     allDownloadOverEvent,
     singleDownloadStartEvent,
@@ -255,4 +255,4 @@ function UIUpres:downloadABFile(
     )
     --print(string.format("download_url:%s\nsave_path:%s\ntemp_fileName:%s",download_url,save_path,temp_fileName))
 end
-return UIUpres
+return UI

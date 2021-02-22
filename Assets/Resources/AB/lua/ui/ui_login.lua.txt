@@ -1,19 +1,13 @@
 local base = require("ui_base")
-local UILogin = class("UILogin", base)
+local UI = class("login", base)
 
 base.static.ab = "ui1"
 base.static.abs = {"p1"}
 
-function UILogin:onLoad()
-    local ttt = comp:addComponent(self.node, "test")
-    print(comp:getComponent(self.node, "test"))
-    print(comp:getComponentInChildren(self.node, "test"))
-    print(#comp:getComponentsInChildren(self.node, "test"))
-    -- ttt:close()
-    -- print(comp:getComponent(self.node, "test"))
+function UI:onLoad()
 end
 
-function UILogin:onLoginBtnClick(o, order)
+function UI:onLoginBtnClick(o, order)
     local username = self.uiComp.InputField.usernameInput.text
     local password = self.uiComp.InputField.passwordInput.text
 
@@ -35,4 +29,4 @@ function UILogin:onLoginBtnClick(o, order)
         end
     )
 end
-return UILogin
+return UI

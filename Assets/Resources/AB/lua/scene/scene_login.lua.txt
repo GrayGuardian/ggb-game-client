@@ -1,7 +1,7 @@
 local base = require("scene_base")
-local SceneLogin = class("SceneLogin", base)
-function SceneLogin:onLoad()
-    ui:showUI("ui_login");
+local Scene = class("login", base)
+function Scene:onLoad()
+    ui:showUI("ui_login")
 end
 
-return SceneLogin
+return Scene

@@ -1,12 +1,12 @@
 local base = require("comp_base")
-local CompTest = class("CompTest", base)
+local Comp = class("test", base)
 
-function CompTest:onLoad()
+function Comp:onLoad()
     print("comp test onLoad")
 end
 
-function CompTest:onDestroy()
+function Comp:onDestroy()
     print("comp test onDestory")
 end
 
-return CompTest
+return Comp
