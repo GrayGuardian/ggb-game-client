@@ -4,6 +4,10 @@ using UnityEngine;
 using System;
 public class MonoComponent : MonoBehaviour
 {
+    /// <summary>
+    /// 绑定的Lua脚本名
+    /// </summary>
+    public string LuaName = "";
     private event Action<string, object[]> _onListenEvent = null;
     public void AddListenEvent(Action<string, object[]> e)
     {

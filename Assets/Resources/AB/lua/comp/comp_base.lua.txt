@@ -1,7 +1,7 @@
 local CompBase = class("UIBase")
 
 ------------------- 继承重写 -------------------
--- Mono生命周期
+-- Mono生命周期 OnDestroy、Awake与第一次OnEnable无法监听 OnDestroy可用onDestroy替代
 
 -- Button点击事件 组件名首字母自动大写 o-组件实例 order-组件序号，可区分多个重名组件
 -- function UITip:on[UIComp_Button_Name]Click(o,order)
@@ -27,6 +27,7 @@ end
 
 --绑定物体
 function CompBase:bind(csComp)
+    csComp.LuaName = self.name
     self.csComp = csComp
     self.node = csComp.transform
 
@@ -41,6 +42,11 @@ function CompBase:monoLifecycleInit()
         System.Action_string_objects(
         function(key, param)
             local action = self[key]
+            if key == "OnDestroy" then
+                action = function()
+                    self:_onDestroy()
+                end
+            end
             if action == nil then
                 return
             end
@@ -134,7 +140,7 @@ function CompBase:_onDestroy()
 end
 -- 卸载
 function CompBase:close()
-    --ui:closeUI(self)
+    comp:closeComponent(self.node, self)
 end
 function CompBase:timer_on(time, loopCount, onTrigger)
     local t = timer:on(time, loopCount, onTrigger)

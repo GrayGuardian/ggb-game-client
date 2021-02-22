@@ -11,6 +11,7 @@ public class MonoComponentWrap
 		L.RegFunction("DelListenEvent", DelListenEvent);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("LuaName", get_LuaName, set_LuaName);
 		L.EndClass();
 	}
 
@@ -63,6 +64,44 @@ public class MonoComponentWrap
 		catch (Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_LuaName(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			MonoComponent obj = (MonoComponent)o;
+			string ret = obj.LuaName;
+			LuaDLL.lua_pushstring(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index LuaName on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_LuaName(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			MonoComponent obj = (MonoComponent)o;
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.LuaName = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index LuaName on a nil value");
 		}
 	}
 }

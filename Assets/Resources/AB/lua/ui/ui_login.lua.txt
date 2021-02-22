@@ -5,7 +5,12 @@ base.static.ab = "ui1"
 base.static.abs = {"p1"}
 
 function UILogin:onLoad()
-    comp:addComponent(self.node, "test")
+    local ttt = comp:addComponent(self.node, "test")
+    print(comp:getComponent(self.node, "test"))
+    print(comp:getComponentInChildren(self.node, "test"))
+    print(#comp:getComponentsInChildren(self.node, "test"))
+    -- ttt:close()
+    -- print(comp:getComponent(self.node, "test"))
 end
 
 function UILogin:onLoginBtnClick(o, order)

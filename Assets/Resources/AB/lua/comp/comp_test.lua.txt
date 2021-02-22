@@ -2,6 +2,11 @@ local base = require("comp_base")
 local CompTest = class("CompTest", base)
 
 function CompTest:onLoad()
+    print("comp test onLoad")
+end
+
+function CompTest:onDestroy()
+    print("comp test onDestory")
 end
 
 return CompTest
