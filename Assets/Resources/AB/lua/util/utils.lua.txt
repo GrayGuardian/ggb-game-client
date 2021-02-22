@@ -20,6 +20,22 @@ string.split = function(str, str1)
     return arr
 end
 
+table.copy = function (copyTable,table)
+    if table == nil then table = {} end;
+    if type(copyTable) ~= "table" then
+        table = copyTable
+    else
+        for k,v in pairs(copyTable) do
+            if type(v) ~= "table" then
+                table[k] = v;
+            else
+                table[k] = {};
+                copy(v, table[k])
+            end
+        end   
+    end
+    return table;
+end
 table.exist = function(t, value)
     for k, v in pairs(t) do
         if v == value then

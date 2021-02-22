@@ -18,33 +18,26 @@ function UI:init()
 end
 -- 场景lua文件加载
 function UI:sceneLoad(info)
-    print("跳转场景>>>>", "idx:", info.idx, "name:", info.name)
+    local param = table.copy(self.scaneParam);
+    local opts = table.copy(self.sceneOpts);
+    self.scaneParam = nil;
+    self.sceneOpts = nil;
+    
+    print("跳转场景>>>>", "idx:", info.idx, "name:", info.name,"param:",utils.serialize(param),"opts:",utils.serialize(opts));
     if self.sceneComp ~= nil then
         print("卸载场景lua脚本>>" .. utils.serialize(self.sceneComp.info))
         self.sceneComp:_onDestroy()
     end
     luaName = string.lower("scene_" .. info.name)
     print("加载场景lua脚本>>" .. luaName)
-    self.sceneComp = require(luaName):new(info, self.sceneParamMap[info.name], self.sceneOptsMap[info.name])
-    self.sceneParamMap[info.name] = nil
-    self.sceneOptsMap[info.name] = nil
+    self.sceneComp = require(luaName):new(info, param, opts)
+
+    
 end
 -- 切换场景
 function UI:loadScene(name, param, opts)
-    -- 默认加载参数
-    local OPTS_DEFAULT = {isCloseAllUI = true}
-    if opts == nil then
-        opts = OPTS_DEFAULT
-    else
-        for key, value in pairs(OPTS_DEFAULT) do
-            if opts[key] == nil then
-                opts[key] = value
-            end
-        end
-    end
-
-    self.sceneParamMap[name] = param
-    self.sceneOptsMap[name] = opts
+    self.scaneParam = param;
+    self.sceneOpts = opts;
 
     SceneManager.LoadScene(name)
 end
@@ -66,29 +59,18 @@ function UI:createUIRoot()
 end
 -- ShowUI
 function UI:showUI(name, param, opts)
-    -- 默认加载参数
-    local OPTS_DEFAULT = {order = 0}
-    if opts == nil then
-        opts = OPTS_DEFAULT
-    else
-        for key, value in pairs(OPTS_DEFAULT) do
-            if opts[key] == nil then
-                opts[key] = value
-            end
-        end
-    end
     -- InitComp
     local comp = require(name):new(name, param, opts);
     self:addUI(comp)
     --加载AB依赖包
-    for index, abKey in ipairs(comp:getABs()) do
+    for index, abKey in ipairs(comp.abs) do
         if self:existAB(abKey, comp) == false and self:addAB(abKey, comp) then
             print("UI>>加载AB包:" .. abKey)
             resUtil:LoadAssetBundle(abKey)
         end
     end
     --加载界面
-    local prefab = resUtil:Load(comp:getAB(), name)
+    local prefab = resUtil:Load(comp.ab, name)
     local go = GameObject.Instantiate(prefab)
     local node = go:GetComponent("RectTransform")
     comp:bind(node)
@@ -101,7 +83,7 @@ function UI:closeUI(uiComp)
     uiComp:_onDestroy()
     GameObject.Destroy(uiComp.node.gameObject)
     --卸载AB依赖包
-    for index, abKey in ipairs(uiComp:getABs()) do
+    for index, abKey in ipairs(uiComp.abs) do
         if self:existAB(abKey, uiComp) == true and self:delAB(abKey, uiComp) and self.abKeyMap[abKey] == nil then
             print("UI>>卸载AB包:" .. abKey)
             resUtil:UnLoadAssetBundle(abKey, true)

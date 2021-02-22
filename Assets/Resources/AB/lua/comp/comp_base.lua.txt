@@ -104,14 +104,12 @@ function CompBase:uiCompInit()
         else
             e = "on" .. comp.name:gsub("^%l", string.upper) .. "Click"
         end
-        print("注册Button点击事件>>", e)
         if self[e] ~= nil then
             if type(comp) == "table" then
                 sum = #comp
                 for i, comp1 in pairs(comp) do
                     comp1.onClick:AddListener(
                         function()
-                            print("点击")
                             self[e](self, comp1, i)
                         end
                     )
@@ -120,7 +118,6 @@ function CompBase:uiCompInit()
                 sum = 1
                 comp.onClick:AddListener(
                     function()
-                        print("点击")
                         self[e](self, comp, 1)
                     end
                 )

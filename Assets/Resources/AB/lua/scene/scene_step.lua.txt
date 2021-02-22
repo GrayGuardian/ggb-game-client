@@ -7,7 +7,7 @@ function Scene:onLoad()
     else
         --ui:loadScene("UpRes")
         --test
-        ui:showUI("ui_msg", {msg = "用户名及密码不可为空"})
+        ui:showUI("ui_msg", {msg = "用sdfsadf为空"},{order = 9999})
         ui:loadScene("Login")
     end
 end

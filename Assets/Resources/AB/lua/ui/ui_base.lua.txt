@@ -2,8 +2,8 @@ local UIBase = class("UIBase")
 
 ------------------- 继承重写 -------------------
 --加载参数二次重写默认值
-function UIBase:GET_Default_OPTS()
-    return nil
+function UIBase:GET_DEFAULT_OPTS()
+    return table.copy(UIBase.DEFAULT_OPTS);
 end
 --UI所在AB包 默认为UI名 可通过子类 base.static.ab = '' 进行重写
 function UIBase:GET_AB()
@@ -24,20 +24,28 @@ function UIBase:onDestroy()
 end
 ------------------- 继承重写 -------------------
 
+UIBase.static.DEFAULT_OPTS = {order = 0}
+
 function UIBase:init(name, param, opts)
     self.name = name
     self.param = param
 
-    if self:GET_Default_OPTS() == nil then
-        self.opts = opts
-    else
-        self.opts = self:GET_Default_OPTS()
+    self.opts = self.GET_DEFAULT_OPTS();
+    if opts~= nil then
         for key, value in pairs(opts) do
-            if self.opts[key] == nil then
-                self.opts[key] = value
-            end
+            self.opts[key] = value
         end
     end
+    for key, value in pairs(UIBase.DEFAULT_OPTS) do
+        if self.opts[key] == nil then
+            self.opts[key] = value
+        end
+    end
+
+    self.ab = self:GET_AB() == "" and self.name or self:GET_AB();
+    self.abs = self:GET_ABS()
+    table.insert(self.abs, 1, self.ab);
+    
 
     self.node = nil
     self.uiComp = {}
@@ -59,6 +67,9 @@ function UIBase:bind(node)
     self.node.anchoredPosition3D = {x = 0, y = 0, z = 0}
     self.node.offsetMax = {x = 0, y = 0}
     self.node.offsetMin = {x = 0, y = 0}
+
+    --加载配置设置
+    
 
     self:uiCompInit()
     self:_onLoad()
@@ -137,14 +148,7 @@ end
 function UIBase:close()
     ui:closeUI(self)
 end
-function UIBase:getAB()
-    return self:GET_AB() == "" and self.name or self:GET_AB()
-end
-function UIBase:getABs()
-    local abs = self:GET_ABS()
-    table.insert(abs, 1, self:getAB())
-    return abs
-end
+
 function UIBase:getRelaOrder()
     return ui:getRelaOrder(self.opts.order) - 1
 end

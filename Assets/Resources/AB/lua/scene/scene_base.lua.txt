@@ -2,8 +2,8 @@ local SceneBase = class("SceneBase")
 
 ------------------- 继承重写 -------------------
 --加载参数二次重写默认值
-function SceneBase:GET_Default_OPTS()
-    return nil
+function SceneBase:GET_DEFAULT_OPTS()
+    return table.copy(SceneBase.DEFAULT_OPTS);
 end
 function SceneBase:onLoad()
 end
@@ -11,33 +11,38 @@ function SceneBase:onDestroy()
 end
 ------------------- 继承重写 -------------------
 
+SceneBase.static.DEFAULT_OPTS = {isCloseAllUI = true}
+
 function SceneBase:init(info, param, opts)
-    print("加载场景-", info.name, " Init")
     self.info = info
     self.param = param
 
-    opts = opts and opts or {}
-    self.opts = opts
-    if self:GET_Default_OPTS() ~= nil then
-        for key, value in pairs(self:GET_Default_OPTS()) do
-            if self.opts[key] == nil then
-                self.opts[key] = value
-            end
+    self.opts = self:GET_DEFAULT_OPTS();
+    if opts~= nil then
+        for key, value in pairs(opts) do
+            self.opts[key] = value
+        end
+    end
+    for key, value in pairs(SceneBase.DEFAULT_OPTS) do
+        if self.opts[key] == nil then
+            self.opts[key] = value
         end
     end
 
-    print(utils.serialize(self.opts))
+    print(self.info.name ,">>>>>>>>>>",utils.serialize(self.opts));
 
     self:_onLoad()
 end
 function SceneBase:_onLoad()
-    if self.opts.isCloseAllUI == true then
-        ui:closeAllUI()
-    end
+    print("卸载场景-" .. self.info.name .. " >>>>>>>>>>>>>>>>>>>>>>>> onLoad")
+  
     self:onLoad()
 end
 function SceneBase:_onDestroy()
     print("卸载场景-" .. self.info.name .. " >>>>>>>>>>>>>>>>>>>>>>>> onDestroy")
+    if self.opts.isCloseAllUI == true then
+        ui:closeAllUI()
+    end
     self:onDestroy()
 end
 
