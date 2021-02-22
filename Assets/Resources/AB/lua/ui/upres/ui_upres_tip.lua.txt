@@ -1,8 +1,14 @@
 local base = require("ui_base")
 local UI = class("upres_tip", base)
 
-base.static.ab = "upres"
-base.static.abs = {}
+----------------UI配置------------------
+function UI:GET_AB()
+    return "upres"
+end
+function UI:GET_ABS()
+    return {}
+end
+----------------UI配置------------------
 
 function UI:onLoad()
     self.msg = self.param.msg

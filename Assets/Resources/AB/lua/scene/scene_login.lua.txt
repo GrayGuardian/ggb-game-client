@@ -1,5 +1,8 @@
 local base = require("scene_base")
 local Scene = class("login", base)
+function Scene:GET_Default_OPTS()
+    return {isCloseAllUI = false}
+end
 function Scene:onLoad()
     ui:showUI("ui_login")
 end

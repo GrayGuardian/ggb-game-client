@@ -1,8 +1,14 @@
 local base = require("ui_base")
 local UI = class("area_sel", base)
 
-base.static.ab = "ui1"
-base.static.abs = {"p1", "prefab1"}
+----------------UI配置------------------
+function UI:GET_AB()
+    return "ui1"
+end
+function UI:GET_ABS()
+    return {"p1", "prefab1"}
+end
+----------------UI配置------------------
 
 function UI:onLoad()
     self.areaInfo = self.param.area

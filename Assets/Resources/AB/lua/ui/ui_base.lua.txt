@@ -1,10 +1,18 @@
 local UIBase = class("UIBase")
 
 ------------------- 继承重写 -------------------
+--加载参数二次重写默认值
+function UIBase:GET_Default_OPTS()
+    return nil
+end
 --UI所在AB包 默认为UI名 可通过子类 base.static.ab = '' 进行重写
-UIBase.static.ab = ""
+function UIBase:GET_AB()
+    return ""
+end
 --通用AB依赖包 可通过子类 base.static.abs = {} 进行重写
-UIBase.static.abs = {"p1"}
+function UIBase:GET_ABS()
+    return {}
+end
 
 -- Button点击事件 组件名首字母自动大写 o-组件实例 order-组件序号，可区分多个重名组件
 -- function UITip:on[UIComp_Button_Name]Click(o,order)
@@ -19,12 +27,22 @@ end
 function UIBase:init(name, param, opts)
     self.name = name
     self.param = param
-    self.opts = opts
+
+    if self:GET_Default_OPTS() == nil then
+        self.opts = opts
+    else
+        self.opts = self:GET_Default_OPTS()
+        for key, value in pairs(opts) do
+            if self.opts[key] == nil then
+                self.opts[key] = value
+            end
+        end
+    end
+
     self.node = nil
     self.uiComp = {}
     self.timerMap = {}
     self.broadcastMap = {}
-    table.insert(UIBase.abs, 1, self:getAB())
 end
 
 --绑定物体
@@ -120,10 +138,12 @@ function UIBase:close()
     ui:closeUI(self)
 end
 function UIBase:getAB()
-    return UIBase.ab == "" and self.name or UIBase.ab
+    return self:GET_AB() == "" and self.name or self:GET_AB()
 end
 function UIBase:getABs()
-    return UIBase.abs
+    local abs = self:GET_ABS()
+    table.insert(abs, 1, self:getAB())
+    return abs
 end
 function UIBase:getRelaOrder()
     return ui:getRelaOrder(self.opts.order) - 1

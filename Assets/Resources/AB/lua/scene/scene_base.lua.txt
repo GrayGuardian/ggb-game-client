@@ -1,6 +1,10 @@
 local SceneBase = class("SceneBase")
 
 ------------------- 继承重写 -------------------
+--加载参数二次重写默认值
+function SceneBase:GET_Default_OPTS()
+    return nil
+end
 function SceneBase:onLoad()
 end
 function SceneBase:onDestroy()
@@ -11,7 +15,19 @@ function SceneBase:init(info, param, opts)
     print("加载场景-", info.name, " Init")
     self.info = info
     self.param = param
-    self.opts = opts and opts or {}
+
+    opts = opts and opts or {}
+    self.opts = opts
+    if self:GET_Default_OPTS() ~= nil then
+        for key, value in pairs(self:GET_Default_OPTS()) do
+            if self.opts[key] == nil then
+                self.opts[key] = value
+            end
+        end
+    end
+
+    print(utils.serialize(self.opts))
+
     self:_onLoad()
 end
 function SceneBase:_onLoad()
