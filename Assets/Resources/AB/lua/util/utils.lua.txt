@@ -1,11 +1,11 @@
 class = require("middle_class")
 
-csbytesToluabytes = function (bytes)
+csbytesToluabytes = function(bytes)
     local data = ""
     for i = 0, bytes.Length - 1 do
         data = data .. string.char(bytes[i])
     end
-    return data;
+    return data
 end
 
 string.split = function(str, str1)
@@ -31,7 +31,7 @@ end
 table.del = function(t, value)
     for k, v in pairs(t) do
         if v == value then
-            table.remove(t,k);
+            table.remove(t, k)
             --t[k] = nil
             return true
         end
@@ -89,6 +89,7 @@ end
 
 -- c#
 resUtil = ResUtil.New()
+monoSingleton = MonoSingleton.Instance
 -- tolua
 pb = require("pb_util"):new()
 json = require("json_util"):new()
@@ -97,6 +98,5 @@ broadcast = require("broadcast_util"):new()
 mono = require("mono_util"):new()
 timer = require("timer_util"):new()
 ui = require("ui"):new()
-http = require("http_util"):new();
-
-
+comp = require("comp"):new()
+http = require("http_util"):new()

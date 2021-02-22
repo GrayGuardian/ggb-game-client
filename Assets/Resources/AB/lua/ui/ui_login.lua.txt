@@ -5,22 +5,28 @@ base.static.ab = "ui1"
 base.static.abs = {"p1"}
 
 function UILogin:onLoad()
-    
 end
 
 function UILogin:onLoginBtnClick(o, order)
     local username = self.uiComp.InputField.usernameInput.text
     local password = self.uiComp.InputField.passwordInput.text
 
-    http:send("login", {username = username, password = password},function (data)
-        print(tostring(data));
-        ui:showUI("ui_tip", {
-            msg = "登录成功",
-            onClick = function()
-                ui:showUI("ui_area_main");
-                self:close();
-            end
-        });
-    end);
+    http:send(
+        "login",
+        {username = username, password = password},
+        function(data)
+            print(tostring(data))
+            ui:showUI(
+                "ui_tip",
+                {
+                    msg = "登录成功",
+                    onClick = function()
+                        ui:showUI("ui_area_main")
+                        self:close()
+                    end
+                }
+            )
+        end
+    )
 end
 return UILogin

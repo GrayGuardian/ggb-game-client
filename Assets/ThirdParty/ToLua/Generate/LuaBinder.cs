@@ -22,6 +22,7 @@ public static class LuaBinder
 		ABVObjectWrap.Register(L);
 		ENV_TYPEWrap.Register(L);
 		HttpResultWrap.Register(L);
+		TestConsoleWrap.Register(L);
 		Singleton_MonoSingletonWrap.Register(L);
 		L.BeginModule("LuaInterface");
 		LuaInterface_LuaInjectionStationWrap.Register(L);

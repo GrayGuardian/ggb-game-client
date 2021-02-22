@@ -1,0 +1,21 @@
+local Comp = class("Comp")
+
+function Comp:addCSComponent(node, comp)
+    return node.gameObject:AddComponent(typeof(comp))
+end
+function Comp:getCSComponent(node, comp)
+    return node.gameObject:GetComponent(typeof(comp))
+end
+function Comp:getCSComponentInChildren(node, comp)
+    return node.gameObject:GetComponentInChildren(typeof(comp))
+end
+function Comp:getCSComponentsInChildren(node, comp)
+    return node.gameObject:GetComponentsInChildren(typeof(comp))
+end
+function Comp:getCSComponentInParent(node, comp)
+    return node.gameObject:GetComponentInParent(typeof(comp))
+end
+function Comp:getCSComponentsInParent(node, comp)
+    return node.gameObject:GetComponentsInParent(typeof(comp))
+end
+return Comp

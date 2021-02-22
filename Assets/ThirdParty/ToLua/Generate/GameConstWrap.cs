@@ -11,6 +11,7 @@ public class GameConstWrap
 		L.RegFunction("New", _CreateGameConst);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("PRO_ENV", get_PRO_ENV, set_PRO_ENV);
+		L.RegVar("URL", get_URL, set_URL);
 		L.RegVar("HTTP", get_HTTP, set_HTTP);
 		L.RegVar("DOWNLOAD_URL", get_DOWNLOAD_URL, set_DOWNLOAD_URL);
 		L.RegVar("RESOURCES", get_RESOURCES, set_RESOURCES);
@@ -71,6 +72,20 @@ public class GameConstWrap
 		try
 		{
 			ToLua.Push(L, GameConst.PRO_ENV);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_URL(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, GameConst.URL);
 			return 1;
 		}
 		catch (Exception e)
@@ -212,6 +227,21 @@ public class GameConstWrap
 		{
 			ENV_TYPE arg0 = (ENV_TYPE)ToLua.CheckObject(L, 2, typeof(ENV_TYPE));
 			GameConst.PRO_ENV = arg0;
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_URL(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			GameConst.URL = arg0;
 			return 0;
 		}
 		catch (Exception e)

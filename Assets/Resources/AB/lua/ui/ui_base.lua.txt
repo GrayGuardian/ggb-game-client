@@ -50,11 +50,11 @@ function UIBase:bind(node)
 end
 -- ui组件初始化
 function UIBase:uiCompInit()
-    local types = {"Text", "Image", "Button","InputField"}
+    local types = {"Text", "Image", "Button", "InputField"}
 
     for index, t in ipairs(types) do
         self.uiComp[t] = {}
-        local arr = self.node:GetComponentsInChildren(typeof(UEUI[t]))
+        local arr = comp:getCSComponentsInChildren(self.node, UEUI[t])
         for i = 0, arr.Length - 1 do
             local comp = arr:GetValue(i)
             local key = comp.name

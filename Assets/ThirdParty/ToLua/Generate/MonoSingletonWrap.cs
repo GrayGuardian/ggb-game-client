@@ -14,6 +14,7 @@ public class MonoSingletonWrap
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("MonoGo", get_MonoGo, set_MonoGo);
 		L.RegVar("MonoComponent", get_MonoComponent, set_MonoComponent);
+		L.RegVar("MonoNode", get_MonoNode, null);
 		L.EndClass();
 	}
 
@@ -127,6 +128,25 @@ public class MonoSingletonWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index MonoComponent on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_MonoNode(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			MonoSingleton obj = (MonoSingleton)o;
+			UnityEngine.Transform ret = obj.MonoNode;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index MonoNode on a nil value");
 		}
 	}
 

@@ -4,6 +4,13 @@ using UnityEngine;
 public class MonoSingleton : Singleton<MonoSingleton>
 {
     public GameObject MonoGo;
+    public Transform MonoNode
+    {
+        get
+        {
+            return MonoGo.transform;
+        }
+    }
     public MonoComponent MonoComponent;
     public MonoSingleton()
     {

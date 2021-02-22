@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// A console to display Unity's debug logs in-game.
 /// </summary>
-class TestConsole : MonoBehaviour
+public class TestConsole : MonoBehaviour
 {
 
     struct Log
@@ -48,7 +48,7 @@ class TestConsole : MonoBehaviour
 
     readonly List<Log> logs = new List<Log>();
     Vector2 scrollPosition;
-    public bool visible;
+    bool visible;
     bool collapse;
 
     // Visual elements:
@@ -97,10 +97,17 @@ class TestConsole : MonoBehaviour
 
         if (shakeToOpen && Input.acceleration.sqrMagnitude > shakeAcceleration)
         {
-            visible = true;
+            Show();
         }
     }
-
+    public void Show()
+    {
+        visible = true;
+    }
+    public void Hide()
+    {
+        visible = false;
+    }
     void OnGUI()
     {
         if (!visible)
