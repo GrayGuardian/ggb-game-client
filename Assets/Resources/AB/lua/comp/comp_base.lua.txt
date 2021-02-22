@@ -1,53 +1,68 @@
-local UIBase = class("UIBase")
+local CompBase = class("UIBase")
 
 ------------------- 继承重写 -------------------
---UI所在AB包 默认为UI名 可通过子类 base.static.ab = '' 进行重写
-UIBase.static.ab = ""
---通用AB依赖包 可通过子类 base.static.abs = {} 进行重写
-UIBase.static.abs = {"p1"}
+-- Mono生命周期
 
 -- Button点击事件 组件名首字母自动大写 o-组件实例 order-组件序号，可区分多个重名组件
 -- function UITip:on[UIComp_Button_Name]Click(o,order)
 
 -- end
-function UIBase:onLoad()
+function CompBase:onLoad()
 end
-function UIBase:onDestroy()
+function CompBase:onDestroy()
 end
 ------------------- 继承重写 -------------------
 
-function UIBase:init(name, param, opts)
-    print("加载UI-", name, " Init >", " name:", name, " param:", utils.serialize(param), " opts:", utils.serialize(opts))
+function CompBase:init(name, param)
+    print("加载Comp-", name, " Init >", " name:", name, " param:", utils.serialize(param))
     self.name = name
     self.param = param
-    self.opts = opts
+    self.csComp = nil
     self.node = nil
+
     self.uiComp = {}
     self.timerMap = {}
     self.broadcastMap = {}
-    table.insert(UIBase.abs, 1, self:getAB())
 end
 
 --绑定物体
-function UIBase:bind(node)
-    self.node = node
-    -- 更新位置
-    self.node.name = self.name
-    self.node.parent = ui.uiCanvas
-    self.node:SetSiblingIndex(self:getRelaOrder())
-    self.node.localScale = {x = 1, y = 1, z = 1}
-    self.node.anchorMin = {x = 0, y = 0}
-    self.node.anchorMax = {x = 1, y = 1}
-    self.node.pivot = {x = 0.5, y = 0.5}
-    self.node.anchoredPosition3D = {x = 0, y = 0, z = 0}
-    self.node.offsetMax = {x = 0, y = 0}
-    self.node.offsetMin = {x = 0, y = 0}
+function CompBase:bind(csComp)
+    self.csComp = csComp
+    self.node = csComp.transform
 
+    self:monoLifecycleInit()
     self:uiCompInit()
     self:_onLoad()
 end
+
+--Mono生命周期初始化
+function CompBase:monoLifecycleInit()
+    local monoListEvent =
+        System.Action_string_objects(
+        function(key, param)
+            local action = self[key]
+            if action == nil then
+                return
+            end
+            if param == nil or param.Length == 0 then
+                action(self)
+            elseif param.Length == 1 then
+                action(self, param:GetValue(0))
+            elseif param.Length == 2 then
+                action(self, param:GetValue(0), param:GetValue(1))
+            end
+        end
+    )
+    self:broadcast_on(
+        BROADCAST_CODE.MONO_QUIT,
+        function()
+            self.csComp:DelListenEvent(monoListEvent)
+        end
+    )
+    self.csComp:AddListenEvent(monoListEvent)
+end
 -- ui组件初始化
-function UIBase:uiCompInit()
+function CompBase:uiCompInit()
     local types = {"Text", "Image", "Button", "InputField"}
 
     for index, t in ipairs(types) do
@@ -106,59 +121,50 @@ function UIBase:uiCompInit()
         --print("注册Button事件>", e, "  共计注册：", sum)
     end
 end
-function UIBase:_onLoad()
-    print("加载UI-" .. self.name .. ">>>>>>>>>>>>>>>>>>>>>>>> onLoad")
+
+function CompBase:_onLoad()
+    print("加载Comp-" .. self.name .. ">>>>>>>>>>>>>>>>>>>>>>>> onLoad")
     self:onLoad()
 end
-function UIBase:_onDestroy()
-    print("卸载UI-" .. self.name .. " >>>>>>>>>>>>>>>>>>>>>>>> onDestroy")
+function CompBase:_onDestroy()
+    print("卸载Comp-" .. self.name .. " >>>>>>>>>>>>>>>>>>>>>>>> onDestroy")
     self:timer_clear()
     self:broadcast_clear()
     self:onDestroy()
 end
 -- 卸载
-function UIBase:close()
-    ui:closeUI(self)
+function CompBase:close()
+    --ui:closeUI(self)
 end
-function UIBase:getAB()
-    return UIBase.ab == "" and self.name or UIBase.ab
-end
-function UIBase:getABs()
-    return UIBase.abs
-end
-function UIBase:getRelaOrder()
-    return ui:getRelaOrder(self.opts.order) - 1
-end
-
-function UIBase:timer_on(time, loopCount, onTrigger)
+function CompBase:timer_on(time, loopCount, onTrigger)
     local t = timer:on(time, loopCount, onTrigger)
     table.insert(self.timerMap, t)
 end
-function UIBase:timer_out(t)
+function CompBase:timer_out(t)
     timer:out(t)
     table.del(self.timerMap, t)
 end
-function UIBase:timer_clear()
+function CompBase:timer_clear()
     for index, t in ipairs(self.timerMap) do
         self:timer_out(t)
     end
     self.timerMap = {}
 end
-
-function UIBase:broadcast_on(key, callback, order, isOnce)
+function CompBase:broadcast_on(key, callback, order, isOnce)
     if broadcast:on(key, callback, order, isOnce) then
         local info = {key = key, callback = callback}
         table.insert(self.broadcastMap, info)
     end
 end
-function UIBase:broadcast_out(key, callback)
+function CompBase:broadcast_out(key, callback)
     broadcast:out(key, callback)
     table.del(self.broadcastMap, {key = key, callback = callback})
 end
-function UIBase:broadcast_clear()
+function CompBase:broadcast_clear()
     for index, info in ipairs(self.broadcastMap) do
         self:broadcast_out(info.key, info.callback)
     end
     self.broadcastMap = {}
 end
-return UIBase
+
+return CompBase

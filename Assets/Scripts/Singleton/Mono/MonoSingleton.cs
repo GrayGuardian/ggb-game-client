@@ -12,6 +12,7 @@ public class MonoSingleton : Singleton<MonoSingleton>
         }
     }
     public MonoComponent MonoComponent;
+
     public MonoSingleton()
     {
         MonoGo = new GameObject("MonoGo");

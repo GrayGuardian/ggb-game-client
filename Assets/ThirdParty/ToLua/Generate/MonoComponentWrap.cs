@@ -21,7 +21,7 @@ public class MonoComponentWrap
 		{
 			ToLua.CheckArgsCount(L, 2);
 			MonoComponent obj = (MonoComponent)ToLua.CheckObject<MonoComponent>(L, 1);
-			System.Action<string> arg0 = (System.Action<string>)ToLua.CheckDelegate<System.Action<string>>(L, 2);
+			System.Action<string,object[]> arg0 = (System.Action<string,object[]>)ToLua.CheckDelegate<System.Action<string,object[]>>(L, 2);
 			obj.AddListenEvent(arg0);
 			return 0;
 		}
@@ -38,7 +38,7 @@ public class MonoComponentWrap
 		{
 			ToLua.CheckArgsCount(L, 2);
 			MonoComponent obj = (MonoComponent)ToLua.CheckObject<MonoComponent>(L, 1);
-			System.Action<string> arg0 = (System.Action<string>)ToLua.CheckDelegate<System.Action<string>>(L, 2);
+			System.Action<string,object[]> arg0 = (System.Action<string,object[]>)ToLua.CheckDelegate<System.Action<string,object[]>>(L, 2);
 			obj.DelListenEvent(arg0);
 			return 0;
 		}

@@ -1,21 +1,21 @@
 local Mono = class("Mono")
 local MonoSingleton = MonoSingleton.Instance
 local MonoComp = MonoSingleton.MonoComponent
-
 local monoListEvent =
-    System.Action_string(
-    function(key)
-        broadcast:notify(BROADCAST_CODE[string.upper("MONO_" .. key)])
+    System.Action_string_objects(
+    function(key, param)
+        broadcast:notify(BROADCAST_CODE[string.upper("MONO_" .. key)], param)
     end
 )
 broadcast:on(
     BROADCAST_CODE.MONO_QUIT,
     function()
-        MonoSingleton.MonoComponent:DelListenEvent(monoListEvent)
+        --MonoSingleton.MonoComponent:DelListenEvent(monoListEvent)
     end
 )
 function Mono:init()
-    MonoSingleton.MonoComponent:AddListenEvent(monoListEvent)
+    self.monoNode = MonoSingleton.MonoNode
+    --MonoSingleton.MonoComponent:AddListenEvent(monoListEvent)
 end
 
 return Mono

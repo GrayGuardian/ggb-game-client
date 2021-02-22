@@ -89,7 +89,6 @@ end
 
 -- c#
 resUtil = ResUtil.New()
-monoSingleton = MonoSingleton.Instance
 -- tolua
 pb = require("pb_util"):new()
 json = require("json_util"):new()

@@ -1,0 +1,7 @@
+local base = require("comp_base")
+local CompTest = class("CompTest", base)
+
+function CompTest:onLoad()
+end
+
+return CompTest

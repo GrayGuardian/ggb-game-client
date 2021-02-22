@@ -1,5 +1,6 @@
 local Comp = class("Comp")
 
+-- CS
 function Comp:addCSComponent(node, comp)
     return node.gameObject:AddComponent(typeof(comp))
 end
@@ -17,5 +18,15 @@ function Comp:getCSComponentInParent(node, comp)
 end
 function Comp:getCSComponentsInParent(node, comp)
     return node.gameObject:GetComponentsInParent(typeof(comp))
+end
+
+--Lua
+function Comp:addComponent(node, compName, param)
+    local compType = require("comp_" .. compName)
+    local csComp = self:addCSComponent(node, MonoComponent)
+    local comp = compType:new(compName, param)
+
+    comp:bind(csComp)
+    return comp
 end
 return Comp

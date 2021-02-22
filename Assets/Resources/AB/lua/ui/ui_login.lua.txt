@@ -5,6 +5,7 @@ base.static.ab = "ui1"
 base.static.abs = {"p1"}
 
 function UILogin:onLoad()
+    comp:addComponent(self.node, "test")
 end
 
 function UILogin:onLoginBtnClick(o, order)
