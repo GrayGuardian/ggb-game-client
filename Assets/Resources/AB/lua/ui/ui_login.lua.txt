@@ -11,6 +11,21 @@ end
 ----------------UI配置------------------
 
 function UI:onLoad()
+    local node = GameObject.Instantiate(resUtil:LoadGameObject("prefab1", "areaItem1")).transform
+    node.parent = self.node
+    node.localPosition = {x = 0, y = 0, z = 0}
+    node.localScale = {x = 0.8, y = 0.8, z = 0.8}
+    local c =
+        comp:addComponent(
+        node,
+        "area_item1",
+        {
+            info = info,
+            onClick = function(c)
+                print('点击')
+            end
+        }
+    )
 end
 
 function UI:onLoginBtnClick(o, order)

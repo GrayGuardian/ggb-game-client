@@ -5,14 +5,6 @@ function Comp:onLoad()
     self.info = self.param.info
     self.onClick = self.param.onClick
 
-    comp:getCSComponent(self.node, UEUI.Button).onClick:AddListener(
-        function()
-            if self.onClick ~= nil then
-                self:onClick(self)
-            end
-        end
-    )
-
     self:refresh()
 
     self:hideOutLine()
@@ -27,5 +19,10 @@ function Comp:showOutLine()
 end
 function Comp:hideOutLine()
     self.uiComp.Image.outlineImage.gameObject:SetActive(false)
+end
+function Comp:onBtnClick()
+    if self.onClick ~= nil then
+        self:onClick()
+    end
 end
 return Comp

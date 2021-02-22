@@ -104,6 +104,7 @@ function CompBase:uiCompInit()
         else
             e = "on" .. comp.name:gsub("^%l", string.upper) .. "Click"
         end
+        print(self.name,' Comp 注册Button事件>',e)
         if self[e] ~= nil then
             if type(comp) == "table" then
                 sum = #comp
