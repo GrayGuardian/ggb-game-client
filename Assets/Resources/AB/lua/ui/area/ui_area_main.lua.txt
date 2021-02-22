@@ -5,12 +5,26 @@ base.static.ab = "ui1"
 base.static.abs = {"p1"}
 
 function UI:onLoad()
+    self.areaInfo = self.param.area
+    self.areaInfos = self.param.areas
+
+    self.areaItemComp = comp:addComponent(self.node:Find("areaItem"), "area_item", {info = self.areaInfo})
 end
 function UI:onAreaItemClick(o, order)
-    print("点击列表")
-    ui:showUI("ui_area_sel")
+    ui:showUI(
+        "ui_area_sel",
+        {
+            area = self.areaInfo,
+            areas = self.areaInfos,
+            onClick = function(info)
+                self.areaInfo = info
+                self.areaItemComp.info = self.areaInfo
+                self.areaItemComp:refresh()
+            end
+        }
+    )
 end
 function UI:onNextBtnClick(o, order)
-    print("点击进入按钮")
+    print("点击进入按钮", tostring(self.areaInfo))
 end
 return UI

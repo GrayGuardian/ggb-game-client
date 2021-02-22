@@ -8,17 +8,7 @@ end
 ------------------- 继承重写 -------------------
 
 function SceneBase:init(info, param, opts)
-    print(
-        "加载场景-",
-        info.name,
-        " Init >",
-        " info:",
-        utils.serialize(info),
-        " param:",
-        utils.serialize(param),
-        " opts:",
-        utils.serialize(opts)
-    )
+    print("加载场景-", info.name, " Init")
     self.info = info
     self.param = param
     self.opts = opts and opts or {}

@@ -21,7 +21,8 @@ function UI:onLoginBtnClick(o, order)
                 {
                     msg = "登录成功",
                     onClick = function()
-                        ui:showUI("ui_area_main")
+                        print(data.area, data.areas)
+                        ui:showUI("ui_area_main", {area = data.area, areas = data.areas})
                         self:close()
                     end
                 }

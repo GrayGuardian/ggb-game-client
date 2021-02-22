@@ -2,8 +2,66 @@ local base = require("ui_base")
 local UI = class("area_sel", base)
 
 base.static.ab = "ui1"
-base.static.abs = {"p1"}
+base.static.abs = {"p1", "prefab1"}
 
 function UI:onLoad()
+    self.areaInfo = self.param.area
+    self.areaInfos = self.param.areas
+    self.onClick = self.param.onClick
+
+    self.selComp = nil
+
+    self.contentNode = self.uiComp.ScrollRect.ScrollView.transform:Find("Viewport"):Find("Content")
+    self:refresh()
+end
+function UI:refresh()
+    for index, info in ipairs(self.areaInfos) do
+        local c = self:addAreaItem(info)
+        if self.areaInfo.aid == info.aid then
+            self:selAreaItem(c)
+        end
+    end
+end
+function UI:addAreaItem(info)
+    local node = GameObject.Instantiate(resUtil:LoadGameObject("prefab1", "areaItem")).transform
+    node.parent = self.contentNode
+    node.localPosition = {x = 0, y = 0, z = 0}
+    node.localScale = {x = 0.8, y = 0.8, z = 0.8}
+    local c =
+        comp:addComponent(
+        node,
+        "area_item",
+        {
+            info = info,
+            onClick = function(c)
+                self:onItemBtnClick(c)
+            end
+        }
+    )
+    return c
+end
+function UI:onItemBtnClick(c)
+    print("点击Item>>>", tostring(c.info))
+    self:selAreaItem(c)
+end
+function UI:selAreaItem(c)
+    self.areaInfo = c.info
+    if self.selComp ~= nil then
+        self.selComp:hideOutLine()
+    end
+    self.selComp = c
+    self.areaInfo = self.selComp.info
+    self.selComp:showOutLine()
+end
+
+function UI:onCloseBtnClick()
+    self:close()
+end
+function UI:onBtnClick()
+    if self.onClick ~= nil then
+        self.onClick(self.areaInfo)
+    end
+
+    self:close()
 end
 return UI

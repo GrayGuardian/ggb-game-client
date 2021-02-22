@@ -1,4 +1,4 @@
-local CompBase = class("UIBase")
+local CompBase = class("CompBase")
 
 ------------------- 继承重写 -------------------
 -- Mono生命周期 OnDestroy、Awake与第一次OnEnable无法监听 OnDestroy可用onDestroy替代
@@ -14,7 +14,7 @@ end
 ------------------- 继承重写 -------------------
 
 function CompBase:init(name, param)
-    print("加载Comp-", name, " Init >", " name:", name, " param:", utils.serialize(param))
+    print("param>>>>", param)
     self.name = name
     self.param = param
     self.csComp = nil
@@ -69,7 +69,7 @@ function CompBase:monoLifecycleInit()
 end
 -- ui组件初始化
 function CompBase:uiCompInit()
-    local types = {"Text", "Image", "Button", "InputField"}
+    local types = {"Text", "Image", "Button", "InputField", "ScrollRect"}
 
     for index, t in ipairs(types) do
         self.uiComp[t] = {}
@@ -104,12 +104,14 @@ function CompBase:uiCompInit()
         else
             e = "on" .. comp.name:gsub("^%l", string.upper) .. "Click"
         end
+        print("注册Button点击事件>>", e)
         if self[e] ~= nil then
             if type(comp) == "table" then
                 sum = #comp
                 for i, comp1 in pairs(comp) do
                     comp1.onClick:AddListener(
                         function()
+                            print("点击")
                             self[e](self, comp1, i)
                         end
                     )
@@ -118,6 +120,7 @@ function CompBase:uiCompInit()
                 sum = 1
                 comp.onClick:AddListener(
                     function()
+                        print("点击")
                         self[e](self, comp, 1)
                     end
                 )

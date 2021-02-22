@@ -17,7 +17,6 @@ end
 ------------------- 继承重写 -------------------
 
 function UIBase:init(name, param, opts)
-    print("加载UI-", name, " Init >", " name:", name, " param:", utils.serialize(param), " opts:", utils.serialize(opts))
     self.name = name
     self.param = param
     self.opts = opts
@@ -48,7 +47,7 @@ function UIBase:bind(node)
 end
 -- ui组件初始化
 function UIBase:uiCompInit()
-    local types = {"Text", "Image", "Button", "InputField"}
+    local types = {"Text", "Image", "Button", "InputField", "ScrollRect"}
 
     for index, t in ipairs(types) do
         self.uiComp[t] = {}

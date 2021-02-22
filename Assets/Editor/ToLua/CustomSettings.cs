@@ -167,6 +167,7 @@ public static class CustomSettings
         _GT(typeof(UnityEngine.UI.Button)),
         _GT(typeof(UnityEngine.UI.Button.ButtonClickedEvent)),
         _GT(typeof(UnityEngine.UI.InputField)),
+        _GT(typeof(UnityEngine.UI.ScrollRect)),
 
         _GT(typeof(GameConst)),
 
