@@ -1,0 +1,4 @@
+local Network = class("Network")
+function Network:init()
+end
+return Network

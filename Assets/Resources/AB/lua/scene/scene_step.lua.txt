@@ -7,8 +7,7 @@ function Scene:onLoad()
     else
         --ui:loadScene("UpRes")
         --test
-        ui:showUI("ui_msg", {msg = "用sdfsadf为空"},{order = 9999})
-        ui:loadScene("Login")
+        --ui:loadScene("Login")
     end
 end
 return Scene
