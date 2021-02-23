@@ -17,6 +17,7 @@ public static class LuaBinder
 		EncryptUtilWrap.Register(L);
 		HttpUtilWrap.Register(L);
 		ResUtilWrap.Register(L);
+		SocketUtilWrap.Register(L);
 		VObjectWrap.Register(L);
 		RefDataWrap.Register(L);
 		ABVObjectWrap.Register(L);

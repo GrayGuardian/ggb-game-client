@@ -1,4 +1,54 @@
 local Network = class("Network")
+CSSocketUtil = SocketUtil.New()
+
 function Network:init()
+    local listenEvent =
+        System.Action_string_objects(
+        function(key, param)
+            local action = self[key]
+            if key == "OnDestroy" then
+                action = function()
+                    self:_onDestroy()
+                end
+            end
+            if param == nil or param.Length == 0 then
+                action(self)
+            elseif param.Length == 1 then
+                action(self, param:GetValue(0))
+            end
+        end
+    )
+    broadcast:on(
+        BROADCAST_CODE.MONO_QUIT,
+        function()
+            CSSocketUtil:DelListenEvent(listenEvent)
+        end
+    )
+    CSSocketUtil:AddListenEvent(listenEvent)
+    self:conn("127.0.0.1:600")
+end
+function Network:conn(url)
+    self.socket = CSSocketUtil:Conn(url)
+    return self.socket
+end
+function Network:OnOpen()
+    print("Socket open!")
+    self:emit("conn", {token = "woshiToken", pid = 990, aid = 123333})
+end
+function Network:OnConnectFailed()
+    print("Socket failed to connect!")
+end
+function Network:OnClose()
+    print("Socket closed!")
+end
+function Network:OnError(error)
+    print("Socket Error: ", error)
+end
+
+function Network:emit(router, data)
+    local body = {router = router}
+    body[router] = data
+    body = pb:encode("socket_pb.c2s", body)
+    CSSocketUtil:Emit("rpc", body)
 end
 return Network

@@ -176,6 +176,7 @@ public static class CustomSettings
         _GT(typeof(EncryptUtil)),
         _GT(typeof(HttpUtil)),
         _GT(typeof(ResUtil)),
+        _GT(typeof(SocketUtil)),
         _GT(typeof(VObject)),
         _GT(typeof(RefData)),
         _GT(typeof(ABVObject)),

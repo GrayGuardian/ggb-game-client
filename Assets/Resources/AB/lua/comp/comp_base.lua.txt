@@ -38,7 +38,7 @@ end
 
 --Mono生命周期初始化
 function CompBase:monoLifecycleInit()
-    local monoListEvent =
+    local monoListenEvent =
         System.Action_string_objects(
         function(key, param)
             local action = self[key]
@@ -62,10 +62,10 @@ function CompBase:monoLifecycleInit()
     self:broadcast_on(
         BROADCAST_CODE.MONO_QUIT,
         function()
-            self.csComp:DelListenEvent(monoListEvent)
+            self.csComp:DelListenEvent(monoListenEvent)
         end
     )
-    self.csComp:AddListenEvent(monoListEvent)
+    self.csComp:AddListenEvent(monoListenEvent)
 end
 -- ui组件初始化
 function CompBase:uiCompInit()
@@ -104,7 +104,7 @@ function CompBase:uiCompInit()
         else
             e = "on" .. comp.name:gsub("^%l", string.upper) .. "Click"
         end
-        print(self.name,' Comp 注册Button事件>',e)
+        print(self.name, " Comp 注册Button事件>", e)
         if self[e] ~= nil then
             if type(comp) == "table" then
                 sum = #comp
