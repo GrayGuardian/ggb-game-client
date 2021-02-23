@@ -5,4 +5,23 @@ GameObject = UE.GameObject
 SceneManager = UE.SceneManagement.SceneManager
 Application = UE.Application
 
+-- c#
+resUtil = ResUtil.New()
+-- tolua
 require("utils")
+
+BROADCAST_CODE = require("BROADCAST_CODE")
+local error_info = require("error_info")
+SUCCESS_CODE = error_info.SUCCESS_CODE
+ERROR_CODE = error_info.ERROR_CODE
+genErrorMsg = error_info.genErrorMsg
+
+pb = require("pb_util"):new()
+json = require("json_util"):new()
+
+broadcast = require("broadcast_util"):new()
+mono = require("mono_util"):new()
+timer = require("timer_util"):new()
+ui = require("ui"):new()
+comp = require("comp"):new()
+http = require("http_util"):new()

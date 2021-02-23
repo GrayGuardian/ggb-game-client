@@ -20,21 +20,23 @@ string.split = function(str, str1)
     return arr
 end
 
-table.copy = function (copyTable,table)
-    if table == nil then table = {} end;
+table.copy = function(copyTable, table)
+    if table == nil then
+        table = {}
+    end
     if type(copyTable) ~= "table" then
         table = copyTable
     else
-        for k,v in pairs(copyTable) do
+        for k, v in pairs(copyTable) do
             if type(v) ~= "table" then
-                table[k] = v;
+                table[k] = v
             else
-                table[k] = {};
+                table[k] = {}
                 copy(v, table[k])
             end
-        end   
+        end
     end
-    return table;
+    return table
 end
 table.exist = function(t, value)
     for k, v in pairs(t) do
@@ -102,16 +104,3 @@ utils.sizeFormat = function(byteSize)
     end
     return string.format("%0.2fBytes", byteSize)
 end
-
--- c#
-resUtil = ResUtil.New()
--- tolua
-pb = require("pb_util"):new()
-json = require("json_util"):new()
-BROADCAST_CODE = require("broadcast_code")
-broadcast = require("broadcast_util"):new()
-mono = require("mono_util"):new()
-timer = require("timer_util"):new()
-ui = require("ui"):new()
-comp = require("comp"):new()
-http = require("http_util"):new()
