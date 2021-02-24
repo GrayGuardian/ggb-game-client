@@ -1,9 +1,11 @@
-﻿namespace Dpoch.SocketIO {
+﻿namespace Dpoch.SocketIO
+{
     using System;
     using UnityEngine;
     using Newtonsoft.Json.Linq;
 
-    public class SocketIOEvent {
+    public class SocketIOEvent
+    {
         /// <summary>
         /// The name of the event
         /// </summary>
@@ -22,7 +24,8 @@
         Action<object[]> ack { get; set; }
         bool ackSent { get; set; }
 
-        public SocketIOEvent(string name, JArray data, Action<object[]> ack) {
+        public SocketIOEvent(string name, JArray data, Action<object[]> ack)
+        {
             Name = name;
             Data = data;
             this.ack = ack;
@@ -32,12 +35,15 @@
         /// Acknowledge this event
         /// </summary>
         /// <param name="data">Data to be sent with the acknowledgement</param>
-        public void Acknowledge(params object[] data) {
-            if(ack == null) {
+        public void Acknowledge(params object[] data)
+        {
+            if (ack == null)
+            {
                 Debug.LogError("The server doesn't expect an acknowledgement for event " + Name);
                 return;
             }
-            if (ackSent) {
+            if (ackSent)
+            {
                 Debug.LogError("Event " + Name + " has already been acknowledged");
                 return;
             }

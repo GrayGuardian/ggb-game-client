@@ -19,6 +19,12 @@ public class SocketUtil
     private void OnOpen()
     {
         if (_onListenEvent != null) _onListenEvent("OnOpen", null);
+        _socket.On("aaa", (info) =>
+        {
+            UnityEngine.Debug.Log("返回aaa的值>>>");
+            UnityEngine.Debug.Log(info.Data);
+
+        });
     }
     private void OnConnectFailed()
     {

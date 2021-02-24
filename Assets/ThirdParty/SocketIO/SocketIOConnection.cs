@@ -1,4 +1,5 @@
-﻿namespace Dpoch.SocketIO {
+﻿namespace Dpoch.SocketIO
+{
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -6,8 +7,10 @@
     using UnityEngine;
     using WebSocketSharp;
 
-    public class SocketIOConnection {
-        class EngineIOHandshakeData {
+    public class SocketIOConnection
+    {
+        class EngineIOHandshakeData
+        {
             public int pingTimeout = 60000;
             public int pingInterval = 25000;
         }
@@ -20,8 +23,10 @@
         Queue<Action> synchronizationQueue = new Queue<Action>();
         object synchronizationQueueLock = new object();
 
-        public bool IsAlive {
-            get {
+        public bool IsAlive
+        {
+            get
+            {
                 return thread != null && thread.IsAlive;
             }
         }
@@ -33,14 +38,17 @@
         public event Action<Packet> OnEvent;
         public event Action<Packet> OnAck;
 
-        public SocketIOConnection(Uri uri, int connectTimeoutMS = 30000) {
+        public SocketIOConnection(Uri uri, int connectTimeoutMS = 30000)
+        {
             if (uri.Scheme != "ws" && uri.Scheme != "wss") throw new ArgumentException("Protocol " + uri.Scheme + " is invalid");
             this.uri = uri;
             this.connectTimeoutMS = connectTimeoutMS;
         }
 
-        public void Connect() {
-            if (IsAlive) {
+        public void Connect()
+        {
+            if (IsAlive)
+            {
                 Debug.LogError("Connection is already alive");
                 return;
             }
@@ -50,34 +58,44 @@
             thread.Start();
         }
 
-        public void Close() {
-            lock (synchronizationQueueLock) {
-                synchronizationQueue.Enqueue(() => {
+        public void Close()
+        {
+            lock (synchronizationQueueLock)
+            {
+                synchronizationQueue.Enqueue(() =>
+                {
                     shouldRun = false;
                 });
             }
         }
 
-        public void Send(Packet packet) {
-            lock (synchronizationQueueLock) {
-                synchronizationQueue.Enqueue(() => {
+        public void Send(Packet packet)
+        {
+            lock (synchronizationQueueLock)
+            {
+                synchronizationQueue.Enqueue(() =>
+                {
                     ws.Send(packet.Encode());
-                    foreach (var attachment in packet.Attachments) {
+                    foreach (var attachment in packet.Attachments)
+                    {
                         ws.Send(Packet.BinaryPacket(attachment));
                     }
                 });
             }
         }
 
-        void RunSocketThread() {
+        void RunSocketThread()
+        {
             ws = new WebSocket(uri.ToString());
             bool receivedSocketHandshake = false;
             EngineIOHandshakeData engineHandshakeData = null;
             DateTime lastPingSent = DateTime.Now;
             DateTime lastPongReceived = DateTime.Now;
 
-            Action<Packet> handleMessage = (Packet packet) => {
-                switch (packet.SocketPacketType) {
+            Action<Packet> handleMessage = (Packet packet) =>
+            {
+                switch (packet.SocketPacketType)
+                {
                     case Packet.SocketIOPacketType.EVENT:
                     case Packet.SocketIOPacketType.BINARY_EVENT:
                         if (OnEvent != null) OnEvent(packet);
@@ -87,7 +105,8 @@
                         if (OnAck != null) OnAck(packet);
                         break;
                     case Packet.SocketIOPacketType.CONNECT:
-                        if (!receivedSocketHandshake) {
+                        if (!receivedSocketHandshake)
+                        {
                             receivedSocketHandshake = true;
                             if (OnOpen != null) OnOpen();
                         }
@@ -101,8 +120,10 @@
                 }
             };
 
-            Action<Packet> handlePacket = (packet) => {
-                switch (packet.EnginePacketType) {
+            Action<Packet> handlePacket = (packet) =>
+            {
+                switch (packet.EnginePacketType)
+                {
                     case Packet.EngineIOPacketType.OPEN:
                         engineHandshakeData = packet.Data.ToObject<EngineIOHandshakeData>();
                         lastPingSent = DateTime.Now - TimeSpan.FromMilliseconds(engineHandshakeData.pingInterval);
@@ -120,30 +141,48 @@
                 }
             };
 
-            ws.OnError += (sender, e) => {
+            ws.OnError += (sender, e) =>
+            {
                 if (OnError != null) OnError(new SocketIOException("WebSocket Error: " + e.Message));
             };
 
-            ws.OnClose += (sender, e) => {
+            ws.OnClose += (sender, e) =>
+            {
                 shouldRun = false;
             };
 
             Packet currentPacket = null;
-            ws.OnMessage += (sender, e) => {
-                if (e.IsText) {
-                    try {
+            ws.OnMessage += (sender, e) =>
+            {
+                UnityEngine.Debug.Log("接收到数据" + e.Data);
+                if (e.IsText)
+                {
+                    try
+                    {
                         var packet = Packet.Parse(e.Data);
-                        if (packet.IsComplete) {
+                        if (packet.IsComplete)
+                        {
                             handlePacket(packet);
-                        } else {
+                        }
+                        else
+                        {
                             currentPacket = packet;
                         }
-                    } catch (SocketIOException ex) {
+                    }
+                    catch (SocketIOException ex)
+                    {
                         if (OnError != null) OnError(ex);
                     }
-                } else if (e.IsBinary && currentPacket != null) {
+                }
+                else if (e.IsBinary && currentPacket != null)
+                {
+                    UnityEngine.Debug.Log("接收到数据111:" + e.Data + "  " + e.RawData.Length + "  " + e.RawData.Skip(1).ToArray().Length);
+                    UnityEngine.Debug.Log(currentPacket.IsComplete);
+                    UnityEngine.Debug.Log(currentPacket.Attachments.Count);
                     currentPacket.Attachments.Add(e.RawData.Skip(1).ToArray());
-                    if (currentPacket.IsComplete) {
+                    UnityEngine.Debug.Log(currentPacket.Attachments.Count);
+                    if (currentPacket.IsComplete)
+                    {
                         handlePacket(currentPacket);
                         currentPacket = null;
                     }
@@ -153,28 +192,37 @@
             ws.ConnectAsync();
             var startTime = DateTime.Now;
 
-            while (shouldRun) {
-                if (engineHandshakeData != null) {
+            while (shouldRun)
+            {
+                if (engineHandshakeData != null)
+                {
                     //stop if we didn't receive a pong in <pingTimeout>
-                    if (DateTime.Now.Subtract(lastPongReceived).TotalMilliseconds >= engineHandshakeData.pingTimeout) {
+                    if (DateTime.Now.Subtract(lastPongReceived).TotalMilliseconds >= engineHandshakeData.pingTimeout)
+                    {
                         break;
                     }
 
                     //ping the server every <pingInterval> if we receive an engine handshake
-                    if (DateTime.Now.Subtract(lastPingSent).TotalMilliseconds >= engineHandshakeData.pingInterval) {
+                    if (DateTime.Now.Subtract(lastPingSent).TotalMilliseconds >= engineHandshakeData.pingInterval)
+                    {
                         ws.Send(Packet.Ping().Encode());
                         lastPingSent = DateTime.Now;
                     }
                 }
 
                 //send queued packets if we received a socketio handshake
-                if (receivedSocketHandshake) {
-                    lock (synchronizationQueueLock) {
-                        while (synchronizationQueue.Count > 0 && shouldRun) {
+                if (receivedSocketHandshake)
+                {
+                    lock (synchronizationQueueLock)
+                    {
+                        while (synchronizationQueue.Count > 0 && shouldRun)
+                        {
                             synchronizationQueue.Dequeue()();
                         }
                     }
-                } else if (DateTime.Now.Subtract(startTime).TotalMilliseconds >= connectTimeoutMS) {
+                }
+                else if (DateTime.Now.Subtract(startTime).TotalMilliseconds >= connectTimeoutMS)
+                {
                     //stop if we didn't receive a socket handshake in <connectTimeoutMS>
                     break;
                 }
@@ -185,9 +233,12 @@
             ws.CloseAsync();
             thread = null;
 
-            if (receivedSocketHandshake) {
+            if (receivedSocketHandshake)
+            {
                 if (OnClose != null) OnClose();
-            }else {
+            }
+            else
+            {
                 if (OnConnectFailed != null) OnConnectFailed();
             }
         }

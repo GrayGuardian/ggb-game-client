@@ -24,6 +24,7 @@ function Network:init()
             CSSocketUtil:DelListenEvent(listenEvent)
         end
     )
+
     CSSocketUtil:AddListenEvent(listenEvent)
     self:conn("127.0.0.1:600")
 end
@@ -49,6 +50,6 @@ function Network:emit(router, data)
     local body = {router = router}
     body[router] = data
     body = pb:encode("socket_pb.c2s", body)
-    CSSocketUtil:Emit("rpc", body)
+    CSSocketUtil:Emit("c2s", body)
 end
 return Network
