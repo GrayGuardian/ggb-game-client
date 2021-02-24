@@ -42,6 +42,10 @@ public class DelegateFactory
 		dict.Add(typeof(UnityEngine.UI.InputField.OnValidateInput), factory.UnityEngine_UI_InputField_OnValidateInput);
 		dict.Add(typeof(System.Action<HttpResult>), factory.System_Action_HttpResult);
 		dict.Add(typeof(System.Action<VObject>), factory.System_Action_VObject);
+		dict.Add(typeof(System.Action<Dpoch.SocketIO.SocketIOException>), factory.System_Action_Dpoch_SocketIO_SocketIOException);
+		dict.Add(typeof(System.Action<Dpoch.SocketIO.Packet>), factory.System_Action_Dpoch_SocketIO_Packet);
+		dict.Add(typeof(System.Action<Dpoch.SocketIO.SocketIOEvent>), factory.System_Action_Dpoch_SocketIO_SocketIOEvent);
+		dict.Add(typeof(System.Action<Newtonsoft.Json.Linq.JArray>), factory.System_Action_Newtonsoft_Json_Linq_JArray);
 
 		DelegateTraits<System.Action>.Init(factory.System_Action);
 		DelegateTraits<UnityEngine.Events.UnityAction>.Init(factory.UnityEngine_Events_UnityAction);
@@ -68,6 +72,10 @@ public class DelegateFactory
 		DelegateTraits<UnityEngine.UI.InputField.OnValidateInput>.Init(factory.UnityEngine_UI_InputField_OnValidateInput);
 		DelegateTraits<System.Action<HttpResult>>.Init(factory.System_Action_HttpResult);
 		DelegateTraits<System.Action<VObject>>.Init(factory.System_Action_VObject);
+		DelegateTraits<System.Action<Dpoch.SocketIO.SocketIOException>>.Init(factory.System_Action_Dpoch_SocketIO_SocketIOException);
+		DelegateTraits<System.Action<Dpoch.SocketIO.Packet>>.Init(factory.System_Action_Dpoch_SocketIO_Packet);
+		DelegateTraits<System.Action<Dpoch.SocketIO.SocketIOEvent>>.Init(factory.System_Action_Dpoch_SocketIO_SocketIOEvent);
+		DelegateTraits<System.Action<Newtonsoft.Json.Linq.JArray>>.Init(factory.System_Action_Newtonsoft_Json_Linq_JArray);
 
 		TypeTraits<System.Action>.Init(factory.Check_System_Action);
 		TypeTraits<UnityEngine.Events.UnityAction>.Init(factory.Check_UnityEngine_Events_UnityAction);
@@ -94,6 +102,10 @@ public class DelegateFactory
 		TypeTraits<UnityEngine.UI.InputField.OnValidateInput>.Init(factory.Check_UnityEngine_UI_InputField_OnValidateInput);
 		TypeTraits<System.Action<HttpResult>>.Init(factory.Check_System_Action_HttpResult);
 		TypeTraits<System.Action<VObject>>.Init(factory.Check_System_Action_VObject);
+		TypeTraits<System.Action<Dpoch.SocketIO.SocketIOException>>.Init(factory.Check_System_Action_Dpoch_SocketIO_SocketIOException);
+		TypeTraits<System.Action<Dpoch.SocketIO.Packet>>.Init(factory.Check_System_Action_Dpoch_SocketIO_Packet);
+		TypeTraits<System.Action<Dpoch.SocketIO.SocketIOEvent>>.Init(factory.Check_System_Action_Dpoch_SocketIO_SocketIOEvent);
+		TypeTraits<System.Action<Newtonsoft.Json.Linq.JArray>>.Init(factory.Check_System_Action_Newtonsoft_Json_Linq_JArray);
 
 		StackTraits<System.Action>.Push = factory.Push_System_Action;
 		StackTraits<UnityEngine.Events.UnityAction>.Push = factory.Push_UnityEngine_Events_UnityAction;
@@ -120,6 +132,10 @@ public class DelegateFactory
 		StackTraits<UnityEngine.UI.InputField.OnValidateInput>.Push = factory.Push_UnityEngine_UI_InputField_OnValidateInput;
 		StackTraits<System.Action<HttpResult>>.Push = factory.Push_System_Action_HttpResult;
 		StackTraits<System.Action<VObject>>.Push = factory.Push_System_Action_VObject;
+		StackTraits<System.Action<Dpoch.SocketIO.SocketIOException>>.Push = factory.Push_System_Action_Dpoch_SocketIO_SocketIOException;
+		StackTraits<System.Action<Dpoch.SocketIO.Packet>>.Push = factory.Push_System_Action_Dpoch_SocketIO_Packet;
+		StackTraits<System.Action<Dpoch.SocketIO.SocketIOEvent>>.Push = factory.Push_System_Action_Dpoch_SocketIO_SocketIOEvent;
+		StackTraits<System.Action<Newtonsoft.Json.Linq.JArray>>.Push = factory.Push_System_Action_Newtonsoft_Json_Linq_JArray;
 	}
     
     public static Delegate CreateDelegate(Type t, LuaFunction func = null)
@@ -1680,6 +1696,234 @@ public class DelegateFactory
 	}
 
 	void Push_System_Action_VObject(IntPtr L, System.Action<VObject> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_Action_Dpoch_SocketIO_SocketIOException_Event : LuaDelegate
+	{
+		public System_Action_Dpoch_SocketIO_SocketIOException_Event(LuaFunction func) : base(func) { }
+		public System_Action_Dpoch_SocketIO_SocketIOException_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(Dpoch.SocketIO.SocketIOException param0)
+		{
+			func.BeginPCall();
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(Dpoch.SocketIO.SocketIOException param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.Action<Dpoch.SocketIO.SocketIOException> System_Action_Dpoch_SocketIO_SocketIOException(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<Dpoch.SocketIO.SocketIOException> fn = delegate(Dpoch.SocketIO.SocketIOException param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_Dpoch_SocketIO_SocketIOException_Event target = new System_Action_Dpoch_SocketIO_SocketIOException_Event(func);
+			System.Action<Dpoch.SocketIO.SocketIOException> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_Dpoch_SocketIO_SocketIOException_Event target = new System_Action_Dpoch_SocketIO_SocketIOException_Event(func, self);
+			System.Action<Dpoch.SocketIO.SocketIOException> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Action_Dpoch_SocketIO_SocketIOException(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Action<Dpoch.SocketIO.SocketIOException>), L, pos);
+	}
+
+	void Push_System_Action_Dpoch_SocketIO_SocketIOException(IntPtr L, System.Action<Dpoch.SocketIO.SocketIOException> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_Action_Dpoch_SocketIO_Packet_Event : LuaDelegate
+	{
+		public System_Action_Dpoch_SocketIO_Packet_Event(LuaFunction func) : base(func) { }
+		public System_Action_Dpoch_SocketIO_Packet_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(Dpoch.SocketIO.Packet param0)
+		{
+			func.BeginPCall();
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(Dpoch.SocketIO.Packet param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.Action<Dpoch.SocketIO.Packet> System_Action_Dpoch_SocketIO_Packet(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<Dpoch.SocketIO.Packet> fn = delegate(Dpoch.SocketIO.Packet param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_Dpoch_SocketIO_Packet_Event target = new System_Action_Dpoch_SocketIO_Packet_Event(func);
+			System.Action<Dpoch.SocketIO.Packet> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_Dpoch_SocketIO_Packet_Event target = new System_Action_Dpoch_SocketIO_Packet_Event(func, self);
+			System.Action<Dpoch.SocketIO.Packet> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Action_Dpoch_SocketIO_Packet(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Action<Dpoch.SocketIO.Packet>), L, pos);
+	}
+
+	void Push_System_Action_Dpoch_SocketIO_Packet(IntPtr L, System.Action<Dpoch.SocketIO.Packet> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_Action_Dpoch_SocketIO_SocketIOEvent_Event : LuaDelegate
+	{
+		public System_Action_Dpoch_SocketIO_SocketIOEvent_Event(LuaFunction func) : base(func) { }
+		public System_Action_Dpoch_SocketIO_SocketIOEvent_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(Dpoch.SocketIO.SocketIOEvent param0)
+		{
+			func.BeginPCall();
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(Dpoch.SocketIO.SocketIOEvent param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.Action<Dpoch.SocketIO.SocketIOEvent> System_Action_Dpoch_SocketIO_SocketIOEvent(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<Dpoch.SocketIO.SocketIOEvent> fn = delegate(Dpoch.SocketIO.SocketIOEvent param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_Dpoch_SocketIO_SocketIOEvent_Event target = new System_Action_Dpoch_SocketIO_SocketIOEvent_Event(func);
+			System.Action<Dpoch.SocketIO.SocketIOEvent> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_Dpoch_SocketIO_SocketIOEvent_Event target = new System_Action_Dpoch_SocketIO_SocketIOEvent_Event(func, self);
+			System.Action<Dpoch.SocketIO.SocketIOEvent> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Action_Dpoch_SocketIO_SocketIOEvent(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Action<Dpoch.SocketIO.SocketIOEvent>), L, pos);
+	}
+
+	void Push_System_Action_Dpoch_SocketIO_SocketIOEvent(IntPtr L, System.Action<Dpoch.SocketIO.SocketIOEvent> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_Action_Newtonsoft_Json_Linq_JArray_Event : LuaDelegate
+	{
+		public System_Action_Newtonsoft_Json_Linq_JArray_Event(LuaFunction func) : base(func) { }
+		public System_Action_Newtonsoft_Json_Linq_JArray_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(Newtonsoft.Json.Linq.JArray param0)
+		{
+			func.BeginPCall();
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(Newtonsoft.Json.Linq.JArray param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.Action<Newtonsoft.Json.Linq.JArray> System_Action_Newtonsoft_Json_Linq_JArray(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<Newtonsoft.Json.Linq.JArray> fn = delegate(Newtonsoft.Json.Linq.JArray param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_Newtonsoft_Json_Linq_JArray_Event target = new System_Action_Newtonsoft_Json_Linq_JArray_Event(func);
+			System.Action<Newtonsoft.Json.Linq.JArray> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_Newtonsoft_Json_Linq_JArray_Event target = new System_Action_Newtonsoft_Json_Linq_JArray_Event(func, self);
+			System.Action<Newtonsoft.Json.Linq.JArray> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Action_Newtonsoft_Json_Linq_JArray(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Action<Newtonsoft.Json.Linq.JArray>), L, pos);
+	}
+
+	void Push_System_Action_Newtonsoft_Json_Linq_JArray(IntPtr L, System.Action<Newtonsoft.Json.Linq.JArray> o)
 	{
 		ToLua.Push(L, o);
 	}

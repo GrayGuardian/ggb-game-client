@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 using Newtonsoft.Json.Linq;
 using System.IO;
 
+
 public static class CustomSettings
 {
     public static string saveDir = Application.dataPath + "/ThirdParty/ToLua/Generate/";
@@ -183,6 +184,7 @@ public static class CustomSettings
         _GT(typeof(ENV_TYPE)),
         _GT(typeof(HttpResult)),
         _GT(typeof(TestConsole)),
+        _GT(typeof(Dpoch.SocketIO.SocketIO)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

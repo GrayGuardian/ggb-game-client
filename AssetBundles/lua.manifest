@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3837201959
+CRC: 2703757906
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: dcf59033e56e46650024786b6c1f895b
+    Hash: dc938f449949acb3075795ddbaf04925
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -16,38 +16,42 @@ Assets:
 - Assets/Resources/AB/lua/base/tolua/protobuf/encoder.lua.txt
 - Assets/Resources/AB/lua/base/tolua/System/coroutine.lua.txt
 - Assets/Resources/AB/lua/util/timer/timer_util.lua.txt
-- Assets/Resources/AB/lua/ui/ui_msg.lua.txt
 - Assets/Resources/AB/lua/base/tolua/protobuf/containers.lua.txt
+- Assets/Resources/AB/lua/const/ERROR_INFO.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Touch.lua.txt
 - Assets/Resources/AB/lua/base/tolua/ltn12.lua.txt
 - Assets/Resources/AB/lua/base/tolua/socket/smtp.lua.txt
-- Assets/Resources/AB/lua/ui/ui_upres_tip.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Mathf.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/dis_x86.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/dis_arm64be.lua.txt
-- Assets/Resources/AB/lua/util/broadcast/broadcast_util.lua.txt
+- Assets/Resources/AB/lua/ui/area/ui_area_sel.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/dump.lua.txt
 - Assets/Resources/AB/lua/scene/scene_login.lua.txt
 - Assets/Resources/AB/lua/base/tolua/socket/url.lua.txt
 - Assets/Resources/AB/lua/base/tolua/protobuf/type_checkers.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/dis_mipsel.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Bounds.lua.txt
+- Assets/Resources/AB/lua/base/comp.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Color.lua.txt
+- Assets/Resources/AB/lua/ui/upres/ui_upres.lua.txt
 - Assets/Resources/AB/lua/base/tolua/socket.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Vector2.lua.txt
 - Assets/Resources/AB/lua/scene/scene_upres.lua.txt
-- Assets/Resources/AB/lua/ui/ui_area_sel.lua.txt
+- Assets/Resources/AB/lua/const/BROADCAST_CODE.lua.txt
+- Assets/Resources/AB/lua/util/socket_util.lua.txt
+- Assets/Resources/AB/lua/ui/upres/ui_upres_tip.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Ray.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Vector4.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/RaycastHit.lua.txt
 - Assets/Resources/AB/lua/ui/ui_login.lua.txt
 - Assets/Resources/AB/lua/base/tolua/socket/mbox.lua.txt
+- Assets/Resources/AB/lua/util/broadcast_util.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Time.lua.txt
 - Assets/Resources/AB/lua/base/tolua/misc/utf8.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Quaternion.lua.txt
-- Assets/Resources/AB/lua/ui/ui_area_main.lua.txt
 - Assets/Resources/AB/lua/base/tolua/tolua.lua.txt
 - Assets/Resources/AB/lua/base/tolua/System/Timer.lua.txt
+- Assets/Resources/AB/lua/ui/area/ui_area_main.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/dis_arm64.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/dis_mips64.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/dis_x64.lua.txt
@@ -59,7 +63,6 @@ Assets:
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Plane.lua.txt
 - Assets/Resources/AB/lua/util/json_util.lua.txt
 - Assets/Resources/AB/lua/util/pb_util.lua.txt
-- Assets/Resources/AB/lua/ui/ui_tip.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/v.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/dis_mips.lua.txt
 - Assets/Resources/AB/lua/base/tolua/event.lua.txt
@@ -70,11 +73,13 @@ Assets:
 - Assets/Resources/AB/lua/base/tolua/System/Injection/LuaInjectionBus.lua.txt
 - Assets/Resources/AB/lua/util/utils.lua.txt
 - Assets/Resources/AB/lua/base/tolua/System/ValueType.lua.txt
+- Assets/Resources/AB/lua/util/network_util.lua.txt
 - Assets/Resources/AB/lua/ui/ui_base.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/dis_arm.lua.txt
 - Assets/Resources/AB/lua/base/tolua/protobuf/descriptor.lua.txt
 - Assets/Resources/AB/lua/base/tolua/protobuf/decoder.lua.txt
 - Assets/Resources/AB/lua/scene/scene_base.lua.txt
+- Assets/Resources/AB/lua/ui/common/ui_msg.lua.txt
 - Assets/Resources/AB/lua/base/tolua/list.lua.txt
 - Assets/Resources/AB/lua/base/tolua/typeof.lua.txt
 - Assets/Resources/AB/lua/base/tolua/System/Injection/LuaInjectionStation.lua.txt
@@ -91,17 +96,19 @@ Assets:
 - Assets/Resources/AB/lua/base/tolua/cjson/util.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/zone.lua.txt
 - Assets/Resources/AB/lua/base/tolua/mime.lua.txt
-- Assets/Resources/AB/lua/util/broadcast/broadcast_code.lua.txt
 - Assets/Resources/AB/lua/base/tolua/protobuf/listener.lua.txt
-- Assets/Resources/AB/lua/ui/ui_upres.lua.txt
 - Assets/Resources/AB/lua/util/timer/timer_model.lua.txt
 - Assets/Resources/AB/lua/scene/scene_step.lua.txt
 - Assets/Resources/AB/lua/util/mono_util.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/LayerMask.lua.txt
+- Assets/Resources/AB/lua/ui/common/ui_tip.lua.txt
+- Assets/Resources/AB/lua/comp/comp_area_item.lua.txt
 - Assets/Resources/AB/lua/main.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/bcsave.lua.txt
 - Assets/Resources/AB/lua/base/tolua/slot.lua.txt
 - Assets/Resources/AB/lua/pb/common_pb.lua.txt
+- Assets/Resources/AB/lua/pb/socket_pb.lua.txt
+- Assets/Resources/AB/lua/comp/comp_base.lua.txt
 - Assets/Resources/AB/lua/base/base.lua.txt
 - Assets/Resources/AB/lua/scene/scene_game.lua.txt
 - Assets/Resources/AB/lua/base/ui.lua.txt

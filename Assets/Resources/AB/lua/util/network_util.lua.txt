@@ -13,7 +13,6 @@ function Network:init()
     broadcast:on(BROADCAST_CODE.SOCKET_EVENT("connRet"),function (data)
         print('connRet>>',tostring(data));
     end);
-    socket:conn("127.0.0.1:600")
 end
 function Network:onConnect()
     print("Socket connect!")
@@ -38,7 +37,9 @@ function Network:onMessage(key,bytes)
 
     broadcast:notify(BROADCAST_CODE.SOCKET_EVENT(router),data);
 end
-
+function Network:conn(url)
+    socket:conn(url)
+end
 function Network:emit(router, data)
     local body = {router = router}
     body[router] = data

@@ -2,8 +2,14 @@ require("base")
 
 --主入口函数。从这里开始lua逻辑
 function Main()
-    --comp:addCSComponent(mono.monoNode, TestConsole):Show()
+    comp:addCSComponent(mono.monoNode, TestConsole):Show()
     print("logic start")
+
+    print(network)
+    print(network.conn)
+    print("192.168.0.104:600")
+    network:conn("192.168.0.104:600")
+    --network:conn("127.0.0.1:600")
 end
 
 --场景切换通知

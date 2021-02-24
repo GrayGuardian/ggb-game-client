@@ -121,6 +121,11 @@ public static class LuaBinder
 		L.RegFunction("ReapplyDrivenProperties", UnityEngine_RectTransform_ReapplyDrivenProperties);
 		L.EndModule();
 		L.EndModule();
+		L.BeginModule("Dpoch");
+		L.BeginModule("SocketIO");
+		Dpoch_SocketIO_SocketIOWrap.Register(L);
+		L.EndModule();
+		L.EndModule();
 		L.BeginModule("System");
 		L.RegFunction("Action", System_Action);
 		L.RegFunction("Predicate_int", System_Predicate_int);
@@ -135,6 +140,10 @@ public static class LuaBinder
 		L.RegFunction("Action_UnityEngine_AsyncOperation", System_Action_UnityEngine_AsyncOperation);
 		L.RegFunction("Action_HttpResult", System_Action_HttpResult);
 		L.RegFunction("Action_VObject", System_Action_VObject);
+		L.RegFunction("Action_Dpoch_SocketIO_SocketIOException", System_Action_Dpoch_SocketIO_SocketIOException);
+		L.RegFunction("Action_Dpoch_SocketIO_Packet", System_Action_Dpoch_SocketIO_Packet);
+		L.RegFunction("Action_Dpoch_SocketIO_SocketIOEvent", System_Action_Dpoch_SocketIO_SocketIOEvent);
+		L.RegFunction("Action_Newtonsoft_Json_Linq_JArray", System_Action_Newtonsoft_Json_Linq_JArray);
 		L.EndModule();
 		L.EndModule();
 		L.BeginPreLoad();
@@ -819,6 +828,114 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateTraits<System.Action<VObject>>.Create(func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_Action_Dpoch_SocketIO_SocketIOException(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<System.Action<Dpoch.SocketIO.SocketIOException>>.Create(func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<System.Action<Dpoch.SocketIO.SocketIOException>>.Create(func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_Action_Dpoch_SocketIO_Packet(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<System.Action<Dpoch.SocketIO.Packet>>.Create(func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<System.Action<Dpoch.SocketIO.Packet>>.Create(func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_Action_Dpoch_SocketIO_SocketIOEvent(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<System.Action<Dpoch.SocketIO.SocketIOEvent>>.Create(func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<System.Action<Dpoch.SocketIO.SocketIOEvent>>.Create(func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_Action_Newtonsoft_Json_Linq_JArray(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<System.Action<Newtonsoft.Json.Linq.JArray>>.Create(func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<System.Action<Newtonsoft.Json.Linq.JArray>>.Create(func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
