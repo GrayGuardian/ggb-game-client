@@ -154,7 +154,6 @@
             Packet currentPacket = null;
             ws.OnMessage += (sender, e) =>
             {
-                UnityEngine.Debug.Log("接收到数据" + e.Data);
                 if (e.IsText)
                 {
                     try
@@ -176,11 +175,7 @@
                 }
                 else if (e.IsBinary && currentPacket != null)
                 {
-                    UnityEngine.Debug.Log("接收到数据111:" + e.Data + "  " + e.RawData.Length + "  " + e.RawData.Skip(1).ToArray().Length);
-                    UnityEngine.Debug.Log(currentPacket.IsComplete);
-                    UnityEngine.Debug.Log(currentPacket.Attachments.Count);
                     currentPacket.Attachments.Add(e.RawData.Skip(1).ToArray());
-                    UnityEngine.Debug.Log(currentPacket.Attachments.Count);
                     if (currentPacket.IsComplete)
                     {
                         handlePacket(currentPacket);

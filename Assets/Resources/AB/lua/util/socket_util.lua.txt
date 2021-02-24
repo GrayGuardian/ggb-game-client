@@ -1,0 +1,54 @@
+local Socket = class("Socket")
+CSSocketUtil = SocketUtil.New()
+
+function Socket:init()
+    local listenEvent =
+        System.Action_string_objects(
+        function(key, param)
+            local action = self[key]
+            if key == "OnDestroy" then
+                action = function()
+                    self:_onDestroy()
+                end
+            end
+            if param == nil or param.Length == 0 then
+                action(self)
+            elseif param.Length == 1 then
+                action(self, param:GetValue(0))
+            elseif param.Length == 2 then
+                action(self, param:GetValue(0),param:GetValue(1))
+            end
+        end
+    )
+    broadcast:on(
+        BROADCAST_CODE.MONO_QUIT,
+        function()
+            CSSocketUtil:DelListenEvent(listenEvent)
+        end
+    )
+    CSSocketUtil:AddListenEvent(listenEvent)
+end
+function Socket:conn(url)
+    self.socket = CSSocketUtil:Conn(url)
+    return self.socket
+end
+function Socket:onConnect()
+    broadcast:notify(BROADCAST_CODE.SOCKET_CONNECT);
+end
+function Socket:onConnectError()
+    broadcast:notify(BROADCAST_CODE.SOCKET_CONNECTERROR);
+end
+function Socket:onDisconnect()
+    broadcast:notify(BROADCAST_CODE.SOCKET_DISCONNECT);
+end
+function Socket:onError(error)
+    broadcast:notify(BROADCAST_CODE.SOCKET_ERROR,error);
+end
+function Socket:onMessage(key,bytes)
+    local data = csbytesToluabytes(bytes);
+    broadcast:notify(BROADCAST_CODE.SOCKET_MESSAGE,{ key=key,bytes=data});
+end
+function Socket:emit(ev, data)
+    CSSocketUtil:Emit(ev, data)
+end
+return Socket

@@ -18,4 +18,15 @@ BroadcastCode.MONO_QUIT = "MONO_QUIT"
 BroadcastCode.HTTP_LOGICERROR = "HTTP_LOGICERROR"
 BroadcastCode.HTTP_CONNONERROR = "HTTP_CONNONERROR"
 
+--Socket
+BroadcastCode.SOCKET_CONNECT = "SOCKET_CONNECT";
+BroadcastCode.SOCKET_CONNECTERROR = "SOCKET_CONNECTERROR";
+BroadcastCode.SOCKET_DISCONNECT = "SOCKET_DISCONNECT";
+BroadcastCode.SOCKET_ERROR = "SOCKET_ERROR";
+BroadcastCode.SOCKET_MESSAGE = "SOCKET_MESSAGE";
+BroadcastCode.SOCKET_EVENT = function(key)
+    return 'SOCKET_EVENT_'..string.upper(key);
+end
+
+
 return BroadcastCode

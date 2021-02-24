@@ -18,25 +18,22 @@ public class SocketUtil
     }
     private void OnOpen()
     {
-        if (_onListenEvent != null) _onListenEvent("OnOpen", null);
-        _socket.On("aaa", (info) =>
-        {
-            UnityEngine.Debug.Log("返回aaa的值>>>");
-            UnityEngine.Debug.Log(info.Data);
-
-        });
+        if (_onListenEvent != null) _onListenEvent("onConnect", null);
     }
     private void OnConnectFailed()
     {
-        if (_onListenEvent != null) _onListenEvent("OnConnectFailed", null);
+        if (_onListenEvent != null) _onListenEvent("onConnectError", null);
     }
     private void OnClose()
     {
-        if (_onListenEvent != null) _onListenEvent("OnClose", null);
+        if (_onListenEvent != null) _onListenEvent("onDisconnect", null);
     }
     private void OnError(string error)
     {
-        if (_onListenEvent != null) _onListenEvent("OnError", new object[] { error });
+        if (_onListenEvent != null) _onListenEvent("onError", new object[] { error });
+    }
+    private void OnEvent(string key,byte[] data){
+        if (_onListenEvent != null) _onListenEvent("onMessage", new object[] { key,data });
     }
     public SocketIO Conn(string url)
     {
@@ -46,7 +43,7 @@ public class SocketUtil
         _socket.OnConnectFailed += OnConnectFailed;
         _socket.OnClose += OnClose;
         _socket.OnError += (error) => { OnError(error.ToString()); };
-
+        _socket.OnEvent += (packet) => { OnEvent(packet.Data.Value<string>(0), packet.Attachments[0]); };
         _socket.Connect();
         return _socket;
     }

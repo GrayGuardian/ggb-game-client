@@ -1,55 +1,48 @@
 local Network = class("Network")
-CSSocketUtil = SocketUtil.New()
-
+local socket = require("socket_util"):new()
 function Network:init()
-    local listenEvent =
-        System.Action_string_objects(
-        function(key, param)
-            local action = self[key]
-            if key == "OnDestroy" then
-                action = function()
-                    self:_onDestroy()
-                end
-            end
-            if param == nil or param.Length == 0 then
-                action(self)
-            elseif param.Length == 1 then
-                action(self, param:GetValue(0))
-            end
-        end
-    )
-    broadcast:on(
-        BROADCAST_CODE.MONO_QUIT,
-        function()
-            CSSocketUtil:DelListenEvent(listenEvent)
-        end
-    )
+    broadcast:on(BROADCAST_CODE.SOCKET_CONNECT,function ()self.onConnect(self);end);
+    broadcast:on(BROADCAST_CODE.SOCKET_CONNECTERROR,function ()self.onConnectError(self);end);
+    broadcast:on(BROADCAST_CODE.SOCKET_DISCONNECT,function ()self.onDisconnect(self);end);
+    broadcast:on(BROADCAST_CODE.SOCKET_ERROR,function (error)self.onError(self,error);end);
+    broadcast:on(BROADCAST_CODE.SOCKET_MESSAGE,function(data)self.onMessage(self,data.key,data.bytes);end);
 
-    CSSocketUtil:AddListenEvent(listenEvent)
-    self:conn("127.0.0.1:600")
+    broadcast:on(BROADCAST_CODE.SOCKET_EVENT("error"),function (data)
+        print('收到逻辑错误>>',tostring(data));
+    end);
+    broadcast:on(BROADCAST_CODE.SOCKET_EVENT("connRet"),function (data)
+        print('connRet>>',tostring(data));
+    end);
+    socket:conn("127.0.0.1:600")
 end
-function Network:conn(url)
-    self.socket = CSSocketUtil:Conn(url)
-    return self.socket
-end
-function Network:OnOpen()
-    print("Socket open!")
+function Network:onConnect()
+    print("Socket connect!")
     self:emit("conn", {token = "woshiToken", pid = 990, aid = 123333})
 end
-function Network:OnConnectFailed()
-    print("Socket failed to connect!")
+function Network:onConnectError()
+    print("Socket connect error!")
 end
-function Network:OnClose()
-    print("Socket closed!")
+function Network:onDisconnect()
+    print("Socket disconnect!")
 end
-function Network:OnError(error)
-    print("Socket Error: ", error)
+function Network:onError(error)
+    print("Socket Error:", error)
+end
+function Network:onMessage(key,bytes)
+    local body = pb:decode("socket_pb.s2c", bytes);
+    if body == nil then
+        return;
+    end
+    local router = body.router;
+    local data = body[router];
+
+    broadcast:notify(BROADCAST_CODE.SOCKET_EVENT(router),data);
 end
 
 function Network:emit(router, data)
     local body = {router = router}
     body[router] = data
     body = pb:encode("socket_pb.c2s", body)
-    CSSocketUtil:Emit("c2s", body)
+    socket:emit("c2s", body)
 end
-return Network
+return Network;

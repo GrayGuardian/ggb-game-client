@@ -42,6 +42,8 @@
         /// </summary>
         public event Action<SocketIOException> OnError;
 
+        public event Action<Packet> OnEvent;
+
         /// <summary>
         /// Creates a new SocketIO Object
         /// </summary>
@@ -186,6 +188,8 @@
                             if (handler != null) handler(ev);
                         }
                     }
+
+                    if(OnEvent!=null) OnEvent(packet);
                 });
             }
         }
