@@ -1,22 +1,54 @@
 local Network = class("Network")
 local socket = require("socket_util"):new()
 function Network:init()
-    broadcast:on(BROADCAST_CODE.SOCKET_CONNECT,function ()self.onConnect(self);end);
-    broadcast:on(BROADCAST_CODE.SOCKET_CONNECTERROR,function ()self.onConnectError(self);end);
-    broadcast:on(BROADCAST_CODE.SOCKET_DISCONNECT,function ()self.onDisconnect(self);end);
-    broadcast:on(BROADCAST_CODE.SOCKET_ERROR,function (error)self.onError(self,error);end);
-    broadcast:on(BROADCAST_CODE.SOCKET_MESSAGE,function(data)self.onMessage(self,data.key,data.bytes);end);
+    broadcast:on(
+        BROADCAST_CODE.SOCKET_CONNECT,
+        function()
+            self.onConnect(self)
+        end
+    )
+    broadcast:on(
+        BROADCAST_CODE.SOCKET_CONNECTERROR,
+        function()
+            self.onConnectError(self)
+        end
+    )
+    broadcast:on(
+        BROADCAST_CODE.SOCKET_DISCONNECT,
+        function()
+            self.onDisconnect(self)
+        end
+    )
+    broadcast:on(
+        BROADCAST_CODE.SOCKET_ERROR,
+        function(error)
+            self.onError(self, error)
+        end
+    )
+    broadcast:on(
+        BROADCAST_CODE.SOCKET_MESSAGE,
+        function(data)
+            self.onMessage(self, data.key, data.bytes)
+        end
+    )
 
-    broadcast:on(BROADCAST_CODE.SOCKET_EVENT("error"),function (data)
-        print('收到逻辑错误>>',tostring(data));
-    end);
-    broadcast:on(BROADCAST_CODE.SOCKET_EVENT("connRet"),function (data)
-        print('connRet>>',tostring(data));
-    end);
+    broadcast:on(
+        BROADCAST_CODE.SOCKET_EVENT("error"),
+        function(data)
+            print("收到逻辑错误>>", tostring(data))
+        end
+    )
+    broadcast:on(
+        BROADCAST_CODE.SOCKET_EVENT("connRet"),
+        function(data)
+            print("connRet>>", tostring(data))
+        end
+    )
 end
 function Network:onConnect()
     print("Socket connect!")
     self:emit("conn", {token = "woshiToken", pid = 990, aid = 123333})
+    self:emit("moveTo", {pos = {mid = 111, x = 23, y = 399}})
 end
 function Network:onConnectError()
     print("Socket connect error!")
@@ -27,15 +59,15 @@ end
 function Network:onError(error)
     print("Socket Error:", error)
 end
-function Network:onMessage(key,bytes)
-    local body = pb:decode("socket_pb.s2c", bytes);
+function Network:onMessage(key, bytes)
+    local body = pb:decode("socket_pb.s2c", bytes)
     if body == nil then
-        return;
+        return
     end
-    local router = body.router;
-    local data = body[router];
+    local router = body.router
+    local data = body[router]
 
-    broadcast:notify(BROADCAST_CODE.SOCKET_EVENT(router),data);
+    broadcast:notify(BROADCAST_CODE.SOCKET_EVENT(router), data)
 end
 function Network:conn(url)
     socket:conn(url)
@@ -46,4 +78,4 @@ function Network:emit(router, data)
     body = pb:encode("socket_pb.c2s", body)
     socket:emit("c2s", body)
 end
-return Network;
+return Network

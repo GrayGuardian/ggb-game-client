@@ -15,6 +15,10 @@ AREAINFO = protobuf.Descriptor()
 localTable.AREAINFO_AID_FIELD = protobuf.FieldDescriptor()
 localTable.AREAINFO_NAME_FIELD = protobuf.FieldDescriptor()
 localTable.AREAINFO_ISMAINTENANCE_FIELD = protobuf.FieldDescriptor()
+POS = protobuf.Descriptor()
+localTable.POS_MID_FIELD = protobuf.FieldDescriptor()
+localTable.POS_X_FIELD = protobuf.FieldDescriptor()
+localTable.POS_Y_FIELD = protobuf.FieldDescriptor()
 
 
 localTable.ERROR_CODE_FIELD.name = "code"
@@ -108,9 +112,47 @@ AREAINFO.enum_types = {}
 AREAINFO.fields = {localTable.AREAINFO_AID_FIELD, localTable.AREAINFO_NAME_FIELD, localTable.AREAINFO_ISMAINTENANCE_FIELD}
 AREAINFO.is_extendable = false
 AREAINFO.extensions = {}
+localTable.POS_MID_FIELD.name = "mid"
+localTable.POS_MID_FIELD.full_name = ".common.Pos.mid"
+localTable.POS_MID_FIELD.number = 1
+localTable.POS_MID_FIELD.index = 0
+localTable.POS_MID_FIELD.label = 2
+localTable.POS_MID_FIELD.has_default_value = false
+localTable.POS_MID_FIELD.default_value = 0
+localTable.POS_MID_FIELD.type = 5
+localTable.POS_MID_FIELD.cpp_type = 1
+
+localTable.POS_X_FIELD.name = "x"
+localTable.POS_X_FIELD.full_name = ".common.Pos.x"
+localTable.POS_X_FIELD.number = 2
+localTable.POS_X_FIELD.index = 1
+localTable.POS_X_FIELD.label = 2
+localTable.POS_X_FIELD.has_default_value = false
+localTable.POS_X_FIELD.default_value = 0
+localTable.POS_X_FIELD.type = 5
+localTable.POS_X_FIELD.cpp_type = 1
+
+localTable.POS_Y_FIELD.name = "y"
+localTable.POS_Y_FIELD.full_name = ".common.Pos.y"
+localTable.POS_Y_FIELD.number = 3
+localTable.POS_Y_FIELD.index = 2
+localTable.POS_Y_FIELD.label = 2
+localTable.POS_Y_FIELD.has_default_value = false
+localTable.POS_Y_FIELD.default_value = 0
+localTable.POS_Y_FIELD.type = 5
+localTable.POS_Y_FIELD.cpp_type = 1
+
+POS.name = "Pos"
+POS.full_name = ".common.Pos"
+POS.nested_types = {}
+POS.enum_types = {}
+POS.fields = {localTable.POS_MID_FIELD, localTable.POS_X_FIELD, localTable.POS_Y_FIELD}
+POS.is_extendable = false
+POS.extensions = {}
 
 AreaInfo = protobuf.Message(AREAINFO)
 Error = protobuf.Message(ERROR)
+Pos = protobuf.Message(POS)
 UserInfo = protobuf.Message(USERINFO)
 
 return m_table
