@@ -32,7 +32,7 @@ function UI:onAreaItemClick(o, order)
 end
 function UI:onNextBtnClick(o, order)
     if self.areaInfo.ismaintenance == 1 then
-        ui:showUI("ui_msg", {msg = "区服正在维护"})
+        ui:showTip({msg = "区服正在维护"})
         return
     end
     http:send(

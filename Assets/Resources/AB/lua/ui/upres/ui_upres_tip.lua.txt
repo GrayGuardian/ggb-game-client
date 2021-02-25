@@ -9,22 +9,77 @@ function UI:GET_ABS()
     return {}
 end
 ----------------UI配置------------------
-
+-- msg type title btnTitle isClose isClickClose onClick onClose onYes onNo
 function UI:onLoad()
-    self.msg = self.param.msg
-    self.btnTitle = self.param.btnTitle
     self.onClick = self.param.onClick
-    self.uiComp.Text.msgText.text = self.msg
+    self.onClose = self.param.onClose
+    self.onYes = self.param.onYes or self.param.onClick
+    self.onNo = self.param.onNo or self.param.onClose
 
-    if self.btnTitle ~= nil then
-        self.uiComp.Text.btnText.text = self.btnTitle
+    self.uiComp.Text.msgText.text = self.param.msg
+
+    if self.param.title ~= nil then
+        self.uiComp.Text.titleText.text = self.param.title
+    end
+
+    self.btnTitle = self.param.btnTitle
+    if type(self.btnTitle) == "string" then
+        self.uiComp.Text.btnText[1].text = self.btnTitle
+        self.uiComp.Text.btnText[2].text = self.btnTitle
+    elseif type(self.btnTitle) == "table" then
+        self.uiComp.Text.btnText[1].text = self.btnTitle[1]
+        self.uiComp.Text.btnText[2].text = self.btnTitle[1]
+        self.uiComp.Text.btnText[3].text = self.btnTitle[2]
+    end
+
+    if type(self.param.isClose) == "boolean" then
+        self.uiComp.Button.closeBtn.gameObject:SetActive(self.param.isClose)
+    end
+
+    local t = self.param.type or 1
+    if t == 1 then
+        self.uiComp.Button.yesBtn.gameObject:SetActive(false)
+        self.uiComp.Button.noBtn.gameObject:SetActive(false)
+    elseif t == 2 then
+        self.uiComp.Button.btn.gameObject:SetActive(false)
+    end
+
+    self.isClickClose = true
+    if self.param.isClickClose == false then
+        self.isClickClose = self.param.isClickClose
     end
 end
 
-function UI:onConfirmBtnClick(o, order)
+function UI:onBtnClick(o, order)
     if self.onClick ~= nil then
         self.onClick()
     end
-    self:close()
+    if self.isClickClose == true then
+        self:close()
+    end
+end
+function UI:onCloseBtnClick(o, order)
+    if self.onClose ~= nil then
+        self.onClose()
+    end
+    if self.isClickClose == true then
+        self:close()
+    end
+end
+function UI:onYesBtnClick(o, order)
+    if self.onYes ~= nil then
+        self.onYes()
+    end
+    if self.isClickClose == true then
+        self:close()
+    end
+end
+function UI:onNoBtnClick(o, order)
+    if self.onNo ~= nil then
+        self.onNo()
+    end
+    if self.isClickClose == true then
+        self:close()
+    end
 end
 return UI

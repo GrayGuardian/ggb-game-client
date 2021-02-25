@@ -1,4 +1,4 @@
-local base = require("ui_base");
+local base = require("ui_base")
 local UI = class("login", base)
 
 ----------------UI配置------------------
@@ -11,14 +11,13 @@ end
 ----------------UI配置------------------
 
 function UI:onLoad()
-
 end
 
 function UI:onLoginBtnClick(o, order)
     local username = self.uiComp.InputField.usernameInput.text
     local password = self.uiComp.InputField.passwordInput.text
     if username == "" or password == "" then
-        ui:showUI("ui_msg", {msg = "用户名及密码不可为空"})
+        ui:showTip({msg = "用户名及密码不可为空"})
         return
     end
     http:send(

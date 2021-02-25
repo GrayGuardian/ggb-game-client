@@ -18,12 +18,22 @@ function UI:init()
 end
 -- 场景lua文件加载
 function UI:sceneLoad(info)
-    local param = table.copy(self.scaneParam);
-    local opts = table.copy(self.sceneOpts);
-    self.scaneParam = nil;
-    self.sceneOpts = nil;
-    
-    print("跳转场景>>>>", "idx:", info.idx, "name:", info.name,"param:",utils.serialize(param),"opts:",utils.serialize(opts));
+    local param = table.copy(self.scaneParam)
+    local opts = table.copy(self.sceneOpts)
+    self.scaneParam = nil
+    self.sceneOpts = nil
+
+    print(
+        "跳转场景>>>>",
+        "idx:",
+        info.idx,
+        "name:",
+        info.name,
+        "param:",
+        utils.serialize(param),
+        "opts:",
+        utils.serialize(opts)
+    )
     if self.sceneComp ~= nil then
         print("卸载场景lua脚本>>" .. utils.serialize(self.sceneComp.info))
         self.sceneComp:_onDestroy()
@@ -31,13 +41,11 @@ function UI:sceneLoad(info)
     luaName = string.lower("scene_" .. info.name)
     print("加载场景lua脚本>>" .. luaName)
     self.sceneComp = require(luaName):new(info, param, opts)
-
-    
 end
 -- 切换场景
 function UI:loadScene(name, param, opts)
-    self.scaneParam = param;
-    self.sceneOpts = opts;
+    self.scaneParam = param
+    self.sceneOpts = opts
 
     SceneManager.LoadScene(name)
 end
@@ -51,7 +59,7 @@ function UI:createUIRoot()
     self.uiRoot.name = "UIRoot"
     self.uiCamera = self.uiRoot:Find("UICamera"):GetComponent("Camera")
     self.uiCanvas = self.uiRoot:Find("UICanvas")
-    
+
     -- if GameConst.PRO_ENV == ENV_TYPE.MASTER then
     --     local canvasScaler = self.uiCanvas:GetComponent("CanvasScaler")
     --     canvasScaler.referenceResolution = {x = UE.Screen.width, y = UE.Screen.height}
@@ -59,27 +67,35 @@ function UI:createUIRoot()
 end
 -- ShowUI
 function UI:showUI(name, param, opts)
-    -- InitComp
-    local comp = require(name):new(name, param, opts);
-    self:addUI(comp)
-    --加载AB依赖包
-    for index, abKey in ipairs(comp.abs) do
-        if self:existAB(abKey, comp) == false and self:addAB(abKey, comp) then
-            print("UI>>加载AB包:" .. abKey)
-            resUtil:LoadAssetBundle(abKey)
+    local comp
+
+    local ok, errors =
+        pcall(
+        function()
+            -- InitComp
+            comp = require(name):new(name, param, opts)
+            self:addUI(comp)
+            --加载AB依赖包
+            for index, abKey in ipairs(comp.abs) do
+                if self:existAB(abKey, comp) == false and self:addAB(abKey, comp) then
+                    print("UI>>加载AB包:" .. abKey)
+                    resUtil:LoadAssetBundle(abKey)
+                end
+            end
+            --加载界面
+            local prefab = resUtil:Load(comp.ab, name)
+            local go = GameObject.Instantiate(prefab)
+            local node = go:GetComponent("RectTransform")
+            comp:bind(node)
         end
+    )
+    if not ok then
+        return nil
     end
-    --加载界面
-    local prefab = resUtil:Load(comp.ab, name)
-    local go = GameObject.Instantiate(prefab)
-    local node = go:GetComponent("RectTransform")
-    comp:bind(node)
 
-
-    return comp;
+    return comp
 end
 function UI:closeUI(uiComp)
-
     uiComp:_onDestroy()
     GameObject.Destroy(uiComp.node.gameObject)
     --卸载AB依赖包
@@ -90,7 +106,6 @@ function UI:closeUI(uiComp)
         end
     end
     self:delUI(uiComp)
-
 end
 function UI:closeAllUI()
     for key, uiComp in pairs(self.uiCompMap) do
@@ -134,11 +149,21 @@ function UI:delAB(abKey, uiKey)
         return false
     end
 
-    table.del(self.abKeyMap[abKey],uiKey);
-    
+    table.del(self.abKeyMap[abKey], uiKey)
+
     if #self.abKeyMap[abKey] <= 0 then
         self.abKeyMap[abKey] = nil
     end
     return true
 end
+
+--业务逻辑
+function UI:showTip(data)
+    local comp = self:showUI("ui_tip", data)
+    if comp == nil then
+        comp = self:showUI("ui_upres_tip", data)
+    end
+    return comp
+end
+
 return UI

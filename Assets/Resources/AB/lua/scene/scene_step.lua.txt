@@ -5,9 +5,11 @@ function Scene:onLoad()
     if GameConst.PRO_ENV == ENV_TYPE.MASTER then
         ui:loadScene("UpRes")
     else
-        --ui:loadScene("UpRes")
         --test
         --ui:loadScene("Login")
+        ui:loadScene("UpRes")
     end
+
+    print(ui:showUI("ui_tip", {msg = "fjlsadjfk"}))
 end
 return Scene

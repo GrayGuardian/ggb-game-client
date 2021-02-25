@@ -42,14 +42,14 @@ function UI:networkInit()
         function()
             self:hideBarNode()
             self:broadcast_out(BROADCAST_CODE.MONO_UPDATE, updateCb)
-            ui:showUI(
-                "ui_upres_tip",
+            ui:showTip(
                 {
                     msg = "网络连接超时，是否重试？",
                     btnTitle = "重试",
                     onClick = function()
                         self:networkInit()
-                    end
+                    end,
+                    isClose = false
                 }
             )
         end
@@ -62,49 +62,49 @@ function UI:upResLoad()
     if self.refdata.type == 0 then
         self:upResOver()
     elseif self.refdata.type == 1 then
-        ui:showUI(
-            "ui_upres_tip",
+        ui:showTip(
             {
                 msg = "需要手动下载安装包进行更新，是否前往下载？",
                 btnTitle = "前往下载",
                 onClick = function()
                     Application.Quit()
-                end
+                end,
+                isClose = false
             }
         )
     elseif self.refdata.type == 2 then
-        ui:showUI(
-            "ui_upres_tip",
+        ui:showTip(
             {
                 msg = string.format("首次下载资源文件，共计需要下载%s资源文件", utils.sizeFormat(self.refdata.size)),
                 btnTitle = "开始下载",
                 onClick = function()
                     self:downloadRes()
-                end
+                end,
+                isClose = false
             }
         )
     elseif self.refdata.type == 3 then
-        ui:showUI(
-            "ui_upres_tip",
+        ui:showTip(
             {
                 msg = string.format("发现新版本，共计需要下载%s资源文件", utils.sizeFormat(self.refdata.size)),
                 btnTitle = "开始下载",
                 onClick = function()
                     self:downloadRes()
-                end
+                end,
+                isClose = false
             }
         )
     elseif self.refdata.type == 4 then
         self:upResOver()
     elseif self.refdata.type == 5 then
-        ui:showUI(
-            "ui_upres_tip",
+        ui:showTip(
             {
                 msg = string.format("文件损坏,需要重新下载\n共计需要下载%s资源文件", utils.sizeFormat(self.refdata.size)),
                 btnTitle = "开始下载",
                 onClick = function()
                     self:downloadRes()
-                end
+                end,
+                isClose = false
             }
         )
     end
@@ -161,14 +161,14 @@ function UI:downloadRes()
         end,
         function()
             self:hideBarNode()
-            ui:showUI(
-                "ui_upres_tip",
+            ui:showTip(
                 {
                     msg = "网络连接超时，是否重试？",
                     btnTitle = "重试",
                     onClick = function()
                         self:downloadRes()
-                    end
+                    end,
+                    isClose = false
                 }
             )
             print("下载失败")
@@ -180,13 +180,13 @@ function UI:downloadResOver()
     self:hideBarNode()
     if self.refdata.data.IsRestart then
         resUtil:UpVersion()
-        ui:showUI(
-            "ui_upres_tip",
+        ui:showTip(
             {
                 msg = "更新完毕，请重启游戏",
                 onClick = function()
                     Application.Quit()
-                end
+                end,
+                isClose = false
             }
         )
         return
