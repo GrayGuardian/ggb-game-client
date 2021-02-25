@@ -15,6 +15,7 @@ local error_info = require("error_info")
 SUCCESS_CODE = error_info.SUCCESS_CODE
 ERROR_CODE = error_info.ERROR_CODE
 genErrorMsg = error_info.genErrorMsg
+tpl = require("tpl")
 
 pb = require("pb_util"):new()
 json = require("json_util"):new()
@@ -26,4 +27,3 @@ ui = require("ui"):new()
 comp = require("comp"):new()
 http = require("http_util"):new()
 network = require("network_util"):new()
-
