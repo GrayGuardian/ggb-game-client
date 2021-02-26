@@ -55,6 +55,7 @@ _decode = function(key, data)
     end
     local pb = message_type()
     pb:ParseFromString(data)
+
     return pb
 end
 
@@ -69,6 +70,7 @@ function PB:encode(key, data)
     if ok then
         return result
     else
+        print(errors)
         return ""
     end
 end
@@ -83,6 +85,7 @@ function PB:decode(key, data)
     if ok then
         return result
     else
+        print(errors)
         return nil
     end
 end

@@ -40,6 +40,7 @@ function UI:onNextBtnClick(o, order)
         {aid = self.areaInfo.aid},
         function(data)
             print("进入选人界面")
+            ui:showUI("ui_player_main", {players = data.players})
             self:close()
         end
     )

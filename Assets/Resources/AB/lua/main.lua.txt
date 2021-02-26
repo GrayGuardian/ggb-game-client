@@ -4,11 +4,6 @@ require("base")
 function Main()
     --comp:addCSComponent(mono.monoNode, TestConsole):Show()
     print("logic start")
-
-    print(network)
-    print(network.conn)
-    --network:conn("192.168.0.104:600")
-    network:conn("127.0.0.1:600")
 end
 
 --场景切换通知

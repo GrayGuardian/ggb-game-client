@@ -4,78 +4,118 @@ function Network:init()
     broadcast:on(
         BROADCAST_CODE.SOCKET_CONNECT,
         function()
-            self.onConnect(self)
+            print("Socket connect!")
         end
     )
     broadcast:on(
         BROADCAST_CODE.SOCKET_CONNECTERROR,
         function()
-            self.onConnectError(self)
+            print("Socket connect error!")
         end
     )
     broadcast:on(
         BROADCAST_CODE.SOCKET_DISCONNECT,
         function()
-            self.onDisconnect(self)
+            print("Socket disconnect!")
         end
     )
     broadcast:on(
         BROADCAST_CODE.SOCKET_ERROR,
         function(error)
-            self.onError(self, error)
+            print("Socket Error:", error)
+
+            ui:showOnlyTip(
+                "NETWORK_ERROR",
+                {
+                    msg = "网络连接错误，请重新登录！",
+                    isClose = false,
+                    onClick = function()
+                        ui:loadScene("Login")
+                        self.errorTipUI = nil
+                    end
+                }
+            )
         end
     )
     broadcast:on(
         BROADCAST_CODE.SOCKET_MESSAGE,
         function(data)
-            self.onMessage(self, data.key, data.bytes)
+            local body = pb:decode("socket_pb.s2c", data.bytes)
+            if body == nil then
+                return
+            end
+            local router = body.router
+            local t_data = body[router]
+            print(string.format("socket.s2c router:%s body:%s", router, tostring(body)))
+
+            broadcast:notify(BROADCAST_CODE.SOCKET_EVENT(router), t_data)
         end
     )
 
     broadcast:on(
         BROADCAST_CODE.SOCKET_EVENT("error"),
-        function(data)
-            print("收到逻辑错误>>", tostring(data))
+        function(error)
+            print("收到逻辑错误>>", tostring(error))
+            if error.code == ERROR_CODE.TOKEN_ERROR then
+                ui:showOnlyTip(
+                    "NETWORK_ERROR",
+                    {
+                        msg = error.msg,
+                        isClose = false,
+                        onClick = function()
+                            ui:loadScene("Login")
+                        end
+                    }
+                )
+
+                return
+            end
+            ui:showOnlyTip("NETWORK_ERROR", {msg = error.msg})
         end
     )
+
+    self.url = nil
+    self.connData = nil
+end
+function Network:conn1(url)
+    socket:conn(url)
+end
+function Network:conn(url, connData, cb)
+    if url ~= nil then
+        self.url = url
+    end
+    if connData ~= nil then
+        self.connData = connData
+    end
+    socket:conn(self.url)
+
     broadcast:on(
         BROADCAST_CODE.SOCKET_EVENT("connRet"),
         function(data)
-            print("connRet>>", tostring(data))
-        end
+            if cb ~= nil then
+                cb(data)
+            end
+        end,
+        0,
+        true
     )
-end
-function Network:onConnect()
-    print("Socket connect!")
-    self:emit("conn", {token = "woshiToken", pid = 990, aid = 123333})
-    self:emit("moveTo", {pos = {mid = 111, x = 23, y = 399}})
-end
-function Network:onConnectError()
-    print("Socket connect error!")
-end
-function Network:onDisconnect()
-    print("Socket disconnect!")
-end
-function Network:onError(error)
-    print("Socket Error:", error)
-end
-function Network:onMessage(key, bytes)
-    local body = pb:decode("socket_pb.s2c", bytes)
-    if body == nil then
-        return
-    end
-    local router = body.router
-    local data = body[router]
-
-    broadcast:notify(BROADCAST_CODE.SOCKET_EVENT(router), data)
-end
-function Network:conn(url)
-    socket:conn(url)
+    broadcast:on(
+        BROADCAST_CODE.SOCKET_CONNECT,
+        function()
+            self:emit("conn", self.connData)
+            --self:emit("moveTo", {pos = {mid = 111, x = 23, y = 399}})
+        end,
+        0,
+        true
+    )
 end
 function Network:emit(router, data)
     local body = {router = router}
     body[router] = data
     body = pb:encode("socket_pb.c2s", body)
+
+    print(string.format("socket.c2s router:%s body:%s", router, pb:decode("socket_pb.c2s", body)))
     socket:emit("c2s", body)
 end
+
 return Network

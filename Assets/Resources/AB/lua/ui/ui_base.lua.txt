@@ -3,7 +3,7 @@ local UIBase = class("UIBase")
 ------------------- 继承重写 -------------------
 --加载参数二次重写默认值
 function UIBase:GET_DEFAULT_OPTS()
-    return table.copy(UIBase.DEFAULT_OPTS);
+    return table.copy(UIBase.DEFAULT_OPTS)
 end
 --UI所在AB包 默认为UI名 可通过子类 base.static.ab = '' 进行重写
 function UIBase:GET_AB()
@@ -24,17 +24,17 @@ function UIBase:onDestroy()
 end
 ------------------- 继承重写 -------------------
 -- 默认加载参数
--- order：渲染数值，越大越前 
+-- order：渲染数值，越大越前
 -- blockInput：是否阻挡下层Input消息
 -- blackMask: 背景黑色遮罩透明度
-UIBase.static.DEFAULT_OPTS = {order = 0,blockInput = true,blackMask = 30}
+UIBase.static.DEFAULT_OPTS = {order = 0, blockInput = true, blackMask = 30}
 
 function UIBase:init(name, param, opts)
     self.name = name
     self.param = param
 
-    self.opts = self.GET_DEFAULT_OPTS();
-    if opts~= nil then
+    self.opts = self.GET_DEFAULT_OPTS()
+    if opts ~= nil then
         for key, value in pairs(opts) do
             self.opts[key] = value
         end
@@ -45,10 +45,9 @@ function UIBase:init(name, param, opts)
         end
     end
 
-    self.ab = self:GET_AB() == "" and self.name or self:GET_AB();
-    self.abs = self:GET_ABS();
-    table.insert(self.abs, 1, self.ab);
-    
+    self.ab = self:GET_AB() == "" and self.name or self:GET_AB()
+    self.abs = self:GET_ABS()
+    table.insert(self.abs, 1, self.ab)
 
     self.node = nil
     self.uiComp = {}
@@ -72,9 +71,9 @@ function UIBase:bind(node)
     self.node.offsetMin = {x = 0, y = 0}
 
     --加载配置设置
-    local maskImage = comp:addCSComponent(self.node,UEUI.Image);
-    maskImage.raycastTarget = self.opts.blockInput;
-    maskImage.color = {r=0,g=0,b=0,a=self.opts.blackMask/100}
+    local maskImage = comp:addCSComponent(self.node, UEUI.Image)
+    maskImage.raycastTarget = self.opts.blockInput
+    maskImage.color = {r = 0, g = 0, b = 0, a = self.opts.blackMask / 100}
 
     self:uiCompInit()
     self:_onLoad()
@@ -116,7 +115,7 @@ function UIBase:uiCompInit()
         else
             e = "on" .. comp.name:gsub("^%l", string.upper) .. "Click"
         end
-        print(self.name,' UI 注册Button事件>',e)
+        print(self.name, " UI 注册Button事件>", e)
         if self[e] ~= nil then
             if type(comp) == "table" then
                 sum = #comp
@@ -154,7 +153,22 @@ end
 function UIBase:close()
     ui:closeUI(self)
 end
-
+-- function UIBase:isActive()
+--     local result = false
+--     local ok, errors =
+--         pcall(
+--         function()
+--             result = self.node.transform.gameObject.activeInHierarchy
+--         end
+--     )
+--     if not ok then
+--         print(errors)
+--     end
+--     return result
+-- end
+function UIBase:isClear()
+    return not table.exist(ui.uiCompMap, self)
+end
 function UIBase:getRelaOrder()
     return ui:getRelaOrder(self.opts.order) - 1
 end
@@ -190,4 +204,5 @@ function UIBase:broadcast_clear()
     end
     self.broadcastMap = {}
 end
+
 return UIBase

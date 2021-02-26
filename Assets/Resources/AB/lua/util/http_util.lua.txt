@@ -5,16 +5,32 @@ local url = GameConst.HTTP
 function Http:init()
     broadcast:on(
         BROADCAST_CODE.HTTP_LOGICERROR,
-        function(data)
+        function(error)
             --print('业务逻辑错误:>>>',tostring(error));
-            ui:showTip({msg = data.error.msg})
+            if error.code == ERROR_CODE.TOKEN_ERROR then
+                ui:showOnlyTip(
+                    "NETWORK_ERROR",
+                    {
+                        msg = error.msg,
+                        isClose = false,
+                        onClick = function()
+                            ui:loadScene("Login")
+                        end
+                    }
+                )
+
+                return
+            end
+
+            ui:showOnlyTip("NETWORK_ERROR", {msg = error.msg})
         end
     )
     broadcast:on(
         BROADCAST_CODE.HTTP_CONNONERROR,
         function(data)
             --print("连接错误:>>>", tostring(data))
-            ui:showTip(
+            ui:showOnlyTip(
+                "NETWORK_ERROR",
                 {
                     msg = "网络连接超时，是否重试？",
                     btnTitle = "重试",
@@ -33,19 +49,20 @@ function Http:send(router, data, cb)
     local body = {}
     body.router = router
     body[router] = data
-    local bytes = pb:encode("http_pb.c2s", body)
+
+    local bytes = pb:encode("http_pb.http_c2s", body)
     if bytes == "" then
         return
     end
 
-    print(string.format("http.c2s router:%s body:%s", router, pb:decode("http_pb.c2s", bytes)))
+    print(string.format("http.c2s router:%s body:%s", router, pb:decode("http_pb.http_c2s", bytes)))
 
     CSHttpUtil:Post_Asyn(
         url,
         bytes,
         self.token,
         function(result)
-            local t_body = pb:decode("http_pb.s2c", csbytesToluabytes(result.bytes))
+            local t_body = pb:decode("http_pb.http_s2c", csbytesToluabytes(result.bytes))
             local t_router = t_body.router
             local t_data = t_body[t_router]
             t_data = t_data and t_data or {}
@@ -54,7 +71,7 @@ function Http:send(router, data, cb)
 
             if t_router == "error" then
                 --出现业务逻辑错误
-                broadcast:notify(BROADCAST_CODE.HTTP_LOGICERROR, {router = router, error = t_data})
+                broadcast:notify(BROADCAST_CODE.HTTP_LOGICERROR, t_data)
                 return
             end
 

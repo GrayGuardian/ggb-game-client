@@ -13,6 +13,7 @@ function UI:init()
 
     self.uiCompMap = {}
     self.abKeyMap = {}
+    self.onlyUIMap = {}
 
     self:createUIRoot()
 end
@@ -69,29 +70,27 @@ end
 function UI:showUI(name, param, opts)
     local comp
 
-    local ok, errors =
-        pcall(
-        function()
-            -- InitComp
-            comp = require(name):new(name, param, opts)
-            self:addUI(comp)
-            --加载AB依赖包
-            for index, abKey in ipairs(comp.abs) do
-                if self:existAB(abKey, comp) == false and self:addAB(abKey, comp) then
-                    print("UI>>加载AB包:" .. abKey)
-                    resUtil:LoadAssetBundle(abKey)
-                end
-            end
-            --加载界面
-            local prefab = resUtil:Load(comp.ab, name)
-            local go = GameObject.Instantiate(prefab)
-            local node = go:GetComponent("RectTransform")
-            comp:bind(node)
-        end
-    )
-    if not ok then
+    -- InitComp
+    if require(name) == nil then
         return nil
     end
+    comp = require(name):new(name, param, opts)
+    self:addUI(comp)
+    --加载AB依赖包
+    for index, abKey in ipairs(comp.abs) do
+        if self:existAB(abKey, comp) == false and self:addAB(abKey, comp) then
+            print("UI>>加载AB包:" .. abKey)
+            resUtil:LoadAssetBundle(abKey)
+        end
+    end
+    --加载界面
+    local prefab = resUtil:Load(comp.ab, name)
+    if prefab == nil then
+        return nil
+    end
+    local go = GameObject.Instantiate(prefab)
+    local node = go:GetComponent("RectTransform")
+    comp:bind(node)
 
     return comp
 end
@@ -158,12 +157,26 @@ function UI:delAB(abKey, uiKey)
 end
 
 --业务逻辑
-function UI:showTip(data)
-    local comp = self:showUI("ui_tip", data)
+function UI:showTip(param, opts)
+    local comp = self:showUI("ui_tip", param, opts)
     if comp == nil then
-        comp = self:showUI("ui_upres_tip", data)
+        comp = self:showUI("ui_upres_tip", param, opts)
     end
     return comp
+end
+
+function UI:showOnlyUI(key, name, param, opts)
+    if self.onlyUIMap[key] ~= nil and not self.onlyUIMap[key]:isClear() then
+        return
+    end
+    self.onlyUIMap[key] = self:showUI(name, param, opts)
+end
+
+function UI:showOnlyTip(key, param, opts)
+    if self.onlyUIMap[key] ~= nil and not self.onlyUIMap[key]:isClear() then
+        return
+    end
+    self.onlyUIMap[key] = self:showTip(param, opts)
 end
 
 return UI

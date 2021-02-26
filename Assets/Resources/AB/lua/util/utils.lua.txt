@@ -1,8 +1,30 @@
 class = require("middle_class")
 
+pbToTable = function(pb)
+    local data = {}
+    local ok, errors =
+        pcall(
+        function()
+            for k, field in ipairs(pb.descriptor.fields) do
+                if pb:HasField(field.name) ~= false then
+                    --print("?????", pb[field.name])
+                    data[field.name] = pbToTable(pb[field.name])
+                end
+            end
+            print(data)
+        end
+    )
+    if ok then
+        return data
+    else
+        print("error util.pbToTable")
+        return pb
+    end
+end
+
 csbytesToluabytes = function(bytes)
     local data = ""
-    for i = 0, bytes.Length - 1 do  
+    for i = 0, bytes.Length - 1 do
         data = data .. string.char(bytes[i])
     end
     return data

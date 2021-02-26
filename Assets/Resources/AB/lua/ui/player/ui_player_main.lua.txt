@@ -1,0 +1,34 @@
+local base = require("ui_base")
+local UI = class("player_main", base)
+
+----------------UI配置------------------
+function UI:GET_AB()
+    return "ui1"
+end
+function UI:GET_ABS()
+    return {"p1"}
+end
+----------------UI配置------------------
+
+function UI:onLoad()
+    self.players = self.param.players
+end
+function UI:onNextBtnClick(o, order)
+    --测试选择第一位角色的pid
+    local pid = self.players[1].pid
+    print(pid)
+    http:send(
+        "enterGame",
+        {pid = pid},
+        function(data)
+            network:conn(
+                data.url,
+                {token = data.token},
+                function()
+                    ui:loadScene("Game")
+                end
+            )
+        end
+    )
+end
+return UI
