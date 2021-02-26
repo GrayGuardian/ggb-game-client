@@ -8,22 +8,49 @@ Application = UE.Application
 -- c#
 resUtil = ResUtil.New()
 -- tolua
-require("utils")
+require('utils')
 
-BROADCAST_CODE = require("BROADCAST_CODE")
-local error_info = require("error_info")
+BROADCAST_CODE = require('BROADCAST_CODE')
+local error_info = require('error_info')
 SUCCESS_CODE = error_info.SUCCESS_CODE
 ERROR_CODE = error_info.ERROR_CODE
 genErrorMsg = error_info.genErrorMsg
-tpl = require("tpl")
+tpl = require('tpl')
 
-pb = require("pb_util"):new()
-json = require("json_util"):new()
+pb = require('pb_util'):new()
+json = require('json_util'):new()
 
-broadcast = require("broadcast_util"):new()
-mono = require("mono_util"):new()
-timer = require("timer_util"):new()
-ui = require("ui"):new()
-comp = require("comp"):new()
-http = require("http_util"):new()
-network = require("network_util"):new()
+broadcast = require('broadcast_util'):new()
+mono = require('mono_util'):new()
+timer = require('timer_util'):new()
+ui = require('ui'):new()
+comp = require('comp'):new()
+http = require('http_util'):new()
+network = require('network_util'):new()
+
+local data = {
+    pid = 1,
+    uid = 2,
+    aid = 4,
+    rid = 2,
+    name = 'sjlkdjf',
+    lv = 34,
+    exp = 1254,
+    pos = {mid = 1, x = 43, y = 432},
+    phone = 'f124323',
+    create_time = 4,
+    login_time = 2,
+    logout_time = 4,
+    online = 1
+}
+print(utils.serialize(data))
+
+local bytes = pb:encode('common_pb.PlayerInfo', data)
+print(bytes)
+
+local body = pb:decode('common_pb.PlayerInfo', bytes)
+print(body)
+print(tostring(body))
+print(body)
+
+print(utils.serialize(pb:pbToTable(body)))

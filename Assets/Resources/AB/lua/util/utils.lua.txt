@@ -1,29 +1,29 @@
-class = require("middle_class")
+class = require('middle_class')
 
-pbToTable = function(pb)
-    local data = {}
-    local ok, errors =
-        pcall(
-        function()
-            for k, field in ipairs(pb.descriptor.fields) do
-                if pb:HasField(field.name) ~= false then
-                    --print("?????", pb[field.name])
-                    data[field.name] = pbToTable(pb[field.name])
-                end
-            end
-            print(data)
-        end
-    )
-    if ok then
-        return data
-    else
-        print("error util.pbToTable")
-        return pb
-    end
-end
+-- pbToTable = function(pb)
+--     local data = {}
+--     local ok, errors =
+--         pcall(
+--         function()
+--             for k, field in ipairs(pb.descriptor.fields) do
+--                 if pb:HasField(field.name) ~= false then
+--                     --print("?????", pb[field.name])
+--                     data[field.name] = pbToTable(pb[field.name])
+--                 end
+--             end
+--             print(data)
+--         end
+--     )
+--     if ok then
+--         return data
+--     else
+--         print('error util.pbToTable')
+--         return pb
+--     end
+-- end
 
 csbytesToluabytes = function(bytes)
-    local data = ""
+    local data = ''
     for i = 0, bytes.Length - 1 do
         data = data .. string.char(bytes[i])
     end
@@ -34,7 +34,7 @@ string.split = function(str, str1)
     local arr = {}
     string.gsub(
         str,
-        "[^" .. str1 .. "]+",
+        '[^' .. str1 .. ']+',
         function(w)
             table.insert(arr, w)
         end
@@ -46,11 +46,11 @@ table.copy = function(copyTable, table)
     if table == nil then
         table = {}
     end
-    if type(copyTable) ~= "table" then
+    if type(copyTable) ~= 'table' then
         table = copyTable
     else
         for k, v in pairs(copyTable) do
-            if type(v) ~= "table" then
+            if type(v) ~= 'table' then
                 table[k] = v
             else
                 table[k] = {}
@@ -81,48 +81,48 @@ end
 
 utils = {}
 utils.serialize = function(obj)
-    local lua = ""
+    local lua = ''
     if obj == nil then
-        return "nil"
+        return 'nil'
     end
     local t = type(obj)
-    if t == "number" then
+    if t == 'number' then
         lua = lua .. obj
-    elseif t == "boolean" then
+    elseif t == 'boolean' then
         lua = lua .. tostring(obj)
-    elseif t == "string" then
-        lua = lua .. string.format("%q", obj)
-    elseif t == "table" then
-        lua = lua .. "{ "
+    elseif t == 'string' then
+        lua = lua .. string.format('%q', obj)
+    elseif t == 'table' then
+        lua = lua .. '{ '
         for k, v in pairs(obj) do
-            lua = lua .. "[" .. utils.serialize(k) .. "]=" .. utils.serialize(v) .. ", "
+            lua = lua .. '[' .. utils.serialize(k) .. ']=' .. utils.serialize(v) .. ', '
         end
         local metatable = getmetatable(obj)
-        if metatable ~= nil and type(metatable.__index) == "table" then
+        if metatable ~= nil and type(metatable.__index) == 'table' then
             for k, v in pairs(metatable.__index) do
-                lua = lua .. "[" .. utils.serialize(k) .. "]=" .. utils.serialize(v) .. ", "
+                lua = lua .. '[' .. utils.serialize(k) .. ']=' .. utils.serialize(v) .. ', '
             end
         end
-        lua = lua .. "}"
-        lua = string.gsub(lua, ", }", " }")
-    elseif t == "function" then
-        lua = lua .. "[function]"
-    elseif t == "userdata" then
-        lua = lua .. "[" .. tostring(t) .. "]"
-    elseif t == "nil" then
-        lua = lua .. "[nil]"
+        lua = lua .. '}'
+        lua = string.gsub(lua, ', }', ' }')
+    elseif t == 'function' then
+        lua = lua .. '[function]'
+    elseif t == 'userdata' then
+        lua = lua .. '[' .. tostring(t) .. ']'
+    elseif t == 'nil' then
+        lua = lua .. '[nil]'
     else
-        error("can not serialize a " .. t .. " type.")
+        error('can not serialize a ' .. t .. ' type.')
     end
     return lua
 end
 utils.sizeFormat = function(byteSize)
     if byteSize > (1024 * 1024 * 1024) * 0.95 then
-        return string.format("%0.2fGB", byteSize / (1024 * 1024 * 1024))
+        return string.format('%0.2fGB', byteSize / (1024 * 1024 * 1024))
     elseif byteSize > (1024 * 1024) * 0.95 then
-        return string.format("%0.2fMB", byteSize / (1024 * 1024))
+        return string.format('%0.2fMB', byteSize / (1024 * 1024))
     elseif byteSize > 1024 * 0.95 then
-        return string.format("%0.2fKB", byteSize / 1024)
+        return string.format('%0.2fKB', byteSize / 1024)
     end
-    return string.format("%0.2fBytes", byteSize)
+    return string.format('%0.2fBytes', byteSize)
 end
