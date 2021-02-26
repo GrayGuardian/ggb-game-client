@@ -25,7 +25,7 @@ function UI:onNextBtnClick(o, order)
                 data.url,
                 {token = data.token},
                 function()
-                    ui:loadScene("Game")
+                    print("连接成功")
                 end
             )
         end

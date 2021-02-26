@@ -1,7 +1,6 @@
 local base = require("scene_base")
 local Scene = class("game", base)
 function Scene:onLoad()
-    ui:loadScene("Login")
 end
 function Scene:onDestroy()
     print("Scene_Game onDestroy")

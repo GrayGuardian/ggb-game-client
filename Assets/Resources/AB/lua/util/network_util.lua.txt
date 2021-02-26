@@ -51,7 +51,26 @@ function Network:init()
             broadcast:notify(BROADCAST_CODE.SOCKET_EVENT(router), t_data)
         end
     )
-
+    broadcast:on(
+        BROADCAST_CODE.SOCKET_EVENT("kick"),
+        function(data)
+            print("连接被断开>>", tostring(data))
+            if data.error.code == ERROR_CODE.TOKEN_ERROR then
+                ui:showOnlyTip(
+                    "NETWORK_ERROR",
+                    {
+                        msg = data.error.msg,
+                        isClose = false,
+                        onClick = function()
+                            ui:loadScene("Login")
+                        end
+                    }
+                )
+                return
+            end
+            ui:showOnlyTip("NETWORK_ERROR", {msg = error.msg})
+        end
+    )
     broadcast:on(
         BROADCAST_CODE.SOCKET_EVENT("error"),
         function(error)

@@ -6,6 +6,8 @@ setmetatable(m_table,{__index = _G})
 local _ENV = m_table
 
 local localTable = {}
+KICK = protobuf.Descriptor()
+localTable.KICK_ERROR_FIELD = protobuf.FieldDescriptor()
 CONN = protobuf.Descriptor()
 localTable.CONN_TOKEN_FIELD = protobuf.FieldDescriptor()
 CONNRET = protobuf.Descriptor()
@@ -15,9 +17,28 @@ localTable.C2S_CONN_FIELD = protobuf.FieldDescriptor()
 S2C = protobuf.Descriptor()
 localTable.S2C_ROUTER_FIELD = protobuf.FieldDescriptor()
 localTable.S2C_ERROR_FIELD = protobuf.FieldDescriptor()
+localTable.S2C_KICK_FIELD = protobuf.FieldDescriptor()
 localTable.S2C_CONNRET_FIELD = protobuf.FieldDescriptor()
 
 
+localTable.KICK_ERROR_FIELD.name = "error"
+localTable.KICK_ERROR_FIELD.full_name = ".socket.kick.error"
+localTable.KICK_ERROR_FIELD.number = 1
+localTable.KICK_ERROR_FIELD.index = 0
+localTable.KICK_ERROR_FIELD.label = 2
+localTable.KICK_ERROR_FIELD.has_default_value = false
+localTable.KICK_ERROR_FIELD.default_value = nil
+localTable.KICK_ERROR_FIELD.message_type = COMMON_PB.ERROR
+localTable.KICK_ERROR_FIELD.type = 11
+localTable.KICK_ERROR_FIELD.cpp_type = 10
+
+KICK.name = "kick"
+KICK.full_name = ".socket.kick"
+KICK.nested_types = {}
+KICK.enum_types = {}
+KICK.fields = {localTable.KICK_ERROR_FIELD}
+KICK.is_extendable = false
+KICK.extensions = {}
 localTable.CONN_TOKEN_FIELD.name = "token"
 localTable.CONN_TOKEN_FIELD.full_name = ".socket.conn.token"
 localTable.CONN_TOKEN_FIELD.number = 1
@@ -91,10 +112,21 @@ localTable.S2C_ERROR_FIELD.message_type = COMMON_PB.ERROR
 localTable.S2C_ERROR_FIELD.type = 11
 localTable.S2C_ERROR_FIELD.cpp_type = 10
 
+localTable.S2C_KICK_FIELD.name = "kick"
+localTable.S2C_KICK_FIELD.full_name = ".socket.s2c.kick"
+localTable.S2C_KICK_FIELD.number = 51
+localTable.S2C_KICK_FIELD.index = 2
+localTable.S2C_KICK_FIELD.label = 1
+localTable.S2C_KICK_FIELD.has_default_value = false
+localTable.S2C_KICK_FIELD.default_value = nil
+localTable.S2C_KICK_FIELD.message_type = KICK
+localTable.S2C_KICK_FIELD.type = 11
+localTable.S2C_KICK_FIELD.cpp_type = 10
+
 localTable.S2C_CONNRET_FIELD.name = "connRet"
 localTable.S2C_CONNRET_FIELD.full_name = ".socket.s2c.connRet"
 localTable.S2C_CONNRET_FIELD.number = 100
-localTable.S2C_CONNRET_FIELD.index = 2
+localTable.S2C_CONNRET_FIELD.index = 3
 localTable.S2C_CONNRET_FIELD.label = 1
 localTable.S2C_CONNRET_FIELD.has_default_value = false
 localTable.S2C_CONNRET_FIELD.default_value = nil
@@ -106,13 +138,14 @@ S2C.name = "s2c"
 S2C.full_name = ".socket.s2c"
 S2C.nested_types = {}
 S2C.enum_types = {}
-S2C.fields = {localTable.S2C_ROUTER_FIELD, localTable.S2C_ERROR_FIELD, localTable.S2C_CONNRET_FIELD}
+S2C.fields = {localTable.S2C_ROUTER_FIELD, localTable.S2C_ERROR_FIELD, localTable.S2C_KICK_FIELD, localTable.S2C_CONNRET_FIELD}
 S2C.is_extendable = false
 S2C.extensions = {}
 
 c2s = protobuf.Message(C2S)
 conn = protobuf.Message(CONN)
 connRet = protobuf.Message(CONNRET)
+kick = protobuf.Message(KICK)
 s2c = protobuf.Message(S2C)
 
 return m_table
