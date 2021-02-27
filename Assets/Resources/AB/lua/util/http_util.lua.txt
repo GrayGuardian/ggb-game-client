@@ -11,7 +11,7 @@ function Http:init()
                 ui:showOnlyTip(
                     'NETWORK_ERROR',
                     {
-                        msg = error.msg,
+                        msg = error.msg .. '，请重新登录！',
                         isClose = false,
                         onClick = function()
                             ui:loadScene('Login')
@@ -32,7 +32,7 @@ function Http:init()
             ui:showOnlyTip(
                 'NETWORK_ERROR',
                 {
-                    msg = '网络连接超时，是否重试？',
+                    msg = '网络连接错误，是否重试？',
                     btnTitle = '重试',
                     onClick = function()
                         http:send(data.router, data.data, data.cb)
@@ -62,12 +62,12 @@ function Http:send(router, data, cb)
         bytes,
         self.token,
         function(result)
-            local t_body = pb:pbToTable(pb:decode('http_pb.http_s2c', csbytesToluabytes(result.bytes)))
+            local t_body = pb:decode('http_pb.http_s2c', csbytesToluabytes(result.bytes))
+            print(string.format('http.s2c router:%s body:%s', t_router, tostring(t_body)))
+            t_body = pb:pbToTable(t_body)
             local t_router = t_body.router
             local t_data = t_body[t_router]
             t_data = t_data and t_data or {}
-
-            print(string.format('http.s2c router:%s body:%s', t_router, utils.serialize(t_body)))
 
             if t_router == 'error' then
                 --出现业务逻辑错误

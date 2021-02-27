@@ -17,6 +17,9 @@ function Network:init()
         BROADCAST_CODE.SOCKET_DISCONNECT,
         function()
             print('Socket disconnect!')
+            if self.heartBeatTimer ~= nil then
+                self.heartBeatTimer:stop()
+            end
         end
     )
     broadcast:on(
@@ -40,55 +43,61 @@ function Network:init()
     broadcast:on(
         BROADCAST_CODE.SOCKET_MESSAGE,
         function(data)
-            local body = pb:pbToTable(pb:decode('socket_pb.s2c', data.bytes))
+            local body = pb:decode('socket_pb.s2c', data.bytes)
             if body == nil then
                 return
             end
+            print(string.format('socket.s2c router:%s body:%s', body.router, tostring(body)))
+            body = pb:pbToTable(body)
             local router = body.router
             local t_data = body[router]
-            print(string.format('socket.s2c router:%s body:%s', router, utils.serialize(body)))
 
             broadcast:notify(BROADCAST_CODE.SOCKET_EVENT(router), t_data)
+        end
+    )
+    broadcast:on(
+        BROADCAST_CODE.SOCKET_EVENT('connRet'),
+        function(data)
+            print('连接成功')
+            --开始发送心跳包
+            self.heartBeatTimer =
+                timer:on(
+                1,
+                true,
+                function()
+                    --发送心跳包
+                    self:emit(
+                        'heartBeat',
+                        {},
+                        function(data)
+                            -- 更新时间
+                            self.unix = data.now
+                        end
+                    )
+                end
+            )
         end
     )
     broadcast:on(
         BROADCAST_CODE.SOCKET_EVENT('kick'),
         function(data)
             print('连接被断开>>', tostring(data))
-            if data.error.code == ERROR_CODE.TOKEN_ERROR then
-                ui:showOnlyTip(
-                    'NETWORK_ERROR',
-                    {
-                        msg = data.error.msg,
-                        isClose = false,
-                        onClick = function()
-                            ui:loadScene('Login')
-                        end
-                    }
-                )
-                return
-            end
-            ui:showOnlyTip('NETWORK_ERROR', {msg = error.msg})
+            ui:showOnlyTip(
+                'NETWORK_ERROR',
+                {
+                    msg = data.error.msg .. '，请重新登录！',
+                    isClose = false,
+                    onClick = function()
+                        ui:loadScene('Login')
+                    end
+                }
+            )
         end
     )
     broadcast:on(
         BROADCAST_CODE.SOCKET_EVENT('error'),
         function(error)
             print('收到逻辑错误>>', tostring(error))
-            if error.code == ERROR_CODE.TOKEN_ERROR then
-                ui:showOnlyTip(
-                    'NETWORK_ERROR',
-                    {
-                        msg = error.msg,
-                        isClose = false,
-                        onClick = function()
-                            ui:loadScene('Login')
-                        end
-                    }
-                )
-
-                return
-            end
             ui:showOnlyTip('NETWORK_ERROR', {msg = error.msg})
         end
     )
@@ -96,9 +105,7 @@ function Network:init()
     self.url = nil
     self.connData = nil
 end
-function Network:conn1(url)
-    socket:conn(url)
-end
+
 function Network:conn(url, connData, cb)
     if url ~= nil then
         self.url = url
@@ -109,26 +116,15 @@ function Network:conn(url, connData, cb)
     socket:conn(self.url)
 
     broadcast:on(
-        BROADCAST_CODE.SOCKET_EVENT('connRet'),
-        function(data)
-            if cb ~= nil then
-                cb(data)
-            end
-        end,
-        0,
-        true
-    )
-    broadcast:on(
         BROADCAST_CODE.SOCKET_CONNECT,
         function()
-            self:emit('conn', self.connData)
-            --self:emit("moveTo", {pos = {mid = 111, x = 23, y = 399}})
+            self:emit('conn', self.connData, cb)
         end,
         0,
         true
     )
 end
-function Network:emit(router, data)
+function Network:emit(router, data, cb)
     data = data or {}
     local body = {router = router}
     body[router] = data
@@ -136,6 +132,18 @@ function Network:emit(router, data)
 
     print(string.format('socket.c2s router:%s body:%s', router, pb:decode('socket_pb.c2s', body)))
     socket:emit('c2s', body)
+    if cb ~= nil then
+        broadcast:on(
+            BROADCAST_CODE.SOCKET_EVENT(router .. 'Ret'),
+            function(data)
+                if cb ~= nil then
+                    cb(data)
+                end
+            end,
+            0,
+            true
+        )
+    end
 end
 
 return Network

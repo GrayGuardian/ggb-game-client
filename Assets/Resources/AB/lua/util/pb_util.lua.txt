@@ -97,7 +97,6 @@ function PB:pbToTable(pb)
     local data = {}
     for key, field in pairs(pb.fieldMap) do
         local value = pb[field.name]
-        --print(key, value, field, field.message_type)
         if field.message_type == nil then
             if type(field.default_value) ~= 'table' then
                 data[key] = value

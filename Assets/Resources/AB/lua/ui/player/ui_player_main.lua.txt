@@ -27,7 +27,7 @@ function UI:onNextBtnClick(o, order)
                 data.url,
                 {token = data.token},
                 function()
-                    print('连接成功')
+                    --print('连接成功')
                     network:emit('enterGame')
                 end
             )
