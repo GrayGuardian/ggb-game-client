@@ -1,8 +1,33 @@
-local base = require("scene_base")
-local Scene = class("login", base)
+local base = require('scene_base')
+local Scene = class('login', base)
 
 function Scene:onLoad()
-    ui:showUI("ui_login")
+    ------------快速登录测试代码------------
+    local socket_url = '127.0.0.1:600'
+    local token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjc0LCJhaWQiOjQsInBpZCI6MSwiaWF0IjoxNjE0NDQzMjYxLCJleHAiOjE2MTQ1Mjk2NjF9.ywqCwzQto_H7g4yzOsl_qpv0WPlxRAtWA1rOxvKWG3w'
+
+    http.token = token
+    network:conn(
+        socket_url,
+        {token = token},
+        function()
+            player = require('model_player'):new()
+            network:emit('enterGame')
+        end
+    )
+    ------------快速登录测试代码------------
+
+    broadcast:on(
+        BROADCAST_CODE.SOCKET_EVENT('enterGameRet'),
+        function()
+            ui:loadScene('Game')
+        end,
+        0,
+        true
+    )
+
+    ui:showUI('ui_login')
 end
 
 return Scene

@@ -1,5 +1,5 @@
-local base = require("comp_base")
-local Comp = class("area_item", base)
+local base = require('comp_base')
+local Comp = class('area_item', base)
 
 function Comp:onLoad()
     self.info = self.param.info
@@ -12,7 +12,7 @@ end
 function Comp:refresh()
     self.uiComp.Text.nameText.text = self.info.name
     self.uiComp.Image.stateIcon.sprite =
-        resUtil:LoadSprite("p1", self.info.ismaintenance == 0 and "icon_red_point" or "icon_gray_point")
+        resUtil:LoadSprite('p1', self.info.ismaintenance == 0 and 'icon_red_point' or 'icon_gray_point')
 end
 function Comp:showOutLine()
     self.uiComp.Image.outlineImage.gameObject:SetActive(true)

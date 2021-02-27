@@ -1,8 +1,9 @@
-local base = require("scene_base")
-local Scene = class("game", base)
+local base = require('scene_base')
+local Scene = class('game', base)
 function Scene:onLoad()
+    print(utils.serialize(player.baseInfo))
 end
 function Scene:onDestroy()
-    print("Scene_Game onDestroy")
+    print('Scene_Game onDestroy')
 end
 return Scene

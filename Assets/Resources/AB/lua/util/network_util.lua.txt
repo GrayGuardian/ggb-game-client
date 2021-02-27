@@ -47,7 +47,11 @@ function Network:init()
             if body == nil then
                 return
             end
-            print(string.format('socket.s2c router:%s body:%s', body.router, tostring(body)))
+
+            if body.router ~= 'heartBeatRet' then
+                print(string.format('socket.s2c router:%s body:%s', body.router, tostring(body)))
+            end
+
             body = pb:pbToTable(body)
             local router = body.router
             local t_data = body[router]
@@ -62,18 +66,11 @@ function Network:init()
             --开始发送心跳包
             self.heartBeatTimer =
                 timer:on(
-                1,
+                5,
                 true,
                 function()
                     --发送心跳包
-                    self:emit(
-                        'heartBeat',
-                        {},
-                        function(data)
-                            -- 更新时间
-                            self.unix = data.now
-                        end
-                    )
+                    self:emit('heartBeat')
                 end
             )
         end
@@ -99,6 +96,13 @@ function Network:init()
         function(error)
             print('收到逻辑错误>>', tostring(error))
             ui:showOnlyTip('NETWORK_ERROR', {msg = error.msg})
+        end
+    )
+
+    broadcast:on(
+        BROADCAST_CODE.SOCKET_EVENT('heartBeatRet'),
+        function(data)
+            self.unix = data.now
         end
     )
 
@@ -130,7 +134,10 @@ function Network:emit(router, data, cb)
     body[router] = data
     body = pb:encode('socket_pb.c2s', body)
 
-    print(string.format('socket.c2s router:%s body:%s', router, pb:decode('socket_pb.c2s', body)))
+    if router ~= 'heartBeat' then
+        print(string.format('socket.c2s router:%s body:%s', router, pb:decode('socket_pb.c2s', body)))
+    end
+
     socket:emit('c2s', body)
     if cb ~= nil then
         broadcast:on(

@@ -12,8 +12,7 @@ end
 
 function UI:onLoad()
     self.players = self.param.players
-
-    print(utils.serialize(self.players))
+    --print(utils.serialize(self.players))
 end
 function UI:onNextBtnClick(o, order)
     --测试选择第一位角色的pid
@@ -27,8 +26,14 @@ function UI:onNextBtnClick(o, order)
                 data.url,
                 {token = data.token},
                 function()
-                    --print('连接成功')
-                    network:emit('enterGame')
+                    player = require('model_player'):new()
+                    network:emit(
+                        'enterGame',
+                        {},
+                        function()
+                            self:close()
+                        end
+                    )
                 end
             )
         end

@@ -1,0 +1,10 @@
+local base = require('model_base')
+local Model = class('player', base)
+function Model:CLASS_NAME()
+    return 'Player'
+end
+function Model:onLoad()
+    print('Player onLoad', self.baseInfo)
+end
+
+return Model
