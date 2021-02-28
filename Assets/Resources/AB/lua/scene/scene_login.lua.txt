@@ -3,19 +3,19 @@ local Scene = class('login', base)
 
 function Scene:onLoad()
     ------------快速登录测试代码------------
-    local socket_url = '127.0.0.1:600'
-    local token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjc0LCJhaWQiOjQsInBpZCI6MSwiaWF0IjoxNjE0NDQzMjYxLCJleHAiOjE2MTQ1Mjk2NjF9.ywqCwzQto_H7g4yzOsl_qpv0WPlxRAtWA1rOxvKWG3w'
+    -- local socket_url = '127.0.0.1:600'
+    -- local token =
+    --     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjc0LCJhaWQiOjQsInBpZCI6MSwiaWF0IjoxNjE0NDQzMjYxLCJleHAiOjE2MTQ1Mjk2NjF9.ywqCwzQto_H7g4yzOsl_qpv0WPlxRAtWA1rOxvKWG3w'
 
-    http.token = token
-    network:conn(
-        socket_url,
-        {token = token},
-        function()
-            player = require('model_player'):new()
-            network:emit('enterGame')
-        end
-    )
+    -- http.token = token
+    -- network:conn(
+    --     socket_url,
+    --     {token = token},
+    --     function()
+    --         player = require('model_player'):new()
+    --         network:emit('enterGame')
+    --     end
+    -- )
     ------------快速登录测试代码------------
 
     broadcast:on(

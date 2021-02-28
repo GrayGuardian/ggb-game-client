@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1862955029
+CRC: 98448789
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 505d6ea18fef10c3a3f582e7f327f035
+    Hash: 6df6d4663403cc172bf38a9889436c1a
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -23,6 +23,7 @@ Assets:
 - Assets/Resources/AB/lua/base/tolua/socket/smtp.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Mathf.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/dis_x86.lua.txt
+- Assets/Resources/AB/lua/model/model_player_currency.lua.txt
 - Assets/Resources/AB/lua/base/tolua/jit/dis_arm64be.lua.txt
 - Assets/Resources/AB/lua/template/tpl.lua.txt
 - Assets/Resources/AB/lua/ui/area/ui_area_sel.lua.txt
@@ -42,6 +43,7 @@ Assets:
 - Assets/Resources/AB/lua/const/BROADCAST_CODE.lua.txt
 - Assets/Resources/AB/lua/util/socket_util.lua.txt
 - Assets/Resources/AB/lua/ui/upres/ui_upres_tip.lua.txt
+- Assets/Resources/AB/lua/model/model_player.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Ray.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/Vector4.lua.txt
 - Assets/Resources/AB/lua/base/tolua/UnityEngine/RaycastHit.lua.txt
@@ -111,6 +113,7 @@ Assets:
 - Assets/Resources/AB/lua/pb/common_pb.lua.txt
 - Assets/Resources/AB/lua/pb/socket_pb.lua.txt
 - Assets/Resources/AB/lua/comp/comp_base.lua.txt
+- Assets/Resources/AB/lua/model/model_base.lua.txt
 - Assets/Resources/AB/lua/base/base.lua.txt
 - Assets/Resources/AB/lua/scene/scene_game.lua.txt
 - Assets/Resources/AB/lua/base/ui.lua.txt
