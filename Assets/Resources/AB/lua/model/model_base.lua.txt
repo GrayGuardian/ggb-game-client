@@ -10,9 +10,11 @@ end
 ------------------- 继承重写 -------------------
 function ModelBase:init(baseInfo)
     broadcast:on(
-        BROADCAST_CODE.SOCKET_EVENT('up' .. self:CLASS_NAME() .. 'Data'),
+        BROADCAST_CODE.SOCKET_EVENT('upModelData'),
         function(data)
-            self:upBaseInfo(data.baseInfo)
+            if data.name == self:CLASS_NAME() then
+                self:upBaseInfo(data[data.name])
+            end
         end
     )
 

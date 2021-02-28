@@ -1,10 +1,15 @@
 local base = require('model_base')
 local Model = class('player', base)
+
+local PlayerCurrency = require('model_player_currency')
+
 function Model:CLASS_NAME()
     return 'Player'
 end
 function Model:onLoad()
     print('Player onLoad', self.baseInfo)
+
+    self.currency = PlayerCurrency:new()
 end
 
 return Model

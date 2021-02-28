@@ -48,7 +48,7 @@ function Network:init()
                 return
             end
 
-            if body.router ~= 'heartBeatRet' then
+            if string.find('heartBeatRet|upModelData|', body.router .. '|') == nil then
                 print(string.format('socket.s2c router:%s body:%s', body.router, tostring(body)))
             end
 
@@ -134,7 +134,7 @@ function Network:emit(router, data, cb)
     body[router] = data
     body = pb:encode('socket_pb.c2s', body)
 
-    if router ~= 'heartBeat' then
+    if string.find('heartBeat|', router .. '|') == nil then
         print(string.format('socket.c2s router:%s body:%s', router, pb:decode('socket_pb.c2s', body)))
     end
 
