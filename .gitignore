@@ -7,3 +7,4 @@ Library/
 *.sln
 *.csproj
 Assets/Resources/Default/
+Assets/Resources/Default.meta
