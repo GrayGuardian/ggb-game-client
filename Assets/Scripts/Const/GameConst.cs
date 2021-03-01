@@ -55,7 +55,7 @@ public class GameConst
     /// Web Res文件夹
     /// </summary>
     /// <returns></returns>
-    public static string RES_WEB_ROOT = Path.Combine(Application.dataPath, "../../koa-game-server/web-server/public/Download");
+    public static string RES_WEB_ROOT = Path.Combine(Application.dataPath, "../../ggb-game-server/web-server/public/Download");
     /// <summary>
     /// 打包根目录
     /// </summary>

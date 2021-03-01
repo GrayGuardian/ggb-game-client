@@ -1,14 +1,14 @@
-require('base')
+require("base")
 
 --主入口函数。从这里开始lua逻辑
 function Main()
-    comp:addCSComponent(mono.monoNode, TestConsole):Show()
-    print('logic start')
+    --comp:addCSComponent(mono.monoNode, TestConsole):Show()
+    print("logic start")
 end
 
 --场景切换通知
 function OnLevelWasLoaded(idx, name)
-    collectgarbage('collect')
+    collectgarbage("collect")
     Time.timeSinceLevelLoad = 0
     broadcast:notify(BROADCAST_CODE.SCENE_LOADED, {idx = idx, name = name})
 end

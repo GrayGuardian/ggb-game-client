@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1882006231
+CRC: 3318507695
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1263e7cf06f3db3f19a74a5a3a77ecbe
+    Hash: 4bd8962cd216f96928e44cde8a8dfb9b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 6830d5dfb2a3184c89661d48cb5532b4
@@ -52,4 +52,4 @@ Assets:
 - Assets/Resources/AB/ui1/ui_area_main.prefab
 - Assets/Resources/AB/ui1/ui_tip.prefab
 Dependencies:
-- F:/Git/ggame/koa-game-client/AssetBundles/p1
+- D:/Demo/Unity/ggb-game-frame/ggb-game-client/AssetBundles/p1
