@@ -1,3 +1,4 @@
+（该框架后续开发手游中，逐步发现一些BUG，等手游项目开发完毕，将开源统一更新并删除这行文字）
 # ggb-game-client
 该项目是一个基于tolua纯lua开发的U3D客户端框架,对应有一个分布式服务器框架[ggb-game-server](https://github.com/GrayGuardian/ggb-game-server)
 ## 项目说明
