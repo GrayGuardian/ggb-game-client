@@ -1,4 +1,5 @@
-（该框架后续开发手游中，逐步发现一些BUG，等手游项目开发完毕，将开源统一更新并删除这行文字）
+> 由于这个框架的AB包打包、网络底层都是用插件，感觉太累赘了，所以打算重写一套不含插件的纯粹开源的架构，目前已开源完成热更架构的项目[HotUpdate](https://github.com/GrayGuardian/HotUpdate)，等完成网络模块的架构对接，会合并到这个项目的分支里，目前这个主分支的框架项目还存在一些问题，该框架已在另一个手游项目开发中使用开源，修复了相关问题，可以前往项目[card-client](https://github.com/GrayGuardian/card-client)查看，
+
 # ggb-game-client
 该项目是一个基于tolua纯lua开发的U3D客户端框架,对应有一个分布式服务器框架[ggb-game-server](https://github.com/GrayGuardian/ggb-game-server)
 ## 项目说明
